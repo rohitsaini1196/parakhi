@@ -24,6 +24,7 @@ import { CategoryTemplateSchema } from "../lib/schemas";
 import { upsertBreakdown } from "../lib/persist";
 import { lookupGstRate } from "../lib/gst-lookup";
 import { brandOriginsForProduct } from "../lib/brand-origins";
+import { isNoteworthy, writeScoreDeltaAlert } from "../lib/alerts";
 
 async function main() {
   const products = await db.product.findMany({
@@ -60,6 +61,18 @@ async function main() {
       : null;
 
     await upsertBreakdown({ productId: product.id, breakdown });
+
+    // Emit an alert when a recompute moved IVC past the threshold — a likely
+    // sign of a template change or a data-layer shift worth a human look.
+    if (isNoteworthy(previousIvc, breakdown.madeInIndiaScorePct)) {
+      await writeScoreDeltaAlert({
+        slug: product.slug,
+        metric: "IVC",
+        previous: previousIvc!,
+        next: breakdown.madeInIndiaScorePct,
+        reason: `template ${template.slug} v${template.templateVersion}, GST ${gst.source}`,
+      });
+    }
 
     const delta =
       previousIvc != null

@@ -62,6 +62,42 @@ work; revisit when you outgrow it.
 - [ ] LICENSE, README, CONTRIBUTING present
 - [ ] GitHub repo public
 
+## Automation (GitHub Actions)
+
+Four scheduled workflows keep the data layer fresh with no manual runs:
+
+| Workflow | Cadence | What |
+| --- | --- | --- |
+| `ingest-agmarknet` | daily 06:00 IST | mandi commodity prices (data.gov.in) |
+| `ingest-cbic` | weekly Mon | HSN → GST table |
+| `ingest-wikidata` | monthly 1st | brand → parent → country registry |
+| `recompute` | on template push + nightly | re-derive breakdowns; commits score-delta alerts to `data/alerts/` |
+
+### Required for cron to actually persist
+
+GitHub runners are ephemeral — a local SQLite file does **not** survive between
+runs. For the cron jobs to write durable data, point them at a **persistent
+Postgres** (Neon free tier is the boring pick):
+
+1. Create a Neon Postgres DB, copy the connection string.
+2. In `prisma/schema.prisma`, set `datasource db { provider = "postgresql" }`.
+3. Run `npx prisma migrate deploy` against it once, then `npm run db:seed`,
+   `npm run ingest:cbic`, `npm run ingest:wikidata`.
+4. Add repo secrets:
+   ```bash
+   gh secret set DATABASE_URL --body "postgres://..."
+   gh secret set DATA_GOV_IN_API_KEY --body "<key>"
+   ```
+
+Until a persistent `DATABASE_URL` secret exists, the workflows run but their
+writes evaporate. They're safe to leave scheduled — they just no-op usefully.
+
+### Alerting
+
+There is no mailer. The `recompute` workflow commits any score-delta entries to
+`data/alerts/<date>.md`; the commit (and any workflow failure) notifies the repo
+owner via GitHub's built-in email. That's the whole alerting system.
+
 ## Domain
 
 `parakhi.in`

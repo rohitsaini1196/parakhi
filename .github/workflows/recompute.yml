@@ -1,0 +1,54 @@
+name: recompute
+
+# Re-derive every non-hero breakdown and commit any score-delta alerts.
+# Triggers:
+#   - push to compute logic or template files (numbers may have changed)
+#   - nightly safety net (picks up data-layer drift)
+#   - manual dispatch
+# Requires repo secret: DATABASE_URL (persistent Postgres).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "lib/breakdown-compute.ts"
+      - "lib/gst-lookup.ts"
+      - "lib/brand-origins.ts"
+      - "prisma/seed-data/**"
+  schedule:
+    - cron: "0 3 * * *" # 08:30 IST nightly
+  workflow_dispatch: {}
+
+concurrency:
+  group: recompute
+  cancel-in-progress: false
+
+permissions:
+  contents: write # to commit data/alerts/
+
+jobs:
+  recompute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npx tsx scripts/recompute-breakdowns.ts
+      - name: Commit alerts if any
+        run: |
+          if [ -n "$(git status --porcelain data/alerts/ 2>/dev/null)" ]; then
+            git config user.name "parakhi-bot"
+            git config user.email "bot@parakhi.in"
+            git add data/alerts/
+            git commit -m "chore(alerts): score deltas from recompute [skip ci]"
+            git push
+          else
+            echo "No score-delta alerts."
+          fi

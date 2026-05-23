@@ -167,14 +167,48 @@ function rawClient(): LlmClient {
  * Call JSON with one automatic retry on validation/JSON failure. If the second
  * attempt also fails, the error propagates — caller decides whether to surface
  * "couldn't estimate" to the user. We never silently coerce.
+ *
+ * Before any call, enforces a hard monthly USD spend cap (LLM_MONTHLY_USD_CAP,
+ * default 50). When the current calendar month's logged spend meets or exceeds
+ * the cap, all calls throw — a billing circuit-breaker. Ollama calls are exempt
+ * (local, free). Set the cap to 0 to disable the check entirely.
  */
 export async function callJson<T>(opts: CallJsonOptions<T>): Promise<T> {
+  await assertUnderSpendCap();
   const client = rawClient();
   try {
     return await client.callJson(opts);
   } catch (err) {
     console.warn(`[llm] ${opts.purpose} attempt 1 failed, retrying`, err);
     return await client.callJson(opts);
+  }
+}
+
+const MONTHLY_USD_CAP = Number(process.env.LLM_MONTHLY_USD_CAP ?? 50);
+
+export class LlmSpendCapError extends Error {
+  constructor(spent: number, cap: number) {
+    super(
+      `LLM monthly spend cap reached: $${spent.toFixed(2)} of $${cap.toFixed(2)}. ` +
+        `Calls are paused until next month or until LLM_MONTHLY_USD_CAP is raised.`,
+    );
+    this.name = "LlmSpendCapError";
+  }
+}
+
+async function assertUnderSpendCap(): Promise<void> {
+  if (PROVIDER === "ollama") return; // local, free
+  if (!MONTHLY_USD_CAP || MONTHLY_USD_CAP <= 0) return; // disabled
+  const startOfMonth = new Date();
+  startOfMonth.setUTCDate(1);
+  startOfMonth.setUTCHours(0, 0, 0, 0);
+  const agg = await db.llmCall.aggregate({
+    _sum: { costUsd: true },
+    where: { createdAt: { gte: startOfMonth } },
+  });
+  const spent = agg._sum.costUsd ?? 0;
+  if (spent >= MONTHLY_USD_CAP) {
+    throw new LlmSpendCapError(spent, MONTHLY_USD_CAP);
   }
 }
 
