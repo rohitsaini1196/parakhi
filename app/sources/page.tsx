@@ -31,18 +31,18 @@ export default async function SourcesPage() {
     });
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-16 text-zinc-800 dark:text-zinc-200">
-      <nav className="mb-6 text-sm text-zinc-500">
-        <Link href="/" className="hover:underline">
-          ← Back
+    <main className="mx-auto max-w-2xl px-5 py-16">
+      <nav className="mb-6 text-sm text-muted">
+        <Link href="/" className="hover:text-foreground">
+          ← Parakhi
         </Link>
       </nav>
-      <h1 className="font-serif text-3xl font-semibold tracking-tight">
+      <h1 className="font-serif text-4xl font-semibold tracking-tight">
         Sources
       </h1>
-      <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
+      <p className="mt-3 text-sm text-muted">
         Every category template links to the data it was built from. Below is
-        the deduplicated master list across all our templates.
+        the deduplicated master list across all templates.
       </p>
 
       <ul className="mt-8 space-y-3 text-sm">
@@ -52,17 +52,17 @@ export default async function SourcesPage() {
               href={s.url}
               target="_blank"
               rel="noreferrer"
-              className="font-medium underline"
+              className="font-medium underline-offset-2 hover:underline"
             >
               {s.title}
             </a>
-            <div className="text-xs text-zinc-500">
+            <div className="text-xs text-muted">
               {s.category} · {s.relevance}
             </div>
           </li>
         ))}
         {master.length === 0 && (
-          <li className="text-zinc-500">No sources yet.</li>
+          <li className="text-muted">No sources yet.</li>
         )}
       </ul>
     </main>

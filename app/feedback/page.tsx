@@ -10,20 +10,20 @@ export default async function FeedbackPage({
 }) {
   const { productId, ok } = await searchParams;
   return (
-    <main className="mx-auto max-w-2xl px-6 py-16">
-      <nav className="mb-6 text-sm text-zinc-500">
-        <Link href="/" className="hover:underline">
-          ← Back
+    <main className="mx-auto max-w-2xl px-5 py-16">
+      <nav className="mb-6 text-sm text-muted">
+        <Link href="/" className="hover:text-foreground">
+          ← Parakhi
         </Link>
       </nav>
-      <h1 className="font-serif text-3xl font-semibold tracking-tight">
-        Tell us what's wrong (or missing)
+      <h1 className="font-serif text-4xl font-semibold tracking-tight">
+        Tell us what&apos;s wrong (or missing)
       </h1>
-      <p className="mt-3 text-zinc-700 dark:text-zinc-300">
+      <p className="mt-3 text-muted">
         Every correction makes the next estimate better. We read every one.
       </p>
       {ok ? (
-        <div className="mt-8 rounded-lg border border-emerald-300 bg-emerald-50 p-4 text-sm text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-200">
+        <div className="mt-8 rounded-2xl border border-india/30 bg-india/10 p-4 text-sm text-india">
           Thanks. Logged.
         </div>
       ) : (

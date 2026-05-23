@@ -6,10 +6,10 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="mx-auto max-w-2xl px-6 py-16 text-zinc-800 dark:text-zinc-200">
-      <nav className="mb-6 text-sm text-zinc-500">
-        <Link href="/" className="hover:underline">
-          ← Back
+    <main className="mx-auto max-w-2xl px-5 py-16 text-foreground">
+      <nav className="mb-6 text-sm text-muted">
+        <Link href="/" className="hover:text-foreground">
+          ← Parakhi
         </Link>
       </nav>
 
@@ -126,7 +126,7 @@ export default function AboutPage() {
         CBIC HSN→rate schedule. Tier 1, always.
       </p>
 
-      <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+      <p className="mt-4 text-sm leading-relaxed text-muted">
         Where we can't justify a foreign share from a public source, we default
         to fully Indian — we'd rather under-claim foreignness than invent it.
       </p>

@@ -12,7 +12,7 @@ import { estimateCostUsd } from "@/lib/llm-cost";
  * against a Zod schema. There is no free-form chat path.
  */
 export interface CallJsonOptions<T> {
-  purpose: "resolve" | "categorize" | "estimate";
+  purpose: "resolve" | "categorize" | "estimate" | "draft-category";
   tier: "fast" | "smart"; // maps to env vars LLM_MODEL_FAST / LLM_MODEL_SMART
   system: string;
   user: string;
@@ -27,7 +27,19 @@ export interface LlmClient {
   callJson<T>(opts: CallJsonOptions<T>): Promise<T>;
 }
 
-const PROVIDER = (process.env.LLM_PROVIDER ?? "openai") as "openai" | "ollama";
+const PROVIDER = (process.env.LLM_PROVIDER ?? "openai") as
+  | "openai"
+  | "ollama"
+  | "none";
+
+let _openai: OpenAI | null = null;
+function getOpenAI(): OpenAI {
+  if (_openai) return _openai;
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) throw new Error("OPENAI_API_KEY not set");
+  _openai = new OpenAI({ apiKey });
+  return _openai;
+}
 
 function modelFor(tier: "fast" | "smart"): string {
   if (PROVIDER === "openai") {
@@ -46,9 +58,7 @@ class OpenAILlmClient implements LlmClient {
   private client: OpenAI;
 
   constructor() {
-    const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) throw new Error("OPENAI_API_KEY not set");
-    this.client = new OpenAI({ apiKey });
+    this.client = getOpenAI();
   }
 
   async callJson<T>(opts: CallJsonOptions<T>): Promise<T> {
@@ -169,7 +179,7 @@ function rawClient(): LlmClient {
  * "couldn't estimate" to the user. We never silently coerce.
  *
  * Before any call, enforces a hard monthly USD spend cap (LLM_MONTHLY_USD_CAP,
- * default 50). When the current calendar month's logged spend meets or exceeds
+ * default 20). When the current calendar month's logged spend meets or exceeds
  * the cap, all calls throw — a billing circuit-breaker. Ollama calls are exempt
  * (local, free). Set the cap to 0 to disable the check entirely.
  */
@@ -184,7 +194,56 @@ export async function callJson<T>(opts: CallJsonOptions<T>): Promise<T> {
   }
 }
 
-const MONTHLY_USD_CAP = Number(process.env.LLM_MONTHLY_USD_CAP ?? 50);
+/**
+ * Loose JSON completion for large/nested schemas that OpenAI's strict
+ * structured-output mode rejects (it requires every field required+nullable;
+ * our CategoryTemplate has optional/defaulted fields). Uses `json_object`
+ * response format, then validates with the provided Zod schema. One retry.
+ *
+ * Used by the category-draft generator. Honors the spend cap + logs the call.
+ */
+export async function completeJson<T>(opts: {
+  purpose: CallJsonOptions<unknown>["purpose"];
+  tier: "fast" | "smart";
+  system: string;
+  user: string;
+  schema: z.ZodType<T>;
+  productId?: string;
+}): Promise<T> {
+  if (PROVIDER !== "openai") {
+    throw new Error(`completeJson requires LLM_PROVIDER=openai (got ${PROVIDER})`);
+  }
+  await assertUnderSpendCap();
+  const model = modelFor(opts.tier);
+  const run = async (): Promise<T> => {
+    const resp = await getOpenAI().chat.completions.create({
+      model,
+      response_format: { type: "json_object" },
+      messages: [
+        { role: "system", content: opts.system },
+        { role: "user", content: opts.user },
+      ],
+    });
+    await logCall({
+      endpoint: opts.purpose,
+      provider: "openai",
+      model,
+      inputTokens: resp.usage?.prompt_tokens ?? 0,
+      outputTokens: resp.usage?.completion_tokens ?? 0,
+      productId: opts.productId,
+    });
+    const raw = resp.choices[0]?.message.content ?? "";
+    return opts.schema.parse(JSON.parse(raw));
+  };
+  try {
+    return await run();
+  } catch (err) {
+    console.warn(`[llm] ${opts.purpose} attempt 1 failed, retrying`, err);
+    return await run();
+  }
+}
+
+const MONTHLY_USD_CAP = Number(process.env.LLM_MONTHLY_USD_CAP ?? 20);
 
 export class LlmSpendCapError extends Error {
   constructor(spent: number, cap: number) {

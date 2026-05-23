@@ -27,3 +27,16 @@ export const COUNTRY_FLAG: Record<string, string> = {
 export function flagFor(code: string): string {
   return COUNTRY_FLAG[code] ?? "🏳️";
 }
+
+/**
+ * One-word verdict for an IVC score. Factual, not judgmental — describes how
+ * Indian the value is, never grades the product's quality.
+ */
+export function verdictWord(ivc: number): string {
+  if (ivc >= 90) return "Almost all Indian";
+  if (ivc >= 75) return "Mostly Indian";
+  if (ivc >= 55) return "Largely Indian";
+  if (ivc >= 45) return "Half imported";
+  if (ivc >= 25) return "Largely imported";
+  return "Barely Indian";
+}

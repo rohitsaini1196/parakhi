@@ -182,6 +182,27 @@ model RecomputeJob {
   @@index([ranAt])
 }
 
+/**
+ * An LLM-generated category template awaiting human review. The whole point:
+ * the model does the grunt research, a human approves before anything goes
+ * live. A draft is NEVER shown to end users — only in the admin review queue.
+ * Approval upserts the templateJson into the live Category table.
+ */
+model CategoryDraft {
+  id            String   @id @default(cuid())
+  slug          String   // proposed category slug
+  displayName   String
+  templateJson  String   // full CategoryTemplate JSON (draft)
+  status        String   @default("pending") // pending | approved | rejected
+  generatedBy   String   // model id, e.g. "gpt-4o"
+  exampleQuery  String?  // the product query that triggered the draft
+  reviewerNotes String?
+  createdAt     DateTime @default(now())
+  reviewedAt    DateTime?
+
+  @@index([status])
+}
+
 model LlmCall {
   id           String   @id @default(cuid())
   endpoint     String

@@ -1,14 +1,11 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { SearchForm } from "@/app/_components/SearchForm";
+import { Wordmark } from "@/app/_components/Wordmark";
 
 type SP = Promise<{ q?: string; error?: string }>;
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: SP;
-}) {
+export default async function Home({ searchParams }: { searchParams: SP }) {
   const { q, error } = await searchParams;
   const [hero, recent] = await Promise.all([
     db.product.findFirst({
@@ -24,55 +21,44 @@ export default async function Home({
   ]);
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-16">
-      <header className="mb-12">
-        <h1 className="font-serif text-4xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Parakhi
-        </h1>
-        <p className="mt-1 font-serif text-lg italic text-zinc-500">
-          Kya hai andar?
-        </p>
-        <p className="mt-3 text-zinc-600 dark:text-zinc-400">
-          What's actually in the Indian products you buy. How much value stays
-          in India, how much is imported, how much went to tax — every number
-          with its source.
+    <main className="mx-auto max-w-2xl px-5 py-16">
+      <header className="mb-10">
+        <Wordmark />
+        <p className="mt-4 max-w-md text-muted">
+          Where does your money actually go when you buy an Indian product?
+          Search one. Every number carries its source.
         </p>
       </header>
 
       <SearchForm defaultValue={q} />
       {error && (
-        <p className="mt-3 text-sm text-orange-700 dark:text-orange-400">
-          Couldn't process that — {error}
-        </p>
+        <p className="mt-3 text-sm text-abroad">Couldn&apos;t process that — {error}</p>
       )}
-      <p className="mt-2 text-xs text-zinc-500">
-        Estimation runs a paid LLM call (max {process.env.RATE_LIMIT_PER_IP_PER_HOUR ?? 10}/hour per visitor).
-      </p>
 
       {hero && (
         <section className="mt-12">
-          <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-zinc-500">
-            Hero product (fully researched)
+          <h2 className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">
+            Fully researched
           </h2>
           <Link
             href={`/p/${hero.slug}`}
-            className="block rounded-xl border border-zinc-200 p-5 transition hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
+            className="group block rounded-2xl border border-border bg-surface/50 p-5 transition-colors hover:border-india/50"
           >
             <div className="flex items-baseline justify-between gap-4">
               <div>
-                <div className="font-serif text-xl font-semibold">
-                  {hero.name}
-                </div>
-                <div className="text-sm text-zinc-500">
+                <div className="font-serif text-xl font-semibold">{hero.name}</div>
+                <div className="text-sm text-muted">
                   {hero.brand} · {hero.variant}
                 </div>
               </div>
               {hero.breakdown && (
                 <div className="text-right">
-                  <div className="text-3xl font-semibold tabular-nums">
+                  <div className="font-serif text-3xl font-semibold tabular-nums text-india">
                     {(hero.breakdown.madeInIndiaScoreBp / 100).toFixed(0)}%
                   </div>
-                  <div className="text-xs text-zinc-500">Indian Value Capture</div>
+                  <div className="text-[10px] uppercase tracking-wide text-muted">
+                    Indian Value
+                  </div>
                 </div>
               )}
             </div>
@@ -81,31 +67,28 @@ export default async function Home({
       )}
 
       {recent.length > 0 && (
-        <section className="mt-12">
-          <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-zinc-500">
-            Recently estimated
+        <section className="mt-10">
+          <h2 className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">
+            Recently analyzed
           </h2>
-          <ul className="divide-y divide-zinc-200 rounded-xl border border-zinc-200 dark:divide-zinc-800 dark:border-zinc-800">
+          <ul className="overflow-hidden rounded-2xl border border-border">
             {recent.map((p) => (
-              <li key={p.id}>
+              <li key={p.id} className="border-b border-border last:border-0">
                 <Link
                   href={`/p/${p.slug}`}
-                  className="flex items-baseline justify-between gap-4 px-5 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-900"
+                  className="flex items-baseline justify-between gap-4 px-5 py-3 transition-colors hover:bg-surface-2"
                 >
                   <div className="min-w-0">
                     <div className="truncate font-medium">{p.name}</div>
-                    <div className="text-xs text-zinc-500">
+                    <div className="text-xs text-muted">
                       {p.brand}
                       {p.variant ? ` · ${p.variant}` : ""}
                     </div>
                   </div>
                   {p.breakdown && (
-                    <div className="text-right">
-                      <div className="text-lg font-semibold tabular-nums">
+                    <div className="shrink-0 text-right">
+                      <div className="font-serif text-lg font-semibold tabular-nums text-india">
                         {(p.breakdown.madeInIndiaScoreBp / 100).toFixed(0)}%
-                      </div>
-                      <div className="text-[10px] uppercase tracking-wide text-zinc-500">
-                        Indian Value
                       </div>
                     </div>
                   )}
@@ -116,18 +99,18 @@ export default async function Home({
         </section>
       )}
 
-      <footer className="mt-24 border-t border-zinc-200 pt-6 text-xs text-zinc-500 dark:border-zinc-800">
-        <Link href="/about" className="hover:underline">
+      <footer className="mt-24 border-t border-border pt-6 text-xs text-muted">
+        <Link href="/about" className="hover:text-foreground">
           About
         </Link>
         {" · "}
-        <Link href="/sources" className="hover:underline">
+        <Link href="/sources" className="hover:text-foreground">
           Sources
         </Link>
         {" · "}
         <a
-          href="https://github.com/"
-          className="hover:underline"
+          href="https://github.com/rohitsaini1196/parakhi"
+          className="hover:text-foreground"
           target="_blank"
           rel="noreferrer"
         >

@@ -46,7 +46,7 @@ export function FeedbackForm({ productId }: { productId?: string }) {
         <select
           value={kind}
           onChange={(e) => setKind(e.target.value as Kind)}
-          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
+          className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
         >
           <option value="correction">Correction — a number looks wrong</option>
           <option value="suggestion">Suggestion — add a product or category</option>
@@ -62,7 +62,7 @@ export function FeedbackForm({ productId }: { productId?: string }) {
           onChange={(e) => setMessage(e.target.value)}
           rows={5}
           placeholder="What did we get wrong? Link a source if you have one."
-          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
+          className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
         />
       </div>
 
@@ -74,20 +74,16 @@ export function FeedbackForm({ productId }: { productId?: string }) {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
+          className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
         />
       </div>
 
-      {error && (
-        <p className="text-sm text-orange-700 dark:text-orange-400">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-sm text-abroad">{error}</p>}
 
       <button
         type="submit"
         disabled={submitting}
-        className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-60 dark:bg-zinc-100 dark:text-zinc-900"
+        className="rounded-lg bg-foreground px-4 py-2 text-sm font-medium text-background disabled:opacity-60"
       >
         {submitting ? "Sending…" : "Send"}
       </button>
