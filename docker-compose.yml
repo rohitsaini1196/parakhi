@@ -1,0 +1,28 @@
+# Local Postgres for parity with the production DB (Neon, Supabase, etc.).
+# Use:
+#   docker compose up -d
+#   export DATABASE_URL="postgres://parakhi:parakhi@localhost:5432/parakhi"
+#   npm run db:migrate && npm run db:seed
+#
+# Data persists in the `parakhi-pg` named volume. Wipe with `docker compose down -v`.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: parakhi-pg
+    environment:
+      POSTGRES_USER: parakhi
+      POSTGRES_PASSWORD: parakhi
+      POSTGRES_DB: parakhi
+    ports:
+      - "5432:5432"
+    volumes:
+      - parakhi-pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U parakhi -d parakhi"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  parakhi-pg-data:

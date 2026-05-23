@@ -44,12 +44,13 @@ and [`lib/schemas.ts`](./lib/schemas.ts) for the data contract.
 
 ## Tech stack (boring on purpose)
 
-- **Next.js 16** (App Router) + TypeScript + Tailwind v4
-- **Prisma 6** + SQLite (single file; swap to Postgres later by changing the
-  Prisma URL — that's the whole migration)
-- **OpenAI** (`gpt-4o-mini` for resolve/categorize, `gpt-4o` for estimation)
-  via a swap-in `LlmClient` interface; **Ollama** supported for local dev
-- **Vercel** for deploy. Free tier should hold for v1.
+- **Next.js 16** (App Router) + TypeScript + Tailwind v4 + `motion`
+- **Prisma 6** + **Postgres** (local via Docker, prod via Neon free tier)
+- **Deterministic compute** is the only path numbers ever take. **OpenAI** is
+  optional fallback for free-text resolve/categorize and admin-only category
+  drafting; **Ollama** supported for local dev. Set `LLM_PROVIDER=none` for a
+  fully LLM-free deployment.
+- **Vercel** for deploy. Free tier holds for v1.
 
 Anti-stack: no Redis, no queues, no Docker, no separate API, no auth. Added
 only when the pain is real.
@@ -62,26 +63,27 @@ only when the pain is real.
 # 1. Install
 npm install
 
-# 2. Configure
+# 2. Local Postgres (Docker)
+docker compose up -d
+
+# 3. Configure (defaults point at the local Postgres above)
 cp .env.example .env
-# fill in OPENAI_API_KEY at minimum
 
-# 3. Database
-npm run db:migrate
+# 4. Database
+npx prisma migrate deploy
 npm run db:seed
+npm run ingest:cbic         # 39 HSN→GST rows
+npm run ingest:wikidata     # ~65 brands
 
-# 4. Run
+# 5. Run
 npm run dev
 # open http://localhost:3000
 # Parle-G is pre-seeded at /p/parle-g-55g
 ```
 
-Smoke test that doesn't need an OpenAI key:
+Want fully LLM-free? Set `LLM_PROVIDER=none` in `.env` — no API keys needed for any user flow.
 
-```bash
-npm run smoke
-# Hits Open Food Facts live and round-trips the seeded template.
-```
+Deploy (Vercel + Neon): see [docs/DEPLOY.md](./docs/DEPLOY.md) for the 10-minute runbook.
 
 ---
 

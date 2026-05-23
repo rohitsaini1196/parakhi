@@ -1,103 +1,113 @@
-# Deploying
+# Deploy Parakhi
 
-## Vercel — production caveat
+10-minute runbook. Production = **Vercel + Neon Postgres**. Both free tier.
 
-The default dev setup uses **SQLite at `prisma/dev.db`**, which is great for
-local dev but **does not work on Vercel** out of the box: serverless functions
-have an ephemeral, read-only filesystem.
+## 1. Neon (Postgres) — 3 min
 
-You have two paths:
+1. Sign up: <https://console.neon.tech> (GitHub login).
+2. Create project `parakhi`. Default region `aws-ap-south-1` (Mumbai).
+3. Copy the **pooled** connection string from the dashboard. Looks like:
+   `postgresql://<user>:<password>@<host>-pooler.neon.tech/parakhi?sslmode=require`
 
-### Path A — Switch to Postgres (recommended for launch)
+## 2. Vercel — 4 min
 
-Use a free hosted Postgres (Neon, Supabase, or Vercel Postgres). All three have
-generous free tiers; Neon is the boringest fit.
+1. <https://vercel.com> → GitHub login → **Import** `rohitsaini1196/parakhi`.
+2. Framework auto-detected as Next.js. Don't change build settings.
+3. **Environment variables** (Settings → Environment Variables):
 
-1. Create a database, copy its connection string.
-2. In `prisma/schema.prisma`, change the datasource:
-   ```prisma
-   datasource db {
-     provider = "postgresql"
-     url      = env("DATABASE_URL")
-   }
-   ```
-3. Set `DATABASE_URL` in Vercel env vars to the Postgres connection string.
-4. Run `npx prisma migrate deploy` from CI (or locally pointed at prod) to
-   apply migrations.
-5. Run `npm run db:seed` once to populate categories and Parle-G hero.
+   | Key | Value |
+   | --- | ----- |
+   | `DATABASE_URL` | Neon pooled string |
+   | `OPENAI_API_KEY` | optional — only if you want LLM fallback on resolve/categorize misses |
+   | `LLM_PROVIDER` | `none` for free, `openai` for fallback |
+   | `LLM_MONTHLY_USD_CAP` | `20` (default; raise if you want headroom) |
+   | `DATA_GOV_IN_API_KEY` | for Agmarknet cron — get one free at <https://data.gov.in> |
+   | `ADMIN_USER` / `ADMIN_PASS` | gate `/admin` |
+   | `IP_HASH_SALT` | random string, rotate per env |
 
-No app code changes are needed — Prisma's query API is identical between
-SQLite and Postgres for everything we use.
+4. Click **Deploy**. First build ~2 min.
 
-### Path B — Keep SQLite, deploy on a long-lived host
+## 3. One-time DB bootstrap (locally, against Neon) — 3 min
 
-Render, Railway, or Fly.io will give you a persistent disk. SQLite continues
-to work. This is fine for the soft-launch phase if you want zero migration
-work; revisit when you outgrow it.
+```bash
+export DATABASE_URL="<paste your Neon pooled string>"
 
-## Required environment variables
+npx prisma migrate deploy   # apply all migrations
+npm run db:seed             # categories + Parle-G hero
+npm run ingest:cbic         # 39 HSN→GST rows
+npm run ingest:wikidata     # 66 brands
+# npm run ingest:agmarknet  # optional; needs DATA_GOV_IN_API_KEY
+```
 
-| Key | Required | Notes |
-| --- | -------- | ----- |
-| `DATABASE_URL` | yes | `file:./dev.db` locally, Postgres URL in prod |
-| `OPENAI_API_KEY` | yes | only if `LLM_PROVIDER=openai` (default) |
-| `LLM_PROVIDER` | no | `openai` (default) or `ollama` |
-| `LLM_MODEL_FAST` | no | default `gpt-4o-mini` |
-| `LLM_MODEL_SMART` | no | default `gpt-4o` |
-| `RATE_LIMIT_PER_IP_PER_HOUR` | no | default `10` |
-| `RATE_LIMIT_GLOBAL_PER_DAY` | no | default `500` (raises bill ceiling) |
-| `ADMIN_USER` / `ADMIN_PASS` | recommended | gate the `/admin` page |
-| `IP_HASH_SALT` | recommended | rotate per environment |
+Verify in Neon SQL editor:
+```sql
+SELECT COUNT(*) FROM "Category";   -- expect 7
+SELECT COUNT(*) FROM "BrandIndex"; -- expect ~65
+SELECT COUNT(*) FROM "HsnGstRate"; -- expect 39
+```
+
+## 4. GitHub Actions secrets (for autonomous cron) — 1 min
+
+```bash
+gh secret set DATABASE_URL --body "<Neon pooled URL>"
+gh secret set DATA_GOV_IN_API_KEY --body "<key>"
+```
+
+Workflows fire on schedule:
+- `ingest-agmarknet` daily — commodity prices
+- `ingest-cbic` weekly — HSN→GST
+- `ingest-wikidata` monthly — brands
+- `recompute` nightly + on template push — re-derives breakdowns, commits score-delta alerts to `data/alerts/`
+
+## 5. Verify the deploy
+
+- `https://<your-vercel-url>/` — landing
+- `/p/parle-g-55g` — Parle-G hero renders
+- `/api/search?q=Maggi+noodles+70g` → 302 → `/p/maggi-noodles-70g`
+- `/admin` prompts for basic auth → enter `ADMIN_USER`/`ADMIN_PASS`
+
+## 6. Domain
+
+`parakhi.in` already secured. Vercel → Settings → Domains → add → follow DNS instructions. ~10 min for SSL.
+
+---
+
+## Local development
+
+```bash
+docker compose up -d                   # local Postgres on :5432
+cp .env.example .env                   # default DATABASE_URL works as-is
+npx prisma migrate deploy
+npm run db:seed
+npm run ingest:cbic
+npm run ingest:wikidata
+npm run dev
+```
+
+Wipe local DB: `docker compose down -v && docker compose up -d`.
+
+## Env reference
+
+| Key | Required | Default | Notes |
+| --- | -------- | ------- | ----- |
+| `DATABASE_URL` | yes | — | Postgres connection string |
+| `OPENAI_API_KEY` | only if LLM_PROVIDER=openai | — | |
+| `LLM_PROVIDER` | no | `openai` | `none` = fully deterministic, $0 LLM |
+| `LLM_MODEL_FAST` | no | `gpt-4o-mini` | resolve + categorize fallback |
+| `LLM_MODEL_SMART` | no | `gpt-4o` | category-draft generator |
+| `LLM_MONTHLY_USD_CAP` | no | `20` | circuit breaker; set 0 to disable |
+| `DATA_GOV_IN_API_KEY` | for agmarknet | — | free key from data.gov.in profile |
+| `RATE_LIMIT_PER_IP_PER_HOUR` | no | `10` | |
+| `RATE_LIMIT_GLOBAL_PER_DAY` | no | `500` | global bill ceiling |
+| `ADMIN_USER` / `ADMIN_PASS` | recommended | unset = `/admin` 401 | basic-auth gate |
+| `IP_HASH_SALT` | recommended | `parakhi-v1` | vote dedupe salt; rotate per env |
 
 ## Pre-launch checklist
 
 - [ ] `npm run build` clean
-- [ ] `OPENAI_API_KEY` set in prod env
-- [ ] DB migrated and seeded (categories + Parle-G hero visible at
-      `/p/parle-g-55g`)
-- [ ] `ADMIN_USER` / `ADMIN_PASS` set; visiting `/admin` prompts for auth
-- [ ] `RATE_LIMIT_GLOBAL_PER_DAY` set to a value you're comfortable being
-      billed for if the site goes viral
-- [ ] Manual sanity test with 5 real products across different categories
-- [ ] LICENSE, README, CONTRIBUTING present
-- [ ] GitHub repo public
-
-## Automation (GitHub Actions)
-
-Four scheduled workflows keep the data layer fresh with no manual runs:
-
-| Workflow | Cadence | What |
-| --- | --- | --- |
-| `ingest-agmarknet` | daily 06:00 IST | mandi commodity prices (data.gov.in) |
-| `ingest-cbic` | weekly Mon | HSN → GST table |
-| `ingest-wikidata` | monthly 1st | brand → parent → country registry |
-| `recompute` | on template push + nightly | re-derive breakdowns; commits score-delta alerts to `data/alerts/` |
-
-### Required for cron to actually persist
-
-GitHub runners are ephemeral — a local SQLite file does **not** survive between
-runs. For the cron jobs to write durable data, point them at a **persistent
-Postgres** (Neon free tier is the boring pick):
-
-1. Create a Neon Postgres DB, copy the connection string.
-2. In `prisma/schema.prisma`, set `datasource db { provider = "postgresql" }`.
-3. Run `npx prisma migrate deploy` against it once, then `npm run db:seed`,
-   `npm run ingest:cbic`, `npm run ingest:wikidata`.
-4. Add repo secrets:
-   ```bash
-   gh secret set DATABASE_URL --body "postgres://..."
-   gh secret set DATA_GOV_IN_API_KEY --body "<key>"
-   ```
-
-Until a persistent `DATABASE_URL` secret exists, the workflows run but their
-writes evaporate. They're safe to leave scheduled — they just no-op usefully.
-
-### Alerting
-
-There is no mailer. The `recompute` workflow commits any score-delta entries to
-`data/alerts/<date>.md`; the commit (and any workflow failure) notifies the repo
-owner via GitHub's built-in email. That's the whole alerting system.
-
-## Domain
-
-`parakhi.in`
+- [ ] DB migrated + seeded; `/p/parle-g-55g` renders
+- [ ] CBIC + Wikidata ingested (Category/HsnGstRate/BrandIndex non-empty)
+- [ ] `ADMIN_USER`/`ADMIN_PASS` set; `/admin` works
+- [ ] `LLM_MONTHLY_USD_CAP` set if `LLM_PROVIDER=openai`
+- [ ] GH Actions secrets set if you want cron persistence
+- [ ] Manual test: search 5 real products across categories
