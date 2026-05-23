@@ -164,18 +164,39 @@ async function resolveText(
   // origin enrichment because brandOriginsForProduct searches the alias list.
   const matchedBrand = titleCase(matchedAlias);
 
-  // Name = query minus the matched brand alias minus the variant. Normalize
-  // hyphens to spaces on both sides so "Coca-Cola" strips against alias
-  // "coca cola" and vice-versa.
-  const norm = (s: string) => s.replace(/[-–—]/g, " ").replace(/\s+/g, " ").trim();
+  // Name = query minus the matched brand alias minus the variant. Aggressively
+  // normalize punctuation so "Coca-Cola" strips against alias "coca cola",
+  // and "Haldiram Bhujia" strips the "Haldiram's" possessive correctly.
+  const norm = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/['']/g, "")
+      .replace(/[-–—]/g, " ")
+      .replace(/[^a-z0-9\s]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
   let name = norm(query);
   if (variantMatch) name = name.replace(norm(variantMatch[1]!), "");
-  const aliasNorm = norm(matchedAlias);
-  const aliasRe = new RegExp(
-    aliasNorm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-    "ig",
-  );
-  name = name.replace(aliasRe, "").replace(/\s+/g, " ").trim();
+  // Build a list of strip patterns: the matched alias, its possessive-stripped
+  // form, and the first token alone (handles "Haldiram's" alias vs "Haldiram"
+  // query). All matched case-insensitively, globally.
+  const aliasBase = norm(matchedAlias);
+  const aliasFirst = aliasBase.split(/\s+/)[0] ?? aliasBase;
+  const stripPatterns = Array.from(
+    new Set(
+      [
+        aliasBase,
+        aliasBase.replace(/s\b/g, "").trim(), // "haldirams" -> "haldiram"
+        aliasFirst,
+        aliasFirst.replace(/s\b/g, "").trim(),
+      ].filter((p) => p && p.length >= 3),
+    ),
+  ).sort((a, b) => b.length - a.length);
+  for (const p of stripPatterns) {
+    const re = new RegExp(p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "ig");
+    name = name.replace(re, " ");
+  }
+  name = name.replace(/\s+/g, " ").trim();
   if (!name) name = matchedBrand;
 
   return ResolvedProductSchema.parse({

@@ -9,6 +9,9 @@ import { BOTTLED_WATER_TEMPLATE } from "./seed-data/bottled-water";
 import { BAR_SOAP_TEMPLATE } from "./seed-data/bar-soap";
 import { PACKAGED_MILK_TEMPLATE } from "./seed-data/packaged-milk";
 import { CARBONATED_SOFT_DRINKS_TEMPLATE } from "./seed-data/carbonated-soft-drinks";
+import { TOOTHPASTE_TEMPLATE } from "./seed-data/toothpaste";
+import { CHIPS_NAMKEEN_TEMPLATE } from "./seed-data/chips-namkeen";
+import { PACKAGED_TEA_TEMPLATE } from "./seed-data/packaged-tea";
 import {
   PARLE_G_BREAKDOWN,
   PARLE_G_HERO_MARKDOWN,
@@ -28,6 +31,9 @@ const CATEGORIES: CategoryTemplate[] = [
   BAR_SOAP_TEMPLATE,
   PACKAGED_MILK_TEMPLATE,
   CARBONATED_SOFT_DRINKS_TEMPLATE,
+  TOOTHPASTE_TEMPLATE,
+  CHIPS_NAMKEEN_TEMPLATE,
+  PACKAGED_TEA_TEMPLATE,
 ];
 
 async function seedCategories() {

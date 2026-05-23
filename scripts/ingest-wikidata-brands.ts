@@ -97,6 +97,49 @@ const BRAND_SEEDS: Array<{ name: string; defaultCountry?: string }> = [
   { name: "Lizol", defaultCountry: "GB" },
   { name: "Good Day", defaultCountry: "IN" }, // Britannia
   { name: "Parle-G", defaultCountry: "IN" },
+
+  // ── Personal care: toothpaste, shampoo ───────────────────────────────────
+  { name: "Pepsodent", defaultCountry: "NL" }, // Unilever
+  { name: "Closeup", defaultCountry: "NL" },
+  { name: "Sensodyne", defaultCountry: "GB" }, // GSK / Haleon
+  { name: "Oral-B", defaultCountry: "US" }, // P&G
+  { name: "Promise", defaultCountry: "IN" }, // Dabur
+  { name: "Meswak", defaultCountry: "IN" }, // Dabur
+  { name: "Babool", defaultCountry: "IN" }, // Dabur
+  { name: "Vicco", defaultCountry: "IN" },
+  { name: "Pantene", defaultCountry: "US" }, // P&G
+  { name: "Sunsilk", defaultCountry: "NL" }, // Unilever
+  { name: "Head & Shoulders", defaultCountry: "US" }, // P&G
+  { name: "Clinic Plus", defaultCountry: "NL" }, // HUL/Unilever
+  { name: "TRESemmé", defaultCountry: "NL" }, // Unilever
+  { name: "Vatika", defaultCountry: "IN" }, // Dabur
+  { name: "Himalaya", defaultCountry: "IN" }, // Himalaya Wellness
+
+  // ── Snacks: chips & namkeen ──────────────────────────────────────────────
+  { name: "Lay's", defaultCountry: "US" }, // already above; duplicate safe — upserts on slug
+  { name: "Kurkure", defaultCountry: "US" },
+  { name: "Uncle Chipps", defaultCountry: "US" }, // PepsiCo
+  { name: "Pringles", defaultCountry: "US" }, // Kellanova / Kellogg's
+  { name: "Doritos", defaultCountry: "US" },
+  { name: "Cheetos", defaultCountry: "US" },
+  { name: "Cornitos", defaultCountry: "IN" },
+  { name: "Haldiram's", defaultCountry: "IN" }, // dup, safe
+  { name: "Bikaji", defaultCountry: "IN" },
+  { name: "Balaji Wafers", defaultCountry: "IN" },
+  { name: "Yellow Diamond", defaultCountry: "IN" },
+
+  // ── Tea ──────────────────────────────────────────────────────────────────
+  { name: "Tata Tea", defaultCountry: "IN" },
+  { name: "Brooke Bond", defaultCountry: "NL" }, // HUL/Unilever
+  { name: "Red Label", defaultCountry: "NL" },
+  { name: "Taj Mahal Tea", defaultCountry: "NL" }, // HUL
+  { name: "Taaza", defaultCountry: "NL" },
+  { name: "Wagh Bakri", defaultCountry: "IN" },
+  { name: "Lipton", defaultCountry: "NL" }, // now under Lipton Teas & Infusions (CVC, NL)
+  { name: "Tetley", defaultCountry: "IN" }, // owned by Tata Consumer
+  { name: "Society Tea", defaultCountry: "IN" },
+  { name: "Girnar", defaultCountry: "IN" },
+  { name: "Kanan Devan", defaultCountry: "IN" }, // Tata
 ];
 
 async function main() {
