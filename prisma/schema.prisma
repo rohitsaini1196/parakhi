@@ -1,0 +1,197 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id            String    @id @default(cuid())
+  slug          String    @unique
+  brand         String
+  name          String
+  variant       String?
+  barcode       String?   @unique
+  hsnCode       String?
+  categorySlug  String
+  category      Category  @relation(fields: [categorySlug], references: [slug])
+  sourceUrls    String?
+  mrpInPaise    Int?
+  mrpLastSeenAt DateTime?
+  breakdown     Breakdown?
+  isHeroProduct Boolean   @default(false)
+  heroMarkdown  String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([brand, name])
+  @@index([categorySlug])
+}
+
+model Category {
+  slug           String    @id
+  displayName    String
+  hsnCodes       String
+  // JSON array of lowercased keywords for deterministic categorization
+  // (denormalized from the template; mirrors the hsnCodes pattern).
+  keywords       String    @default("[]")
+  defaultGstRate Float
+  templateJson   String
+  sourcesJson    String
+  notes          String?
+  products       Product[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Breakdown {
+  id                 String   @id @default(cuid())
+  productId          String   @unique
+  product            Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  // Indian Value Capture: MRP-weighted share that flows to Indian sources
+  // across every cost bucket except GST. Stored in basis points (8700 = 87%).
+  // Field name retained as `madeInIndiaScoreBp` to avoid migration churn;
+  // semantically this is now IVC. See lib/breakdown-compute.ts.
+  madeInIndiaScoreBp Int
+  madeInIndiaLowBp   Int
+  madeInIndiaHighBp  Int
+  // Secondary metric: composition-only Made-in-India score (raw materials
+  // weighted by composition share, ignoring buckets and GST).
+  compositionMiiBp     Int @default(0)
+  compositionMiiLowBp  Int @default(0)
+  compositionMiiHighBp Int @default(0)
+  componentsJson     String
+  importsJson        String
+  gstJson            String
+  reasoningMarkdown  String
+  modelUsed          String
+  confidenceOverall  String
+  templateVersion    String
+  createdAt          DateTime @default(now())
+}
+
+model Feedback {
+  id             String   @id @default(cuid())
+  productId      String?
+  kind           String
+  message        String
+  submitterEmail String?
+  resolved       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  target    String
+  ipHash    String
+  createdAt DateTime @default(now())
+
+  @@unique([target, ipHash])
+}
+
+/**
+ * Daily wholesale ("mandi") commodity prices from data.gov.in Agmarknet.
+ * One row per (commodity, variety, market, date). Used to keep raw-material
+ * cost references current — e.g. "today's wheat modal price ₹2,420/quintal."
+ *
+ * Refreshed by `npm run ingest:agmarknet`. Data.gov.in retains ~30 days of
+ * daily data, so older rows are kept by us and become a historical series.
+ */
+model CommodityPrice {
+  id            String   @id @default(cuid())
+  commodity     String   // "Wheat", "Sugar", "Palm Oil" — Agmarknet's canonical name
+  variety       String   // e.g. "Dara", "Local", "Refined"
+  state         String
+  district      String
+  market        String
+  grade         String?
+  arrivalDate   DateTime // the day prices were recorded
+  minPricePerQuintal  Int  // ₹/quintal
+  maxPricePerQuintal  Int
+  modalPricePerQuintal Int
+  source        String   @default("agmarknet")
+  ingestedAt    DateTime @default(now())
+
+  @@unique([commodity, variety, market, arrivalDate])
+  @@index([commodity, arrivalDate])
+}
+
+/**
+ * Canonical HSN → GST rate table, scraped from CBIC notifications. Tier-1
+ * source for tax rates. `hsnPrefix` is the longest-matching chapter/heading
+ * (e.g. "1905" covers HSN 19053100, 19053219). Lookup uses longest-prefix
+ * match — see lib/gst-lookup.ts.
+ *
+ * Refreshed by `npm run ingest:cbic`. Falls back to a CSV seeded into the
+ * repo at prisma/seed-data/cbic-hsn-rates.csv if scrape fails.
+ */
+model HsnGstRate {
+  hsnPrefix   String   @id
+  ratePct     Float
+  cessPct     Float    @default(0)
+  description String
+  source      String
+  sourceUrl   String
+  asOfDate    DateTime
+  ingestedAt  DateTime @default(now())
+
+  @@index([asOfDate])
+}
+
+/**
+ * Brand registry, populated from Wikidata SPARQL + manual additions. Drives
+ * deterministic resolve (Phase 2) and brand-origin enrichment of the
+ * brandProfit cost bucket at compute time.
+ *
+ * `aliases` is a JSON-encoded array of lowercased strings. `country` is ISO-2.
+ * Refreshed by `npm run ingest:wikidata`.
+ */
+model BrandIndex {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  canonicalName String
+  aliases       String
+  parentCompany String?
+  country       String
+  source        String
+  sourceUrl     String?
+  ingestedAt    DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([country])
+  @@index([canonicalName])
+}
+
+/**
+ * Queue of recompute jobs to drain async. A row exists for each (product,
+ * reason) pair that warrants regenerating a breakdown — e.g. template version
+ * bump, GST rate change, brand-origin change. Drained by recompute worker
+ * (cron + on-write triggers).
+ */
+model RecomputeJob {
+  id           String    @id @default(cuid())
+  productId    String?
+  categorySlug String?
+  reason       String
+  enqueuedAt   DateTime  @default(now())
+  ranAt        DateTime?
+  result       String?
+
+  @@index([ranAt])
+}
+
+model LlmCall {
+  id           String   @id @default(cuid())
+  endpoint     String
+  model        String
+  provider     String
+  inputTokens  Int
+  outputTokens Int
+  costUsd      Float
+  productId    String?
+  createdAt    DateTime @default(now())
+
+  @@index([createdAt])
+}

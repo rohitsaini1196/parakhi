@@ -1,17 +1,37 @@
 {
-  "name": "disect",
+  "name": "parakhi",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "tsx --env-file=.env prisma/seed.ts",
+    "db:studio": "prisma studio",
+    "smoke": "tsx --env-file=.env scripts/smoke-no-llm.ts",
+    "recompute": "tsx --env-file=.env scripts/recompute-breakdowns.ts",
+    "ingest:agmarknet": "tsx --env-file=.env scripts/ingest-agmarknet.ts",
+    "ingest:cbic": "tsx --env-file=.env scripts/ingest-cbic-gst.ts",
+    "ingest:wikidata": "tsx --env-file=.env scripts/ingest-wikidata-brands.ts",
+    "test:resolve": "tsx --env-file=.env scripts/test-live.ts resolve",
+    "test:categorize": "tsx --env-file=.env scripts/test-live.ts categorize",
+    "test:estimate": "tsx --env-file=.env scripts/test-live.ts estimate",
+    "postinstall": "prisma generate"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@prisma/client": "^6.19.3",
     "next": "16.2.6",
+    "openai": "^6.39.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -20,7 +40,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "prisma": "^6.19.3",
     "tailwindcss": "^4",
+    "tsx": "^4.22.3",
     "typescript": "^5"
   }
 }
