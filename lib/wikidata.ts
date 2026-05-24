@@ -9,9 +9,9 @@
  * lives in scripts/ingest-wikidata-brands.ts.
  */
 
+import { USER_AGENT } from "./contact";
+
 const ENDPOINT = "https://query.wikidata.org/sparql";
-const USER_AGENT =
-  "Parakhi/0.1 (https://parakhi.in; sidsaini1196@gmail.com)";
 
 export interface WikidataBrandHit {
   qid: string;

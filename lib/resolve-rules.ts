@@ -1,5 +1,6 @@
 import { db } from "./db";
 import { ResolvedProductSchema, type ResolvedProduct } from "./schemas";
+import { USER_AGENT } from "./contact";
 
 /**
  * Deterministic resolver — no LLM.
@@ -44,8 +45,7 @@ async function resolveBarcode(barcode: string): Promise<ResolvedProduct> {
   const url = `https://world.openfoodfacts.org/api/v2/product/${barcode}.json`;
   const res = await fetch(url, {
     headers: {
-      "User-Agent":
-        "Parakhi/0.1 (https://parakhi.in; sidsaini1196@gmail.com)",
+      "User-Agent": USER_AGENT,
     },
     next: { revalidate: 86400 },
   });
