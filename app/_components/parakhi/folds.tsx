@@ -13,6 +13,7 @@ import {
   FoldMarker,
   AsOf,
   OriginPill,
+  useIsNarrow,
 } from "./atoms";
 import { NoteFill } from "./NoteFill";
 
@@ -29,8 +30,7 @@ export function Fold1({ product }: { product: DesignProduct }) {
       style={{
         background: T.bg,
         color: T.ink,
-        minHeight: "100vh",
-        padding: `clamp(28px,6vw,72px) ${PAD} 80px`,
+        padding: `clamp(24px,5vw,56px) ${PAD} clamp(40px,5vw,64px)`,
         position: "relative",
         overflow: "hidden",
         display: "flex",
@@ -63,9 +63,9 @@ export function Fold1({ product }: { product: DesignProduct }) {
         </div>
       </div>
 
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: 40 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
         <BigStack product={product} />
-        <div style={{ marginTop: 8 }}>
+        <div style={{ width: "100%", maxWidth: 560 }}>
           <NoteFill split={product.split} ivc={product.ivc} />
         </div>
       </div>
@@ -232,39 +232,42 @@ function BreakdownRow({ c }: { c: DesignComponent }) {
 
 // ─── FOLD 3 — the catch ──────────────────────────────────────────────
 export function Fold3({ product }: { product: DesignProduct }) {
+  const narrow = useIsNarrow();
   if (!product.imports.length) return null;
   return (
-    <section style={{ background: T.bg, color: T.ink, padding: `clamp(56px,9vw,100px) ${PAD}`, borderTop: `1px solid ${T.line}` }}>
+    <section style={{ background: T.bg, color: T.ink, padding: `clamp(48px,8vw,90px) ${PAD}`, borderTop: `1px solid ${T.line}` }}>
       <FoldMarker n="03" label="The catch" />
-      <h2 style={{ fontFamily: T.fontDisplay, fontSize: "clamp(34px,6vw,56px)", fontStyle: "italic", marginTop: 12, maxWidth: 740, letterSpacing: "-0.02em", lineHeight: 1.05 }}>
+      <h2 style={{ fontFamily: T.fontDisplay, fontSize: "clamp(30px,6vw,56px)", fontStyle: "italic", marginTop: 12, maxWidth: 740, letterSpacing: "-0.02em", lineHeight: 1.05 }}>
         {product.catch ?? `The ${product.split.abroad}% that didn't stay home.`}
       </h2>
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.1fr) minmax(0,0.9fr)", gap: 40, marginTop: 48, alignItems: "flex-start" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: narrow ? "1fr" : "minmax(0,1.1fr) minmax(0,0.9fr)", gap: narrow ? 28 : 40, marginTop: 40, alignItems: "flex-start" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {product.imports.map((imp, i) => (
-            <div key={i} style={{ padding: "20px 0", borderTop: `1px solid ${T.line}`, display: "grid", gridTemplateColumns: "auto 1fr", gap: 18, alignItems: "center" }}>
-              <div style={{ fontFamily: T.fontDisplay, fontStyle: "italic", fontSize: 56, color: T.abroad, letterSpacing: "-0.04em", lineHeight: 1, minWidth: 90 }}>
+            <div key={i} style={{ padding: "18px 0", borderTop: `1px solid ${T.line}`, display: "grid", gridTemplateColumns: "auto 1fr", gap: 16, alignItems: "center" }}>
+              <div style={{ fontFamily: T.fontDisplay, fontStyle: "italic", fontSize: "clamp(40px,9vw,56px)", color: T.abroad, letterSpacing: "-0.04em", lineHeight: 1, minWidth: 70 }}>
                 {imp.pct}
                 <span style={{ fontSize: 22, color: T.inkDim, marginLeft: 2 }}>%</span>
               </div>
-              <div>
-                <div style={{ fontSize: 18, marginBottom: 6 }}>{imp.input}</div>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontSize: 17, marginBottom: 6 }}>{imp.input}</div>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                   {imp.countries.map((co, j) => (
-                    <span key={j} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "4px 8px", border: `1px solid ${T.lineSoft}`, borderRadius: 2, fontFamily: T.fontMono, fontSize: 10, letterSpacing: "0.06em", color: T.inkDim }}>
+                    <span key={j} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "4px 8px", border: `1px solid ${T.lineSoft}`, borderRadius: 2, fontFamily: T.fontMono, fontSize: 10, letterSpacing: "0.04em", color: T.inkDim, whiteSpace: "nowrap" }}>
                       <span style={{ fontSize: 13 }}>{FLAGS[co.code] ?? "🏳️"}</span>
                       {co.name} · {co.prob}%
                     </span>
                   ))}
                 </div>
-                {imp.note && <div style={{ color: T.inkFaint, fontSize: 12, marginTop: 8, maxWidth: 380 }}>{imp.note}</div>}
+                {imp.note && <div style={{ color: T.inkFaint, fontSize: 12, marginTop: 8, maxWidth: 380, lineHeight: 1.5 }}>{imp.note}</div>}
               </div>
             </div>
           ))}
         </div>
-        <div>
-          <FlowMap product={product} />
-        </div>
+        {!narrow && (
+          <div>
+            <FlowMap product={product} />
+          </div>
+        )}
       </div>
     </section>
   );
@@ -292,15 +295,17 @@ function FlowMap({ product }: { product: DesignProduct }) {
         <text x="0" y="20" textAnchor="middle" fontFamily="var(--font-mono), monospace" fontSize="9" fill="oklch(0.20 0.06 145)" letterSpacing="0.2em">STAYS HOME</text>
       </g>
       {imports.map((imp, i) => {
-        const yBase = 60 + i * (240 / Math.max(imports.length, 1));
+        const yBase = 56 + i * (250 / Math.max(imports.length, 1));
         const country = imp.countries[0];
+        const dest = (country?.name ?? "").length > 11 ? country!.code : (country?.name ?? "").toUpperCase();
+        const label = imp.input.length > 18 ? imp.input.slice(0, 17) + "…" : imp.input;
         return (
           <g key={i}>
-            <path d={`M 240,180 Q 380,${yBase + 20} 520,${yBase}`} fill="none" stroke={T.abroad} strokeWidth={Math.max(2, imp.pct * 0.4)} strokeOpacity="0.5" strokeDasharray="4 6" style={{ animation: "flowDash 1.6s linear infinite" }} />
-            <g transform={`translate(516, ${yBase})`}>
-              <rect x="-6" y="-18" width="84" height="36" fill={T.abroad} fillOpacity="0.12" stroke={T.abroad} strokeOpacity="0.5" rx="2" />
-              <text x="2" y="-3" fontFamily="var(--font-mono), monospace" fontSize="9" fill={T.abroad} letterSpacing="0.1em">{imp.pct}% · {(country?.name ?? "").toUpperCase()}</text>
-              <text x="2" y="12" fontFamily="var(--font-body), sans-serif" fontSize="9" fill="oklch(0.85 0.04 32)" opacity="0.85">{imp.input}</text>
+            <path d={`M 240,180 Q 360,${yBase + 20} 452,${yBase}`} fill="none" stroke={T.abroad} strokeWidth={Math.max(2, imp.pct * 0.4)} strokeOpacity="0.5" strokeDasharray="4 6" style={{ animation: "flowDash 1.6s linear infinite" }} />
+            <g transform={`translate(452, ${yBase})`}>
+              <rect x="-4" y="-18" width="148" height="36" fill={T.abroad} fillOpacity="0.12" stroke={T.abroad} strokeOpacity="0.5" rx="2" />
+              <text x="6" y="-3" fontFamily="var(--font-mono), monospace" fontSize="10" fill={T.abroad} letterSpacing="0.08em">{imp.pct}% · {dest}</text>
+              <text x="6" y="12" fontFamily="var(--font-body), sans-serif" fontSize="9" fill="oklch(0.85 0.04 32)" opacity="0.85">{label}</text>
             </g>
             <circle cx="240" cy="180" r="3" fill={T.abroad} />
           </g>

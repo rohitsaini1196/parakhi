@@ -3,6 +3,19 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { T, FLAGS } from "@/lib/parakhi-tokens";
 
+// ─── Narrow-viewport hook (for inline-style responsive switches) ─────
+export function useIsNarrow(maxWidth = 760) {
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${maxWidth}px)`);
+    const update = () => setNarrow(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [maxWidth]);
+  return narrow;
+}
+
 // ─── Count-up number ─────────────────────────────────────────────────
 export function CountUp({
   to,

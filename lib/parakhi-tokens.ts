@@ -25,8 +25,8 @@ export const T = {
   fontMono: "var(--font-mono), 'JetBrains Mono', ui-monospace, monospace",
   fontDeva: "var(--font-deva), 'Tiro Devanagari Hindi', serif",
   scale: {
-    mega: "200px",
-    display: "104px",
+    mega: "clamp(88px, 20vw, 190px)",
+    display: "clamp(64px, 12vw, 104px)",
     h1: "56px",
     h2: "36px",
     h3: "1.25rem",
