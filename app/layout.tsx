@@ -1,34 +1,42 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import {
+  Instrument_Serif,
+  Geist,
+  JetBrains_Mono,
+  Tiro_Devanagari_Hindi,
+} from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-sans",
+const display = Instrument_Serif({
+  variable: "--font-display",
+  weight: "400",
+  style: ["normal", "italic"],
   subsets: ["latin"],
 });
-
-const fraunces = Fraunces({
-  variable: "--font-serif",
-  subsets: ["latin"],
+const body = Geist({ variable: "--font-body", subsets: ["latin"] });
+const mono = JetBrains_Mono({ variable: "--font-mono", subsets: ["latin"] });
+const deva = Tiro_Devanagari_Hindi({
+  variable: "--font-deva",
+  weight: "400",
+  style: ["normal", "italic"],
+  subsets: ["latin", "devanagari"],
 });
 
 export const metadata: Metadata = {
-  title: "Parakhi — what's really inside Indian products",
+  title: "Parakhi — kya hai andar?",
   description:
-    "Indian Value Capture, GST, and honest cost breakdowns for everyday Indian products. Confidence-labeled, source-cited. Kya hai andar?",
+    "Where does your money go when you buy an Indian product? Indian Value Capture, tax, and import origins — every number sourced. Kya hai andar?",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${display.variable} ${body.variable} ${mono.variable} ${deva.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

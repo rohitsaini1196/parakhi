@@ -11,15 +11,15 @@ export default async function FeedbackPage({
   const { productId, ok } = await searchParams;
   return (
     <main className="mx-auto max-w-2xl px-5 py-16">
-      <nav className="mb-6 text-sm text-muted">
-        <Link href="/" className="hover:text-foreground">
+      <nav className="mb-6 text-sm text-ink-dim">
+        <Link href="/" className="hover:text-ink">
           ← Parakhi
         </Link>
       </nav>
       <h1 className="font-serif text-4xl font-semibold tracking-tight">
         Tell us what&apos;s wrong (or missing)
       </h1>
-      <p className="mt-3 text-muted">
+      <p className="mt-3 text-ink-dim">
         Every correction makes the next estimate better. We read every one.
       </p>
       {ok ? (

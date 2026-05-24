@@ -32,15 +32,15 @@ export default async function SourcesPage() {
 
   return (
     <main className="mx-auto max-w-2xl px-5 py-16">
-      <nav className="mb-6 text-sm text-muted">
-        <Link href="/" className="hover:text-foreground">
+      <nav className="mb-6 text-sm text-ink-dim">
+        <Link href="/" className="hover:text-ink">
           ← Parakhi
         </Link>
       </nav>
       <h1 className="font-serif text-4xl font-semibold tracking-tight">
         Sources
       </h1>
-      <p className="mt-3 text-sm text-muted">
+      <p className="mt-3 text-sm text-ink-dim">
         Every category template links to the data it was built from. Below is
         the deduplicated master list across all templates.
       </p>
@@ -56,13 +56,13 @@ export default async function SourcesPage() {
             >
               {s.title}
             </a>
-            <div className="text-xs text-muted">
+            <div className="text-xs text-ink-dim">
               {s.category} · {s.relevance}
             </div>
           </li>
         ))}
         {master.length === 0 && (
-          <li className="text-muted">No sources yet.</li>
+          <li className="text-ink-dim">No sources yet.</li>
         )}
       </ul>
     </main>

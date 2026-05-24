@@ -37,14 +37,14 @@ export default async function AdminPage() {
     <main className="mx-auto max-w-5xl px-6 py-10 font-sans">
       <header className="mb-8 flex items-baseline justify-between">
         <h1 className="font-serif text-2xl font-semibold">Admin</h1>
-        <Link href="/" className="text-sm text-muted hover:text-foreground">
+        <Link href="/" className="text-sm text-ink-dim hover:text-ink">
           ← Back to site
         </Link>
       </header>
 
       <Section title={`Category drafts — ${pendingDrafts.length} pending`}>
-        <form action={generateDraftAction} className="mb-5 rounded-2xl border border-border bg-surface/40 p-4">
-          <div className="text-xs uppercase tracking-[0.18em] text-muted">
+        <form action={generateDraftAction} className="mb-5 rounded-2xl border border-line bg-bg-raised/40 p-4">
+          <div className="text-xs uppercase tracking-[0.18em] text-ink-dim">
             Generate a new draft (gpt-4o · ~$0.03/call)
           </div>
           <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-[1fr_1fr_auto]">
@@ -52,21 +52,21 @@ export default async function AdminPage() {
               name="exampleQuery"
               required
               placeholder='example product, e.g. "Lay&apos;s Magic Masala 52g"'
-              className="rounded-md border border-border bg-surface px-3 py-2 text-sm"
+              className="rounded-md border border-line bg-bg-raised px-3 py-2 text-sm"
             />
             <input
               name="categoryHint"
               placeholder="category hint (optional) e.g. potato_chips"
-              className="rounded-md border border-border bg-surface px-3 py-2 text-sm"
+              className="rounded-md border border-line bg-bg-raised px-3 py-2 text-sm"
             />
             <button
               type="submit"
-              className="rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background hover:opacity-90"
+              className="rounded-md bg-ink px-4 py-2 text-sm font-medium text-bg hover:opacity-90"
             >
               Draft
             </button>
           </div>
-          <p className="mt-2 text-xs text-muted">
+          <p className="mt-2 text-xs text-ink-dim">
             LLM drafts a CategoryTemplate. Lands as pending. Nothing goes live
             until you approve below.
           </p>
@@ -78,7 +78,7 @@ export default async function AdminPage() {
             return (
               <li
                 key={d.id}
-                className="rounded-2xl border border-border bg-surface/30 p-4"
+                className="rounded-2xl border border-line bg-bg-raised/30 p-4"
               >
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <div>
@@ -94,16 +94,16 @@ export default async function AdminPage() {
                       {d.status}
                     </span>
                     <span className="font-medium">{d.displayName}</span>
-                    <span className="ml-2 font-mono text-xs text-muted">
+                    <span className="ml-2 font-mono text-xs text-ink-dim">
                       ({d.slug})
                     </span>
                   </div>
-                  <span className="text-xs text-muted">
+                  <span className="text-xs text-ink-dim">
                     {d.createdAt.toISOString().slice(0, 19).replace("T", " ")}
                   </span>
                 </div>
                 {d.exampleQuery && (
-                  <div className="mt-1 text-xs text-muted">
+                  <div className="mt-1 text-xs text-ink-dim">
                     Triggered by: <em>{d.exampleQuery}</em>
                   </div>
                 )}
@@ -116,10 +116,10 @@ export default async function AdminPage() {
                   />
                 </div>
                 <details className="mt-2">
-                  <summary className="cursor-pointer text-xs text-muted">
+                  <summary className="cursor-pointer text-xs text-ink-dim">
                     Inspect full JSON
                   </summary>
-                  <pre className="mt-2 overflow-x-auto rounded-md bg-background p-3 text-[11px]">
+                  <pre className="mt-2 overflow-x-auto rounded-md bg-bg p-3 text-[11px]">
                     {JSON.stringify(tpl, null, 2)}
                   </pre>
                 </details>
@@ -129,7 +129,7 @@ export default async function AdminPage() {
                       <input type="hidden" name="draftId" value={d.id} />
                       <button
                         type="submit"
-                        className="rounded-md bg-india px-3 py-1.5 text-xs font-medium text-background"
+                        className="rounded-md bg-india px-3 py-1.5 text-xs font-medium text-bg"
                       >
                         Approve & publish
                       </button>
@@ -138,7 +138,7 @@ export default async function AdminPage() {
                       <input type="hidden" name="draftId" value={d.id} />
                       <button
                         type="submit"
-                        className="rounded-md border border-border px-3 py-1.5 text-xs"
+                        className="rounded-md border border-line px-3 py-1.5 text-xs"
                       >
                         Reject
                       </button>
@@ -146,7 +146,7 @@ export default async function AdminPage() {
                   </div>
                 )}
                 {d.reviewerNotes && (
-                  <div className="mt-2 text-xs text-muted">
+                  <div className="mt-2 text-xs text-ink-dim">
                     Notes: {d.reviewerNotes}
                   </div>
                 )}
@@ -154,14 +154,14 @@ export default async function AdminPage() {
             );
           })}
           {drafts.length === 0 && (
-            <li className="text-sm text-muted">No drafts yet.</li>
+            <li className="text-sm text-ink-dim">No drafts yet.</li>
           )}
         </ul>
       </Section>
 
       <Section title={`LLM spend — $${totalCost.toFixed(4)} total`}>
         <table className="w-full text-sm">
-          <thead className="text-left text-xs uppercase tracking-wide text-muted">
+          <thead className="text-left text-xs uppercase tracking-wide text-ink-dim">
             <tr>
               <th className="py-1 pr-3">Model</th>
               <th className="py-1 pr-3 tabular-nums">Calls</th>
@@ -172,7 +172,7 @@ export default async function AdminPage() {
           </thead>
           <tbody>
             {llmTotals.map((t) => (
-              <tr key={t.model} className="border-t border-border">
+              <tr key={t.model} className="border-t border-line">
                 <td className="py-1.5 pr-3 font-mono text-xs">{t.model}</td>
                 <td className="py-1.5 pr-3 tabular-nums">{t._count._all}</td>
                 <td className="py-1.5 pr-3 tabular-nums">
@@ -188,7 +188,7 @@ export default async function AdminPage() {
             ))}
             {llmTotals.length === 0 && (
               <tr>
-                <td colSpan={5} className="py-2 text-muted">
+                <td colSpan={5} className="py-2 text-ink-dim">
                   No LLM calls yet.
                 </td>
               </tr>
@@ -199,7 +199,7 @@ export default async function AdminPage() {
 
       <Section title="Recent LLM calls">
         <table className="w-full text-sm">
-          <thead className="text-left text-xs uppercase tracking-wide text-muted">
+          <thead className="text-left text-xs uppercase tracking-wide text-ink-dim">
             <tr>
               <th className="py-1 pr-3">When</th>
               <th className="py-1 pr-3">Endpoint</th>
@@ -210,8 +210,8 @@ export default async function AdminPage() {
           </thead>
           <tbody>
             {recentCalls.map((c) => (
-              <tr key={c.id} className="border-t border-border">
-                <td className="py-1.5 pr-3 text-muted">
+              <tr key={c.id} className="border-t border-line">
+                <td className="py-1.5 pr-3 text-ink-dim">
                   {c.createdAt.toISOString().replace("T", " ").slice(0, 19)}
                 </td>
                 <td className="py-1.5 pr-3">{c.endpoint}</td>
@@ -226,7 +226,7 @@ export default async function AdminPage() {
             ))}
             {recentCalls.length === 0 && (
               <tr>
-                <td colSpan={5} className="py-2 text-muted">
+                <td colSpan={5} className="py-2 text-ink-dim">
                   Nothing yet.
                 </td>
               </tr>
@@ -238,10 +238,10 @@ export default async function AdminPage() {
       <Section title={`Feedback (${feedback.length})`}>
         <ul className="space-y-3">
           {feedback.map((f) => (
-            <li key={f.id} className="rounded-md border border-border p-3">
-              <div className="flex flex-wrap items-baseline justify-between gap-2 text-xs text-muted">
+            <li key={f.id} className="rounded-md border border-line p-3">
+              <div className="flex flex-wrap items-baseline justify-between gap-2 text-xs text-ink-dim">
                 <span>
-                  <span className="font-medium text-foreground">{f.kind}</span>
+                  <span className="font-medium text-ink">{f.kind}</span>
                   {f.productId ? ` · product ${f.productId}` : ""}
                   {f.submitterEmail ? ` · ${f.submitterEmail}` : ""}
                 </span>
@@ -253,14 +253,14 @@ export default async function AdminPage() {
             </li>
           ))}
           {feedback.length === 0 && (
-            <li className="text-sm text-muted">No feedback yet.</li>
+            <li className="text-sm text-ink-dim">No feedback yet.</li>
           )}
         </ul>
       </Section>
 
       <Section title="Top votes">
         <table className="w-full text-sm">
-          <thead className="text-left text-xs uppercase tracking-wide text-muted">
+          <thead className="text-left text-xs uppercase tracking-wide text-ink-dim">
             <tr>
               <th className="py-1 pr-3">Target</th>
               <th className="py-1 pr-3 tabular-nums">Votes</th>
@@ -268,14 +268,14 @@ export default async function AdminPage() {
           </thead>
           <tbody>
             {votes.map((v) => (
-              <tr key={v.target} className="border-t border-border">
+              <tr key={v.target} className="border-t border-line">
                 <td className="py-1.5 pr-3">{v.target}</td>
                 <td className="py-1.5 pr-3 tabular-nums">{v._count.target}</td>
               </tr>
             ))}
             {votes.length === 0 && (
               <tr>
-                <td colSpan={2} className="py-2 text-muted">
+                <td colSpan={2} className="py-2 text-ink-dim">
                   No votes yet.
                 </td>
               </tr>
@@ -304,8 +304,8 @@ function Section({
 
 function DraftStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-border bg-background/40 px-3 py-2">
-      <div className="text-[10px] uppercase tracking-wide text-muted">
+    <div className="rounded-md border border-line bg-bg/40 px-3 py-2">
+      <div className="text-[10px] uppercase tracking-wide text-ink-dim">
         {label}
       </div>
       <div className="mt-0.5 truncate" title={value}>

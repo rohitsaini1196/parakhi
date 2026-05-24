@@ -46,7 +46,7 @@ export function FeedbackForm({ productId }: { productId?: string }) {
         <select
           value={kind}
           onChange={(e) => setKind(e.target.value as Kind)}
-          className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
+          className="w-full rounded-lg border border-line bg-bg-raised px-3 py-2 text-sm"
         >
           <option value="correction">Correction — a number looks wrong</option>
           <option value="suggestion">Suggestion — add a product or category</option>
@@ -62,7 +62,7 @@ export function FeedbackForm({ productId }: { productId?: string }) {
           onChange={(e) => setMessage(e.target.value)}
           rows={5}
           placeholder="What did we get wrong? Link a source if you have one."
-          className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
+          className="w-full rounded-lg border border-line bg-bg-raised px-3 py-2 text-sm"
         />
       </div>
 
@@ -74,7 +74,7 @@ export function FeedbackForm({ productId }: { productId?: string }) {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
+          className="w-full rounded-lg border border-line bg-bg-raised px-3 py-2 text-sm"
         />
       </div>
 
@@ -83,7 +83,7 @@ export function FeedbackForm({ productId }: { productId?: string }) {
       <button
         type="submit"
         disabled={submitting}
-        className="rounded-lg bg-foreground px-4 py-2 text-sm font-medium text-background disabled:opacity-60"
+        className="rounded-lg bg-ink px-4 py-2 text-sm font-medium text-bg disabled:opacity-60"
       >
         {submitting ? "Sending…" : "Send"}
       </button>

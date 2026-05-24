@@ -1,45 +1,62 @@
 @import "tailwindcss";
 
+/* Parakhi design tokens — warm dark, paper-burned. From the design handoff. */
 :root {
-  --background: #07080a;
-  --surface: #0e1014;
-  --surface-2: #15181e;
-  --border: #23272f;
-  --foreground: #f4f5f7;
-  --muted: #8b909a;
-  --india: #34d399;
-  --tax: #fbbf24;
-  --abroad: #fb7185;
+  --bg: oklch(0.145 0.012 60);
+  --bg-raised: oklch(0.185 0.014 60);
+  --bg-ink: oklch(0.115 0.010 60);
+  --paper: oklch(0.945 0.022 85);
+  --paper-ink: oklch(0.22 0.018 60);
+  --ink: oklch(0.965 0.012 80);
+  --ink-dim: oklch(0.72 0.014 70);
+  --ink-faint: oklch(0.50 0.014 70);
+  --line: oklch(0.30 0.012 60);
+  --line-soft: oklch(0.24 0.012 60);
+
+  --india: oklch(0.72 0.135 145);
+  --india-soft: oklch(0.40 0.07 145);
+  --tax: oklch(0.80 0.135 85);
+  --tax-soft: oklch(0.42 0.08 85);
+  --abroad: oklch(0.71 0.165 32);
+  --abroad-soft: oklch(0.40 0.10 32);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-border: var(--border);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
+  --color-bg: var(--bg);
+  --color-bg-raised: var(--bg-raised);
+  --color-bg-ink: var(--bg-ink);
+  --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
   --color-india: var(--india);
   --color-tax: var(--tax);
   --color-abroad: var(--abroad);
-  --font-sans: var(--font-sans);
-  --font-serif: var(--font-serif);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+  --font-deva: var(--font-deva);
 }
 
 html {
   color-scheme: dark;
 }
 
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  background-image:
-    radial-gradient(60rem 40rem at 70% -10%, rgba(52, 211, 153, 0.08), transparent 60%),
-    radial-gradient(50rem 40rem at 10% 0%, rgba(99, 102, 241, 0.06), transparent 55%);
-  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Reduce motion for users who ask. */
+* {
+  box-sizing: border-box;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -49,46 +66,8 @@ body {
   }
 }
 
-.glass {
-  background: color-mix(in oklab, var(--surface) 80%, transparent);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-}
-
-/* Hero markdown styles (Parle-G story etc). */
-.hero-md h2 {
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-.hero-md h3 {
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-.hero-md p {
-  margin: 0.6rem 0;
-}
-.hero-md table {
-  width: 100%;
-  margin: 0.75rem 0;
-  border-collapse: collapse;
-  font-variant-numeric: tabular-nums;
-}
-.hero-md th,
-.hero-md td {
-  padding: 0.4rem 0.6rem;
-  border-bottom: 1px solid var(--border);
-  text-align: left;
-}
-.hero-md th {
-  font-weight: 500;
-  color: var(--muted);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+@keyframes flowDash {
+  to {
+    stroke-dashoffset: -40;
+  }
 }

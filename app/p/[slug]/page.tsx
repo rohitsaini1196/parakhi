@@ -1,25 +1,33 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { db } from "@/lib/db";
 import {
   CategoryTemplateSchema,
   CostComponentSchema,
   GstInfoSchema,
   ImportSchema,
-  type CategoryTemplate,
-  type CostComponent,
-  type Import,
 } from "@/lib/schemas";
-import { paiseToRupees, pct, pctRange, flagFor } from "@/lib/format";
-import { ConfidenceDot, TierDot } from "@/app/_components/Dots";
-import { RupeeFlowBar } from "@/app/_components/RupeeFlowBar";
-import { StatOrbs } from "@/app/_components/StatOrbs";
-import { DigDeeper } from "@/app/_components/DigDeeper";
 import { z } from "zod";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import {
+  verdictFor,
+  type DesignProduct,
+  type DesignComponent,
+  type DesignImport,
+  type DesignSource,
+} from "@/lib/parakhi-tokens";
+import { Fold1, Fold2, Fold3, Fold4, HeroStory, NextProducts } from "@/app/_components/parakhi/folds";
 
 type Params = Promise<{ slug: string }>;
+
+// Hand-curated shrinkflation series for hero products (not in the DB).
+const SHRINKFLATION: Record<string, { year: number; weight: number; price: number }[]> = {
+  "parle-g-55g": [
+    { year: 1994, weight: 100, price: 4 },
+    { year: 2003, weight: 92, price: 4 },
+    { year: 2013, weight: 88, price: 4 },
+    { year: 2021, weight: 65, price: 5 },
+    { year: 2025, weight: 55, price: 5 },
+  ],
+};
 
 export default async function ProductPage({ params }: { params: Params }) {
   const { slug } = await params;
@@ -29,257 +37,150 @@ export default async function ProductPage({ params }: { params: Params }) {
   });
   if (!product || !product.breakdown) return notFound();
 
-  const components = z
-    .array(CostComponentSchema)
-    .parse(JSON.parse(product.breakdown.componentsJson));
-  const imports = z
-    .array(ImportSchema)
-    .parse(JSON.parse(product.breakdown.importsJson));
+  const components = z.array(CostComponentSchema).parse(JSON.parse(product.breakdown.componentsJson));
+  const imports = z.array(ImportSchema).parse(JSON.parse(product.breakdown.importsJson));
   const gst = GstInfoSchema.parse(JSON.parse(product.breakdown.gstJson));
-  const template = CategoryTemplateSchema.parse(
-    JSON.parse(product.category.templateJson),
-  );
+  const template = CategoryTemplateSchema.parse(JSON.parse(product.category.templateJson));
 
-  const ivc = product.breakdown.madeInIndiaScoreBp / 100;
-  const compMii = product.breakdown.compositionMiiBp / 100;
-  const importedPct = imports.reduce((s, i) => s + i.sharePctOfProduct, 0);
+  const ivc = Math.round(product.breakdown.madeInIndiaScoreBp / 100);
+  const composition = Math.round(product.breakdown.compositionMiiBp / 100);
+  const mrp = product.mrpInPaise != null ? Math.round(product.mrpInPaise / 100) : null;
+
+  // Money split: tax = GST rate, abroad = sum of imports, india = remainder.
+  const taxPct = Math.round(gst.ratePct);
+  const abroadPct = Math.round(imports.reduce((s, i) => s + i.sharePctOfProduct, 0));
+  const indiaPct = Math.max(0, 100 - taxPct - abroadPct);
+
+  // Map components, tagging origin (TAX / foreign country / IN).
+  const importNames = new Map<string, string>(); // lowercased ingredient -> top foreign code
+  for (const imp of imports) {
+    const foreign = imp.likelyCountries.find((c) => c.code !== "IN" && c.code !== "MIXED");
+    if (foreign) importNames.set(imp.ingredient.toLowerCase(), foreign.code);
+  }
+  function originOf(label: string): string {
+    if (label.toLowerCase().startsWith("gst")) return "TAX";
+    for (const [name, code] of importNames) {
+      if (label.toLowerCase().includes(name) || name.includes(label.toLowerCase())) return code;
+    }
+    return "IN";
+  }
+
+  const designComponents: DesignComponent[] = components.map((c) => ({
+    name: c.label,
+    pct: Math.round(c.sharePct),
+    rupees: c.rupeeAmount != null ? c.rupeeAmount / 100 : null,
+    origin: originOf(c.label),
+    confidence: c.confidence,
+    tier: c.sourceTier,
+    note: c.explanation,
+  }));
+
+  const designImports: DesignImport[] = imports.map((imp) => ({
+    input: imp.ingredient,
+    pct: Math.round(imp.sharePctOfProduct),
+    countries: imp.likelyCountries.map((co) => ({
+      code: co.code,
+      name: co.name,
+      prob: co.probabilityPct,
+    })),
+    note: imp.notes ?? undefined,
+  }));
+
+  const designSources: DesignSource[] = template.sources.map((s) => ({
+    tier: sourceTier(s.url, s.relevance),
+    title: s.title,
+    ref: hostOf(s.url),
+    url: s.url,
+  }));
+
+  const design: DesignProduct = {
+    slug: product.slug,
+    brand: product.name,
+    variant: [product.category.displayName, product.variant].filter(Boolean).join(" · "),
+    category: product.category.displayName,
+    mrp,
+    ivc,
+    verdict: verdictFor(ivc),
+    composition,
+    split: { india: indiaPct, tax: taxPct, abroad: abroadPct },
+    components: designComponents,
+    imports: designImports,
+    sources: designSources,
+    hero: product.isHeroProduct,
+    asOf: gst.asOfDate?.slice(0, 7) ?? "2026",
+    longform: product.isHeroProduct && product.heroMarkdown ? parseLongform(product.heroMarkdown) : undefined,
+    shrinkflation: SHRINKFLATION[product.slug],
+  };
+
+  // "Next products" — a few others to jump to.
+  const others = await db.product.findMany({
+    where: { slug: { not: slug }, breakdown: { isNot: null } },
+    include: { breakdown: true, category: true },
+    orderBy: { isHeroProduct: "desc" },
+    take: 6,
+  });
+  const nextItems = others.map((p) => {
+    const c = z.array(CostComponentSchema).parse(JSON.parse(p.breakdown!.componentsJson));
+    const im = z.array(ImportSchema).parse(JSON.parse(p.breakdown!.importsJson));
+    const g = GstInfoSchema.parse(JSON.parse(p.breakdown!.gstJson));
+    const tax = Math.round(g.ratePct);
+    const ab = Math.round(im.reduce((s, i) => s + i.sharePctOfProduct, 0));
+    void c;
+    return {
+      slug: p.slug,
+      brand: p.name,
+      category: p.category.displayName,
+      ivc: Math.round(p.breakdown!.madeInIndiaScoreBp / 100),
+      split: { india: Math.max(0, 100 - tax - ab), tax, abroad: ab },
+    };
+  });
 
   return (
-    <main className="mx-auto max-w-3xl px-5 py-8 sm:py-12">
-      <nav className="mb-8 text-sm text-muted">
-        <Link href="/" className="transition-colors hover:text-foreground">
-          ← Parakhi
-        </Link>
-      </nav>
-
-      {/* Minimal header */}
-      <header className="mb-8">
-        <div className="text-sm text-muted">{product.brand}</div>
-        <h1 className="mt-1 font-serif text-4xl font-semibold tracking-tight">
-          {product.name}
-        </h1>
-        <div className="mt-2 flex flex-wrap items-center gap-x-2 text-sm text-muted">
-          {product.variant && <span>{product.variant}</span>}
-          {product.mrpInPaise != null && (
-            <>
-              <span>·</span>
-              <span>MRP {paiseToRupees(product.mrpInPaise)}</span>
-            </>
-          )}
-        </div>
-      </header>
-
-      {/* Hero: rupee flow bar — the whole story above the fold */}
-      <RupeeFlowBar
-        ivc={ivc}
-        components={components}
-        imports={imports}
-        gst={gst}
-        mrpInPaise={product.mrpInPaise}
-      />
-
-      {/* Progressive disclosure: everything else */}
-      <DigDeeper>
-        <StatOrbs
-          orbs={[
-            {
-              label: "Composition Indian",
-              value: compMii,
-              suffix: "%",
-              sub: "by raw-material origin",
-              accent: "var(--india)",
-            },
-            {
-              label: "Tax · GST",
-              value: gst.ratePct,
-              suffix: "%",
-              sub:
-                gst.rupeeAmount != null
-                  ? `${paiseToRupees(gst.rupeeAmount)} per pack · HSN ${gst.hsnCode}`
-                  : `HSN ${gst.hsnCode}`,
-              accent: "var(--tax)",
-            },
-            {
-              label: "Flies abroad",
-              value: importedPct,
-              suffix: "%",
-              sub:
-                imports.length === 0
-                  ? "no significant imports"
-                  : imports
-                      .flatMap((i) => i.likelyCountries.slice(0, 2))
-                      .map((c) => `${flagFor(c.code)} ${c.name}`)
-                      .join(" · "),
-              accent: "var(--abroad)",
-            },
-          ]}
-        />
-        <div className="mt-8" />
-        <ComponentsTable components={components} mrpInPaise={product.mrpInPaise} />
-        {imports.length > 0 && (
-          <div className="mt-8">
-            <h3 className="mb-3 font-serif text-lg font-semibold">
-              Imported inputs
-            </h3>
-            <ImportsList imports={imports} />
-          </div>
-        )}
-        <div className="mt-8">
-          <h3 className="mb-3 font-serif text-lg font-semibold">
-            How we estimated this
-          </h3>
-          <p className="text-sm leading-relaxed text-muted">
-            {product.breakdown.reasoningMarkdown}
-          </p>
-          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
-            <span className="inline-flex items-center gap-1">
-              <ConfidenceDot
-                level={
-                  product.breakdown.confidenceOverall as "high" | "medium" | "low"
-                }
-              />
-              {product.breakdown.confidenceOverall} confidence
-            </span>
-            <span>·</span>
-            <span>{product.breakdown.modelUsed}</span>
-            <span>·</span>
-            <span>template v{product.breakdown.templateVersion}</span>
-          </div>
-          <SourcesList template={template} />
-        </div>
-      </DigDeeper>
-
-      {/* Hero story (Parle-G etc.) */}
-      {product.isHeroProduct && product.heroMarkdown && (
-        <section className="mt-12 border-t border-border pt-8">
-          <HeroMarkdown content={product.heroMarkdown} />
-        </section>
-      )}
-
-      {/* Feedback */}
-      <section className="mt-12 flex items-center justify-between rounded-2xl border border-border bg-surface/40 px-5 py-4">
-        <span className="text-sm text-muted">A number looks off?</span>
-        <Link
-          href={`/feedback?productId=${product.id}`}
-          className="rounded-lg border border-border px-3 py-1.5 text-sm transition-colors hover:bg-surface-2"
-        >
-          Tell us
-        </Link>
-      </section>
+    <main style={{ background: "var(--bg)", color: "var(--ink)" }}>
+      <Fold1 product={design} />
+      <Fold2 product={design} />
+      <Fold3 product={design} />
+      <Fold4 product={design} />
+      {design.longform && <HeroStory product={design} />}
+      <NextProducts items={nextItems} />
     </main>
   );
 }
 
-function ComponentsTable({
-  components,
-  mrpInPaise,
-}: {
-  components: CostComponent[];
-  mrpInPaise: number | null;
-}) {
-  return (
-    <div className="overflow-hidden rounded-2xl border border-border">
-      <table className="w-full text-sm">
-        <thead className="bg-surface-2 text-left text-xs uppercase tracking-wide text-muted">
-          <tr>
-            <th className="px-3 py-2 font-medium">Component</th>
-            <th className="px-3 py-2 font-medium tabular-nums">Share</th>
-            <th className="px-3 py-2 font-medium tabular-nums">Range</th>
-            {mrpInPaise != null && (
-              <th className="px-3 py-2 font-medium tabular-nums">₹</th>
-            )}
-            <th className="px-3 py-2 font-medium">Source</th>
-          </tr>
-        </thead>
-        <tbody>
-          {components.map((c) => (
-            <tr key={c.label} className="border-t border-border align-top">
-              <td className="px-3 py-2">
-                <div className="font-medium text-foreground">{c.label}</div>
-                <div className="text-xs text-muted">{c.explanation}</div>
-              </td>
-              <td className="px-3 py-2 tabular-nums">{pct(c.sharePct)}</td>
-              <td className="px-3 py-2 tabular-nums text-muted">
-                {pctRange(c.rangePct.low, c.rangePct.high)}
-              </td>
-              {mrpInPaise != null && (
-                <td className="px-3 py-2 tabular-nums">
-                  {c.rupeeAmount != null ? paiseToRupees(c.rupeeAmount) : "—"}
-                </td>
-              )}
-              <td className="px-3 py-2">
-                <span className="inline-flex items-center gap-1.5 text-xs text-muted">
-                  <TierDot tier={c.sourceTier} />
-                  T{c.sourceTier}
-                  <ConfidenceDot level={c.confidence} />
-                </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+// ── helpers ──────────────────────────────────────────────────────────
+
+function hostOf(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
 }
 
-function ImportsList({ imports }: { imports: Import[] }) {
-  return (
-    <ul className="space-y-3">
-      {imports.map((imp) => (
-        <li key={imp.ingredient} className="rounded-2xl border border-border p-4">
-          <div className="flex items-baseline justify-between gap-3">
-            <div className="font-medium">{imp.ingredient}</div>
-            <div className="tabular-nums text-sm text-muted">
-              ~{imp.sharePctOfProduct}% of MRP
-            </div>
-          </div>
-          <div className="mt-2 flex flex-wrap gap-2 text-sm">
-            {imp.likelyCountries.map((c) => (
-              <span
-                key={c.code}
-                className="inline-flex items-center gap-1 rounded-full bg-surface-2 px-2 py-0.5"
-              >
-                {flagFor(c.code)} {c.name}
-                <span className="text-muted">{c.probabilityPct}%</span>
-              </span>
-            ))}
-          </div>
-          {imp.notes && <div className="mt-2 text-xs text-muted">{imp.notes}</div>}
-        </li>
-      ))}
-    </ul>
-  );
+function sourceTier(url: string, relevance: string): number {
+  const u = (url + " " + relevance).toLowerCase();
+  if (/cbic|dgft|data\.gov|nddb|gov\.in|teaboard|apeda/.test(u)) return 1;
+  if (/tofler|mca|annual report|filing|investor|results/.test(u)) return 2;
+  if (/mordor|nielsen|cii|business-standard|tradeint/.test(u)) return 3;
+  return 3;
 }
 
-function SourcesList({ template }: { template: CategoryTemplate }) {
-  return (
-    <details className="mt-4 rounded-2xl border border-border px-4 py-3">
-      <summary className="cursor-pointer text-sm font-medium text-muted">
-        Sources ({template.sources.length})
-      </summary>
-      <ul className="mt-3 space-y-2 text-sm">
-        {template.sources.map((s) => (
-          <li key={s.url}>
-            <a
-              href={s.url}
-              target="_blank"
-              rel="noreferrer"
-              className="underline-offset-2 hover:underline"
-            >
-              {s.title}
-            </a>
-            <span className="ml-2 text-xs text-muted">{s.relevance}</span>
-          </li>
-        ))}
-      </ul>
-    </details>
-  );
-}
-
-function HeroMarkdown({ content }: { content: string }) {
-  return (
-    <article className="hero-md text-sm leading-relaxed text-muted">
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
-    </article>
-  );
+/** Light markdown → {kicker, body[]}. First heading is the kicker; the next
+ *  paragraphs (until a table/heading) become the body. */
+function parseLongform(md: string): { kicker: string; body: string[] } {
+  const lines = md.split("\n");
+  let kicker = "";
+  const body: string[] = [];
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) continue;
+    if (line.startsWith("#")) {
+      const text = line.replace(/^#+\s*/, "");
+      if (!kicker) kicker = text;
+      continue;
+    }
+    if (line.startsWith("|") || line.startsWith("-") || line.startsWith("*")) continue;
+    if (body.length < 3) body.push(line);
+  }
+  return { kicker: kicker || "The story.", body: body.length ? body : ["—"] };
 }

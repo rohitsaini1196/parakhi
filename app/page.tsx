@@ -1,122 +1,94 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
-import { SearchForm } from "@/app/_components/SearchForm";
-import { Wordmark } from "@/app/_components/Wordmark";
+import { T } from "@/lib/parakhi-tokens";
+import { Wordmark, Eyebrow, MoneyBar } from "@/app/_components/parakhi/atoms";
+import { SearchHero } from "@/app/_components/parakhi/SearchHero";
+import { GstInfoSchema, ImportSchema } from "@/lib/schemas";
+import { z } from "zod";
 
 type SP = Promise<{ q?: string; error?: string }>;
 
 export default async function Home({ searchParams }: { searchParams: SP }) {
   const { q, error } = await searchParams;
-  const [hero, recent] = await Promise.all([
-    db.product.findFirst({
-      where: { isHeroProduct: true },
-      include: { breakdown: true },
-    }),
-    db.product.findMany({
-      where: { isHeroProduct: false, breakdown: { isNot: null } },
-      include: { breakdown: true },
-      orderBy: { createdAt: "desc" },
-      take: 8,
-    }),
-  ]);
+  const recent = await db.product.findMany({
+    where: { breakdown: { isNot: null } },
+    include: { breakdown: true, category: true },
+    orderBy: [{ isHeroProduct: "desc" }, { createdAt: "desc" }],
+    take: 9,
+  });
+
+  const cards = recent.map((p) => {
+    const im = z.array(ImportSchema).parse(JSON.parse(p.breakdown!.importsJson));
+    const g = GstInfoSchema.parse(JSON.parse(p.breakdown!.gstJson));
+    const tax = Math.round(g.ratePct);
+    const ab = Math.round(im.reduce((s, i) => s + i.sharePctOfProduct, 0));
+    return {
+      slug: p.slug,
+      brand: p.name,
+      category: p.category.displayName,
+      ivc: Math.round(p.breakdown!.madeInIndiaScoreBp / 100),
+      split: { india: Math.max(0, 100 - tax - ab), tax, abroad: ab },
+    };
+  });
 
   return (
-    <main className="mx-auto max-w-2xl px-5 py-16">
-      <header className="mb-10">
-        <Wordmark />
-        <p className="mt-4 max-w-md text-muted">
-          Where does your money actually go when you buy an Indian product?
-          Search one. Every number carries its source.
-        </p>
+    <div style={{ minHeight: "100vh", background: T.bg, color: T.ink, display: "flex", flexDirection: "column" }}>
+      <header style={{ padding: "26px clamp(20px,5vw,48px) 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Wordmark size={26} />
+        <div style={{ display: "flex", gap: 24 }}>
+          <Link href="/about" style={{ textDecoration: "none" }}><Eyebrow>about</Eyebrow></Link>
+          <Link href="/sources" style={{ textDecoration: "none" }}><Eyebrow>sources</Eyebrow></Link>
+        </div>
       </header>
 
-      <SearchForm defaultValue={q} />
-      {error && (
-        <p className="mt-3 text-sm text-abroad">Couldn&apos;t process that — {error}</p>
-      )}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "48px clamp(20px,5vw,48px)", textAlign: "center" }}>
+        <div style={{ marginBottom: 36 }}>
+          <div style={{ fontFamily: T.fontDeva, fontSize: 22, color: T.inkDim, marginBottom: 8 }}>
+            क्या है अंदर?
+          </div>
+          <h1 style={{ fontFamily: T.fontDisplay, fontStyle: "italic", fontSize: "clamp(44px,9vw,72px)", letterSpacing: "-0.03em", lineHeight: 1.05, margin: 0, maxWidth: 900 }}>
+            What&apos;s <span style={{ color: T.india }}>actually</span> inside.
+          </h1>
+          <p style={{ color: T.inkDim, fontSize: 16, marginTop: 18, maxWidth: 560, lineHeight: 1.5, marginInline: "auto" }}>
+            Search any Indian product. See where your money goes — and how much
+            stays in India. Every number sourced. No guessing.
+          </p>
+        </div>
 
-      {hero && (
-        <section className="mt-12">
-          <h2 className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">
-            Fully researched
-          </h2>
-          <Link
-            href={`/p/${hero.slug}`}
-            className="group block rounded-2xl border border-border bg-surface/50 p-5 transition-colors hover:border-india/50"
-          >
-            <div className="flex items-baseline justify-between gap-4">
-              <div>
-                <div className="font-serif text-xl font-semibold">{hero.name}</div>
-                <div className="text-sm text-muted">
-                  {hero.brand} · {hero.variant}
-                </div>
-              </div>
-              {hero.breakdown && (
-                <div className="text-right">
-                  <div className="font-serif text-3xl font-semibold tabular-nums text-india">
-                    {(hero.breakdown.madeInIndiaScoreBp / 100).toFixed(0)}%
-                  </div>
-                  <div className="text-[10px] uppercase tracking-wide text-muted">
-                    Indian Value
-                  </div>
-                </div>
-              )}
-            </div>
-          </Link>
-        </section>
-      )}
+        <SearchHero defaultValue={q} />
+        {error && (
+          <p style={{ color: T.abroad, fontSize: 13, marginTop: 14 }}>Couldn&apos;t process that — {error}</p>
+        )}
 
-      {recent.length > 0 && (
-        <section className="mt-10">
-          <h2 className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">
-            Recently analyzed
-          </h2>
-          <ul className="overflow-hidden rounded-2xl border border-border">
-            {recent.map((p) => (
-              <li key={p.id} className="border-b border-border last:border-0">
+        {cards.length > 0 && (
+          <div style={{ width: "100%", maxWidth: 920, marginTop: 64 }}>
+            <Eyebrow style={{ color: T.inkFaint, marginBottom: 16 }}>recently analysed · jump in</Eyebrow>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px,1fr))", gap: 14 }}>
+              {cards.map((p) => (
                 <Link
+                  key={p.slug}
                   href={`/p/${p.slug}`}
-                  className="flex items-baseline justify-between gap-4 px-5 py-3 transition-colors hover:bg-surface-2"
+                  style={{ border: `1px solid ${T.line}`, padding: "18px 20px", borderRadius: 3, background: T.bgRaised, textDecoration: "none", color: T.ink, textAlign: "left" }}
                 >
-                  <div className="min-w-0">
-                    <div className="truncate font-medium">{p.name}</div>
-                    <div className="text-xs text-muted">
-                      {p.brand}
-                      {p.variant ? ` · ${p.variant}` : ""}
-                    </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+                    <span style={{ fontFamily: T.fontDisplay, fontStyle: "italic", fontSize: 19 }}>{p.brand}</span>
+                    <span style={{ fontFamily: T.fontDisplay, fontStyle: "italic", fontSize: 24, color: p.ivc >= 85 ? T.india : p.ivc >= 70 ? T.tax : T.abroad }}>{p.ivc}%</span>
                   </div>
-                  {p.breakdown && (
-                    <div className="shrink-0 text-right">
-                      <div className="font-serif text-lg font-semibold tabular-nums text-india">
-                        {(p.breakdown.madeInIndiaScoreBp / 100).toFixed(0)}%
-                      </div>
-                    </div>
-                  )}
+                  <div style={{ color: T.inkDim, fontSize: 11, marginTop: 2 }}>{p.category}</div>
+                  <div style={{ marginTop: 12 }}>
+                    <MoneyBar india={p.split.india} tax={p.split.tax} abroad={p.split.abroad} height={5} />
+                  </div>
                 </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
 
-      <footer className="mt-24 border-t border-border pt-6 text-xs text-muted">
-        <Link href="/about" className="hover:text-foreground">
-          About
-        </Link>
-        {" · "}
-        <Link href="/sources" className="hover:text-foreground">
-          Sources
-        </Link>
-        {" · "}
-        <a
-          href="https://github.com/rohitsaini1196/parakhi"
-          className="hover:text-foreground"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Open source
-        </a>
+      <footer style={{ padding: "24px clamp(20px,5vw,48px)", borderTop: `1px solid ${T.line}`, display: "flex", justifyContent: "center", gap: 18 }}>
+        <Link href="/about" style={{ textDecoration: "none" }}><Eyebrow>About</Eyebrow></Link>
+        <a href="https://github.com/rohitsaini1196/parakhi" target="_blank" rel="noreferrer" style={{ textDecoration: "none" }}><Eyebrow>Open source</Eyebrow></a>
       </footer>
-    </main>
+    </div>
   );
 }
