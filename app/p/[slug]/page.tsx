@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
 import {
   CategoryTemplateSchema,
@@ -33,12 +34,33 @@ const SHRINKFLATION: Record<string, { year: number; weight: number; price: numbe
   ],
 };
 
+// Cache the per-slug DB read for an hour — Neon round-trips (incl. free-tier
+// cold-start) are the dominant cost; caching them is what makes warm loads fast.
+const loadProduct = unstable_cache(
+  async (slug: string) =>
+    db.product.findUnique({
+      where: { slug },
+      include: { breakdown: true, category: true },
+    }),
+  ["product-by-slug"],
+  { revalidate: 3600 },
+);
+
+const loadOthers = unstable_cache(
+  async (slug: string) =>
+    db.product.findMany({
+      where: { slug: { not: slug }, breakdown: { isNot: null } },
+      include: { breakdown: true, category: true },
+      orderBy: { isHeroProduct: "desc" },
+      take: 6,
+    }),
+  ["product-others"],
+  { revalidate: 3600 },
+);
+
 export default async function ProductPage({ params }: { params: Params }) {
   const { slug } = await params;
-  const product = await db.product.findUnique({
-    where: { slug },
-    include: { breakdown: true, category: true },
-  });
+  const product = await loadProduct(slug);
   if (!product || !product.breakdown) return notFound();
 
   const components = z.array(CostComponentSchema).parse(JSON.parse(product.breakdown.componentsJson));
@@ -117,12 +139,7 @@ export default async function ProductPage({ params }: { params: Params }) {
   };
 
   // "Next products" — a few others to jump to.
-  const others = await db.product.findMany({
-    where: { slug: { not: slug }, breakdown: { isNot: null } },
-    include: { breakdown: true, category: true },
-    orderBy: { isHeroProduct: "desc" },
-    take: 6,
-  });
+  const others = await loadOthers(slug);
   const nextItems = others.map((p) => {
     const c = z.array(CostComponentSchema).parse(JSON.parse(p.breakdown!.componentsJson));
     const im = z.array(ImportSchema).parse(JSON.parse(p.breakdown!.importsJson));
