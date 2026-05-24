@@ -140,6 +140,57 @@ const BRAND_SEEDS: Array<{ name: string; defaultCountry?: string }> = [
   { name: "Society Tea", defaultCountry: "IN" },
   { name: "Girnar", defaultCountry: "IN" },
   { name: "Kanan Devan", defaultCountry: "IN" }, // Tata
+
+  // ── Chocolate ────────────────────────────────────────────────────────────
+  { name: "Cadbury", defaultCountry: "US" }, // Mondelez (dup-safe)
+  { name: "Dairy Milk", defaultCountry: "US" },
+  { name: "5 Star", defaultCountry: "US" },
+  { name: "Perk", defaultCountry: "US" },
+  { name: "Gems", defaultCountry: "US" },
+  { name: "Bournville", defaultCountry: "US" },
+  { name: "Munch", defaultCountry: "CH" }, // Nestlé
+  { name: "Milkybar", defaultCountry: "CH" },
+  { name: "Ferrero Rocher", defaultCountry: "IT" },
+  { name: "Amul Chocolate", defaultCountry: "IN" },
+
+  // ── Hair / shampoo ───────────────────────────────────────────────────────
+  { name: "Indulekha", defaultCountry: "NL" }, // HUL
+  { name: "Chik", defaultCountry: "IN" }, // CavinKare
+  { name: "Clear", defaultCountry: "NL" },
+
+  // ── Skin cream / lotion ──────────────────────────────────────────────────
+  { name: "Pond's", defaultCountry: "NL" }, // HUL
+  { name: "Glow & Lovely", defaultCountry: "NL" },
+  { name: "Vaseline", defaultCountry: "NL" },
+  { name: "Lakmé", defaultCountry: "NL" },
+  { name: "Nivea", defaultCountry: "DE" },
+  { name: "Boroline", defaultCountry: "IN" },
+  { name: "Olay", defaultCountry: "US" }, // P&G
+  { name: "Garnier", defaultCountry: "FR" }, // L'Oréal
+
+  // ── Cooking oil ──────────────────────────────────────────────────────────
+  { name: "Fortune", defaultCountry: "IN" }, // Adani Wilmar (India-listed)
+  { name: "Saffola", defaultCountry: "IN" }, // Marico
+  { name: "Sundrop", defaultCountry: "IN" },
+  { name: "Dhara", defaultCountry: "IN" }, // Mother Dairy
+  { name: "Gemini", defaultCountry: "IN" },
+
+  // ── Coffee ───────────────────────────────────────────────────────────────
+  { name: "Bru", defaultCountry: "NL" }, // HUL
+  { name: "Sunrise", defaultCountry: "IN" },
+  { name: "Tata Coffee", defaultCountry: "IN" },
+  { name: "Continental Coffee", defaultCountry: "IN" },
+
+  // ── Juice ────────────────────────────────────────────────────────────────
+  { name: "Real", defaultCountry: "IN" }, // Dabur
+  { name: "Frooti", defaultCountry: "IN" }, // Parle Agro
+  { name: "Appy", defaultCountry: "IN" },
+  { name: "Tropicana", defaultCountry: "US" }, // PepsiCo
+  { name: "Slice", defaultCountry: "US" },
+  { name: "Maaza", defaultCountry: "US" }, // Coca-Cola (dup-safe)
+  { name: "Minute Maid", defaultCountry: "US" },
+  { name: "Paper Boat", defaultCountry: "IN" },
+  { name: "B Natural", defaultCountry: "IN" }, // ITC
 ];
 
 async function main() {
