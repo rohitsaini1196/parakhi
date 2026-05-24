@@ -44,3 +44,6 @@ next-env.d.ts
 prisma/dev.db*
 prisma/migrations.sqlite-archive/
 *.sqlite-archive
+
+# local Claude Code config
+.claude/
