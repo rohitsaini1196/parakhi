@@ -37,7 +37,7 @@ export async function GET(req: Request) {
       return Response.redirect(new URL(`/p/${existing.slug}`, req.url), 302);
     }
 
-    const limit = await checkRateLimit(req, "estimate");
+    const limit = await checkRateLimit(req);
     if (!limit.ok) return jsonError(429, limit.reason!);
 
     const cat = await categorize(resolved);

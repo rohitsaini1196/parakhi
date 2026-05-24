@@ -4,7 +4,7 @@ import { handleError, jsonError, readJson } from "@/lib/api";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
-  const limit = await checkRateLimit(req, "categorize");
+  const limit = await checkRateLimit(req);
   if (!limit.ok) return jsonError(429, limit.reason!);
 
   try {

@@ -203,6 +203,27 @@ model CategoryDraft {
   @@index([status])
 }
 
+/**
+ * DB-backed rate-limit counters. One row per (scope, window). Survives
+ * serverless cold starts (an in-memory map does not — each Vercel lambda has
+ * its own). Counts search/analysis requests regardless of whether an LLM was
+ * involved, so the deterministic path is limited too.
+ *
+ *   scope     "global" | "ip:<sha256-prefix>"
+ *   windowKey "2026-05-24"        (daily, for global)
+ *             "2026-05-24T18"     (hourly, for per-IP)
+ */
+model RateHit {
+  id        String   @id @default(cuid())
+  scope     String
+  windowKey String
+  count     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@unique([scope, windowKey])
+  @@index([createdAt])
+}
+
 model LlmCall {
   id           String   @id @default(cuid())
   endpoint     String

@@ -27,7 +27,7 @@ const BodySchema = z.union([
 ]);
 
 export async function POST(req: Request) {
-  const limit = await checkRateLimit(req, "estimate");
+  const limit = await checkRateLimit(req);
   if (!limit.ok) return jsonError(429, limit.reason!);
 
   try {

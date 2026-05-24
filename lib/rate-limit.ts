@@ -2,18 +2,22 @@ import { createHash } from "node:crypto";
 import { db } from "@/lib/db";
 
 /**
- * DB-backed rate limiting using the LlmCall table as the source of truth —
- * one row per LLM call already, so we just count rows. Boring and good enough
- * until we outgrow SQLite.
+ * DB-backed rate limiting. Counts analysis requests (new-product searches),
+ * not LLM calls — the deterministic compute path makes no LLM call, so an
+ * LLM-row count would never trigger. Uses a RateHit counter table so limits
+ * survive serverless cold starts (an in-memory map resets per lambda and is
+ * effectively no limit on Vercel).
  *
- * Two limits enforced per brief §9.3:
+ * Two limits (per brief §9.3):
  *   - per-IP per hour  (default 10)
- *   - global per day   (default 500)
+ *   - global per day   (default 500) — protects the free-tier DB + any LLM bill
+ *
+ * Called only on the cache-miss path, so repeat product views are never
+ * limited; only fresh analyses (which create DB rows) count.
  */
 
 const PER_IP_PER_HOUR = Number(process.env.RATE_LIMIT_PER_IP_PER_HOUR ?? 10);
 const GLOBAL_PER_DAY = Number(process.env.RATE_LIMIT_GLOBAL_PER_DAY ?? 500);
-
 const IP_SALT = process.env.IP_HASH_SALT ?? "parakhi-v1";
 
 export function hashIp(ip: string): string {
@@ -23,9 +27,7 @@ export function hashIp(ip: string): string {
 export function ipFrom(req: Request): string {
   const fwd = req.headers.get("x-forwarded-for");
   if (fwd) return fwd.split(",")[0]!.trim();
-  const real = req.headers.get("x-real-ip");
-  if (real) return real;
-  return "0.0.0.0";
+  return req.headers.get("x-real-ip") ?? "0.0.0.0";
 }
 
 export interface RateCheck {
@@ -33,46 +35,39 @@ export interface RateCheck {
   reason?: string;
 }
 
-/**
- * We use Feedback's `submitterEmail` as a side-channel? No — we lean on
- * LlmCall logs. But LlmCall doesn't have IP. Add a small RateHit table?
- * Trade-off: avoid yet another table; just enforce the global limit via
- * LlmCall and the per-IP limit via a tiny in-memory map. Memory resets on
- * deploy, which is fine for a soft rate limit.
- */
-const IP_HITS = new Map<string, { count: number; resetAt: number }>();
+/** Atomically increment a counter row and return its new value. */
+async function bump(scope: string, windowKey: string): Promise<number> {
+  const row = await db.rateHit.upsert({
+    where: { scope_windowKey: { scope, windowKey } },
+    update: { count: { increment: 1 } },
+    create: { scope, windowKey, count: 1 },
+  });
+  return row.count;
+}
 
-export async function checkRateLimit(
-  req: Request,
-  purpose: "estimate" | "resolve" | "categorize",
-): Promise<RateCheck> {
-  // Only the costly estimate endpoint counts toward global daily cap.
-  if (purpose === "estimate") {
-    const since = new Date(Date.now() - 24 * 60 * 60 * 1000);
-    const todayCount = await db.llmCall.count({
-      where: { endpoint: "estimate", createdAt: { gte: since } },
-    });
-    if (todayCount >= GLOBAL_PER_DAY) {
-      return {
-        ok: false,
-        reason: "Service capacity reached for today. Try again tomorrow.",
-      };
-    }
-  }
-
+export async function checkRateLimit(req: Request): Promise<RateCheck> {
+  const now = new Date();
+  const day = now.toISOString().slice(0, 10); // YYYY-MM-DD
+  const hour = now.toISOString().slice(0, 13); // YYYY-MM-DDTHH
   const ip = hashIp(ipFrom(req));
-  const now = Date.now();
-  const hit = IP_HITS.get(ip);
-  if (!hit || hit.resetAt < now) {
-    IP_HITS.set(ip, { count: 1, resetAt: now + 60 * 60 * 1000 });
-    return { ok: true };
-  }
-  if (hit.count >= PER_IP_PER_HOUR) {
+
+  // Global daily cap first (protects DB + bill).
+  const globalCount = await bump("global", day);
+  if (globalCount > GLOBAL_PER_DAY) {
     return {
       ok: false,
-      reason: `Slow down — max ${PER_IP_PER_HOUR} requests/hour per IP.`,
+      reason: "Service capacity reached for today. Try again tomorrow.",
     };
   }
-  hit.count += 1;
+
+  // Per-IP hourly cap.
+  const ipCount = await bump(`ip:${ip}`, hour);
+  if (ipCount > PER_IP_PER_HOUR) {
+    return {
+      ok: false,
+      reason: `Slow down — max ${PER_IP_PER_HOUR} new analyses/hour per visitor.`,
+    };
+  }
+
   return { ok: true };
 }

@@ -6,7 +6,7 @@ import { checkRateLimit } from "@/lib/rate-limit";
 const BodySchema = z.object({ query: z.string().min(1).max(500) });
 
 export async function POST(req: Request) {
-  const limit = await checkRateLimit(req, "resolve");
+  const limit = await checkRateLimit(req);
   if (!limit.ok) return jsonError(429, limit.reason!);
 
   try {
