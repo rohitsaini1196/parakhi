@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
 import { T } from "@/lib/parakhi-tokens";
 import { Wordmark, Eyebrow, MoneyBar } from "@/app/_components/parakhi/atoms";
@@ -8,28 +9,37 @@ import { z } from "zod";
 
 type SP = Promise<{ q?: string; error?: string }>;
 
+// Cache the recent-products list for 10 min so the homepage doesn't hit Neon
+// on every load (the page itself stays dynamic because of searchParams).
+const getRecentCards = unstable_cache(
+  async () => {
+    const recent = await db.product.findMany({
+      where: { breakdown: { isNot: null } },
+      include: { breakdown: true, category: true },
+      orderBy: [{ isHeroProduct: "desc" }, { createdAt: "desc" }],
+      take: 9,
+    });
+    return recent.map((p) => {
+      const im = z.array(ImportSchema).parse(JSON.parse(p.breakdown!.importsJson));
+      const g = GstInfoSchema.parse(JSON.parse(p.breakdown!.gstJson));
+      const tax = Math.round(g.ratePct);
+      const ab = Math.round(im.reduce((s, i) => s + i.sharePctOfProduct, 0));
+      return {
+        slug: p.slug,
+        brand: p.name,
+        category: p.category.displayName,
+        ivc: Math.round(p.breakdown!.madeInIndiaScoreBp / 100),
+        split: { india: Math.max(0, 100 - tax - ab), tax, abroad: ab },
+      };
+    });
+  },
+  ["home-recent-cards"],
+  { revalidate: 600 },
+);
+
 export default async function Home({ searchParams }: { searchParams: SP }) {
   const { q, error } = await searchParams;
-  const recent = await db.product.findMany({
-    where: { breakdown: { isNot: null } },
-    include: { breakdown: true, category: true },
-    orderBy: [{ isHeroProduct: "desc" }, { createdAt: "desc" }],
-    take: 9,
-  });
-
-  const cards = recent.map((p) => {
-    const im = z.array(ImportSchema).parse(JSON.parse(p.breakdown!.importsJson));
-    const g = GstInfoSchema.parse(JSON.parse(p.breakdown!.gstJson));
-    const tax = Math.round(g.ratePct);
-    const ab = Math.round(im.reduce((s, i) => s + i.sharePctOfProduct, 0));
-    return {
-      slug: p.slug,
-      brand: p.name,
-      category: p.category.displayName,
-      ivc: Math.round(p.breakdown!.madeInIndiaScoreBp / 100),
-      split: { india: Math.max(0, 100 - tax - ab), tax, abroad: ab },
-    };
-  });
+  const cards = await getRecentCards();
 
   return (
     <div style={{ minHeight: "100vh", background: T.bg, color: T.ink, display: "flex", flexDirection: "column" }}>

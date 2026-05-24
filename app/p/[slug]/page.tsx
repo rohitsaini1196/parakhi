@@ -18,6 +18,10 @@ import { Fold1, Fold2, Fold3, Fold4, HeroStory, NextProducts } from "@/app/_comp
 
 type Params = Promise<{ slug: string }>;
 
+// ISR: cache each product page; breakdowns change only on recompute (nightly).
+// First hit renders + caches; subsequent hits skip the DB entirely.
+export const revalidate = 3600;
+
 // Hand-curated shrinkflation series for hero products (not in the DB).
 const SHRINKFLATION: Record<string, { year: number; weight: number; price: number }[]> = {
   "parle-g-55g": [
