@@ -58,6 +58,9 @@ async function main() {
       gstOverride: gst,
       brandProfitOriginsOverride: brandOrigins ?? undefined,
       commodityPrices,
+      declaredIngredients: product.declaredIngredients
+        ? (JSON.parse(product.declaredIngredients) as string[])
+        : undefined,
     });
 
     const previousIvc = product.breakdown

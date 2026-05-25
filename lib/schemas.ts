@@ -101,6 +101,9 @@ export const CostComponentSchema = z.object({
   confidence: ConfidenceSchema,
   sourceTier: SourceTierSchema,
   explanation: z.string(),
+  /** True when this raw material is confirmed present on the product's actual
+   * label (Open Food Facts), not just inferred from the category template. */
+  confirmedOnLabel: z.boolean().optional(),
 });
 export type CostComponent = z.infer<typeof CostComponentSchema>;
 

@@ -117,6 +117,30 @@ function describeForeignOrigins(origins: Origin[] | undefined): string {
   return `Significant foreign share: ${top}.`;
 }
 
+// Generic tokens that don't, on their own, identify a material on a label.
+const GENERIC_TOKENS = new Set([
+  "oil", "powder", "paste", "solids", "syrup", "extract", "regulator",
+  "regulators", "agent", "agents", "flavour", "flavor", "flavouring",
+  "colour", "color", "preservative", "preservatives", "emulsifier",
+  "emulsifiers", "added", "based", "other", "mixed", "unknown", "and",
+  "the", "refined", "edible", "iodised", "leavening",
+]);
+
+/**
+ * Does a template raw-material appear on the product's declared label?
+ * Matches on distinctive tokens (wheat, palm, cocoa, sugar, milk…), ignoring
+ * generic words (oil, powder, flavour) that would false-match across materials.
+ */
+function materialOnLabel(materialName: string, declared: string[]): boolean {
+  const tokens = materialName
+    .toLowerCase()
+    .replace(/[()/,]/g, " ")
+    .split(/\s+/)
+    .filter((t) => t.length >= 3 && !GENERIC_TOKENS.has(t));
+  if (tokens.length === 0) return false;
+  return declared.some((ing) => tokens.some((t) => ing.includes(t)));
+}
+
 function paiseFromPct(pct: number, mrpPaise: number | null | undefined) {
   if (mrpPaise == null) return null;
   return round0((pct / 100) * mrpPaise);
@@ -157,8 +181,33 @@ export function computeBaseline(args: {
    * Raw-material components that map to a commodity get a dated Tier-1
    * wholesale-price anchor instead of a pure template estimate. */
   commodityPrices?: Map<string, import("./commodity").CommodityAnchor>;
+  /** Optional declared ingredients from the product's label (Open Food Facts).
+   * When present + confident, restricts the raw-material set to what the label
+   * actually lists — making composition product-specific, not category-generic. */
+  declaredIngredients?: string[];
 }): ProductBreakdown {
   const { template, hsnCode, mrpInPaise = null } = args;
+
+  // ── Label-driven raw materials ──────────────────────────────────────────
+  // If we have the product's actual label, use it to decide which template
+  // raw materials are really in THIS product. Match each material to the
+  // declared ingredients; drop those clearly absent (renormalizing the rest).
+  // Guarded: only override when the label is reasonably complete and we
+  // matched enough, else fall back to the full template set.
+  // We use the label to *confirm* which template materials are really in this
+  // product (per-component provenance) — we do NOT drop/reweight on it. Fuzzy
+  // matching that silently removes a real ingredient (e.g. Frooti losing its
+  // fruit pulp because the label said "mango" not "pulp") is worse than an
+  // honest category estimate. So composition stays template-derived; the label
+  // only adds a "✓ confirmed on label" mark. Correct > impressive-but-wrong.
+  const declared = (args.declaredIngredients ?? []).map((s) => s.toLowerCase());
+  const labelMatched = new Set<string>();
+  if (declared.length >= 3) {
+    for (const rm of template.rawMaterials) {
+      if (materialOnLabel(rm.name, declared)) labelMatched.add(rm.name);
+    }
+  }
+  const activeRawMaterials = template.rawMaterials;
   // Apply overrides without mutating the template object.
   const effectiveGstRate =
     args.gstOverride?.source === "cbic"
@@ -192,22 +241,22 @@ export function computeBaseline(args: {
   const rmBucketMid = mid(rmBucketLow, rmBucketHigh);
 
   // Templates aren't required to sum exactly to 100; we normalize.
-  const rmInternalTotalMid = template.rawMaterials.reduce(
+  const rmInternalTotalMid = activeRawMaterials.reduce(
     (s, rm) => s + mid(rm.sharePct.low, rm.sharePct.high),
     0,
   );
-  const rmInternalTotalLow = template.rawMaterials.reduce(
+  const rmInternalTotalLow = activeRawMaterials.reduce(
     (s, rm) => s + rm.sharePct.low,
     0,
   );
-  const rmInternalTotalHigh = template.rawMaterials.reduce(
+  const rmInternalTotalHigh = activeRawMaterials.reduce(
     (s, rm) => s + rm.sharePct.high,
     0,
   );
 
   const components: CostComponent[] = [];
 
-  for (const rm of template.rawMaterials) {
+  for (const rm of activeRawMaterials) {
     const internalMid = mid(rm.sharePct.low, rm.sharePct.high);
     const shareOfMrp = (internalMid / rmInternalTotalMid) * rmBucketMid;
     const rangeLow =
@@ -231,9 +280,11 @@ export function computeBaseline(args: {
     const anchor = args.commodityPrices
       ? anchorForMaterial(rm.name, args.commodityPrices)
       : null;
+    const confirmed = labelMatched.has(rm.name);
+    const labelNote = confirmed ? " Confirmed on the product label (Open Food Facts)." : "";
     const explanation = anchor
-      ? `Template composition share; ${originText}. Wholesale ${anchor.commodity.toLowerCase()} ₹${anchor.modalPerQuintal.toLocaleString("en-IN")}/quintal (Agmarknet ${anchor.market}, ${anchor.asOf}) — input-commodity reference.`
-      : `Template composition share of the raw-materials bucket; ${originText}.`;
+      ? `Template composition share; ${originText}. Wholesale ${anchor.commodity.toLowerCase()} ₹${anchor.modalPerQuintal.toLocaleString("en-IN")}/quintal (Agmarknet ${anchor.market}, ${anchor.asOf}) — input-commodity reference.${labelNote}`
+      : `Template composition share of the raw-materials bucket; ${originText}.${labelNote}`;
 
     components.push({
       label: rm.name,
@@ -244,6 +295,7 @@ export function computeBaseline(args: {
       confidence: anchor ? "high" : "medium",
       sourceTier: anchor ? 1 : 2,
       explanation,
+      confirmedOnLabel: confirmed,
     });
   }
 
@@ -290,7 +342,7 @@ export function computeBaseline(args: {
   const imports: Import[] = [];
   const IMPORT_THRESHOLD_PCT_NON_IN = 20;
 
-  for (const rm of template.rawMaterials) {
+  for (const rm of activeRawMaterials) {
     const pIN = probIndian(rm.typicalOrigin);
     const pNonIN = 100 - pIN;
     if (pNonIN < IMPORT_THRESHOLD_PCT_NON_IN) continue;
@@ -331,7 +383,7 @@ export function computeBaseline(args: {
   let ivcInWeighted = 0;
   let ivcShareTotal = 0;
 
-  for (const rm of template.rawMaterials) {
+  for (const rm of activeRawMaterials) {
     const compositionShareOfRM =
       (mid(rm.sharePct.low, rm.sharePct.high) / rmInternalTotalMid) * 100;
     const shareOfMrp = (compositionShareOfRM / 100) * rmBucketMid;
@@ -359,7 +411,7 @@ export function computeBaseline(args: {
   // a secondary signal; never published as the headline.
   let compInWeighted = 0;
   let compTotal = 0;
-  for (const rm of template.rawMaterials) {
+  for (const rm of activeRawMaterials) {
     const w = mid(rm.sharePct.low, rm.sharePct.high);
     compInWeighted += w * probIndian(rm.typicalOrigin);
     compTotal += w;

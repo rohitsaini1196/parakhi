@@ -25,6 +25,7 @@ export async function estimateBreakdown(args: {
   product: ResolvedProduct;
   template: CategoryTemplate;
   hsnCode: string;
+  declaredIngredients?: string[];
 }): Promise<ProductBreakdown> {
   const gst = await lookupGstRate(args.hsnCode, {
     ratePct: args.template.defaultGstRate,
@@ -40,5 +41,7 @@ export async function estimateBreakdown(args: {
     gstOverride: gst,
     brandProfitOriginsOverride: brandProfitOrigins ?? undefined,
     commodityPrices,
+    declaredIngredients:
+      args.declaredIngredients ?? args.product.declaredIngredients,
   });
 }

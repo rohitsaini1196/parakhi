@@ -234,6 +234,14 @@ function BreakdownRow({ c }: { c: DesignComponent }) {
       <div style={{ padding: "12px 0", borderBottom: `1px solid ${T.line}`, display: "flex", alignItems: "center", gap: 10 }}>
         <span style={{ width: 8, height: 8, background: colorFor(c.origin), borderRadius: 1 }} />
         {c.name}
+        {c.confirmedOnLabel && (
+          <span
+            title="Confirmed on the product label (Open Food Facts)"
+            style={{ fontFamily: T.fontMono, fontSize: 9, color: T.india, border: `1px solid ${T.india}`, borderRadius: 2, padding: "1px 5px", letterSpacing: "0.06em", whiteSpace: "nowrap" }}
+          >
+            ✓ ON LABEL
+          </span>
+        )}
       </div>
       <div style={{ padding: "12px 0", borderBottom: `1px solid ${T.line}`, fontFamily: T.fontMono, fontSize: 12, color: T.ink }}>{c.pct}%</div>
       <div style={{ padding: "12px 0", borderBottom: `1px solid ${T.line}`, fontFamily: T.fontMono, fontSize: 12, color: T.inkDim }}>

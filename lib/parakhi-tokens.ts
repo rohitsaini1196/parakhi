@@ -94,6 +94,7 @@ export interface DesignComponent {
   confidence: "high" | "medium" | "low";
   tier: 1 | 2 | 3 | 4;
   note?: string;
+  confirmedOnLabel?: boolean;
 }
 
 export interface DesignImport {

@@ -107,6 +107,7 @@ export default async function ProductPage({ params }: { params: Params }) {
     confidence: c.confidence,
     tier: c.sourceTier,
     note: c.explanation,
+    confirmedOnLabel: c.confirmedOnLabel,
   }));
 
   const designImports: DesignImport[] = imports.map((imp) => ({
