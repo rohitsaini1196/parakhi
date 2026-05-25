@@ -121,7 +121,7 @@ export default async function ProductPage({ params }: { params: Params }) {
 
   const design: DesignProduct = {
     slug: product.slug,
-    brand: product.name,
+    brand: productTitle(product.brand, product.name),
     variant: [product.category.displayName, product.variant].filter(Boolean).join(" · "),
     category: product.category.displayName,
     mrp,
@@ -169,6 +169,16 @@ export default async function ProductPage({ params }: { params: Params }) {
 }
 
 // ── helpers ──────────────────────────────────────────────────────────
+
+/** Brand-forward, deduped product title. "Maaza" + "Mango Drink" →
+ *  "Maaza Mango Drink"; "Parle Products" + "Parle-G …" → "Parle-G …"
+ *  (avoids repeating the brand when the name already carries it). */
+function productTitle(brand: string, name: string): string {
+  const nameLower = name.toLowerCase();
+  const brandWords = brand.toLowerCase().split(/\s+/);
+  const nameCarriesBrand = brandWords.some((w) => w.length > 2 && nameLower.includes(w));
+  return nameCarriesBrand ? name : `${brand} ${name}`;
+}
 
 function hostOf(url: string): string {
   try {
