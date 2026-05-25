@@ -41,8 +41,25 @@ export function Fold1({ product }: { product: DesignProduct }) {
         <Link href="/" style={{ textDecoration: "none" }}>
           <Wordmark size={22} />
         </Link>
-        <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
+        <div style={{ display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap" }}>
           <Eyebrow>{product.category}</Eyebrow>
+          {product.isDraft && (
+            <span
+              style={{
+                fontFamily: T.fontMono,
+                fontSize: 10,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: T.tax,
+                border: `1px solid ${T.tax}`,
+                borderRadius: 2,
+                padding: "2px 7px",
+              }}
+              title="This category's template is an unreviewed draft estimate."
+            >
+              draft · unreviewed
+            </span>
+          )}
           <AsOf date={product.asOf} />
         </div>
       </header>
@@ -335,6 +352,28 @@ export function Fold4({ product }: { product: DesignProduct }) {
       <p style={{ color: T.inkDim, marginTop: 14, fontSize: 16, maxWidth: 540, lineHeight: 1.5 }}>
         Every number is sourced and tiered. We grade our own confidence so you don&apos;t have to take our word for it.
       </p>
+
+      {/* Honesty meter — how much rests on hard data vs estimate */}
+      <div style={{ marginTop: 32, maxWidth: 620 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+          <Eyebrow>How much is hard-sourced</Eyebrow>
+          <span style={{ fontFamily: T.fontMono, fontSize: 12, color: T.ink }}>
+            {product.sourcedShare}% Tier 1–2
+          </span>
+        </div>
+        <div style={{ height: 8, borderRadius: 2, overflow: "hidden", display: "flex", boxShadow: `inset 0 0 0 1px ${T.line}` }}>
+          <div style={{ width: `${product.sourcedShare}%`, background: T.india }} />
+          <div style={{ width: `${100 - product.sourcedShare}%`, background: T.lineSoft }} />
+        </div>
+        <p style={{ marginTop: 10, fontSize: 13, color: T.inkDim, lineHeight: 1.5 }}>
+          {product.sourcedShare}% of this breakdown rests on hard data — GST schedule,
+          live mandi prices, trade + filings.{" "}
+          {product.isDraft
+            ? "The rest is a category-typical estimate from an unreviewed draft template — treat it as directional, not gospel."
+            : "The rest is a reviewed category-typical estimate, shown with ranges."}
+        </p>
+      </div>
+
       <div style={{ marginTop: 40, display: "flex", gap: 20, flexWrap: "wrap" }}>
         {tiers.map((t) => (
           <div key={t.tier} style={{ flex: "1 1 200px", maxWidth: 280, padding: "18px 22px", border: `1px solid ${T.line}`, borderRadius: 3 }}>

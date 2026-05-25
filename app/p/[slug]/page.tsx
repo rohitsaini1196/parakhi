@@ -77,6 +77,14 @@ export default async function ProductPage({ params }: { params: Params }) {
   const abroadPct = Math.round(imports.reduce((s, i) => s + i.sharePctOfProduct, 0));
   const indiaPct = Math.max(0, 100 - taxPct - abroadPct);
 
+  // Honesty: how much of the breakdown rests on hard data (Tier 1-2) vs
+  // category-typical estimate (Tier 3-4).
+  const totalShare = components.reduce((s, c) => s + c.sharePct, 0) || 1;
+  const sourcedShare = Math.round(
+    (components.filter((c) => c.sourceTier <= 2).reduce((s, c) => s + c.sharePct, 0) / totalShare) * 100,
+  );
+  const isDraft = product.breakdown.templateVersion.includes("draft");
+
   // Map components, tagging origin (TAX / foreign country / IN).
   const importNames = new Map<string, string>(); // lowercased ingredient -> top foreign code
   for (const imp of imports) {
@@ -134,6 +142,8 @@ export default async function ProductPage({ params }: { params: Params }) {
     sources: designSources,
     hero: product.isHeroProduct,
     asOf: gst.asOfDate?.slice(0, 7) ?? "2026",
+    sourcedShare,
+    isDraft,
     longform: product.isHeroProduct && product.heroMarkdown ? parseLongform(product.heroMarkdown) : undefined,
     shrinkflation: SHRINKFLATION[product.slug],
   };

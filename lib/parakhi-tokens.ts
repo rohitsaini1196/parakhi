@@ -76,6 +76,12 @@ export interface DesignProduct {
   catch?: string;
   hero: boolean;
   asOf: string;
+  /** % of the breakdown (by share of MRP) resting on Tier-1/2 hard data. */
+  sourcedShare: number;
+  /** True when the category template is still an unreviewed draft. */
+  isDraft: boolean;
+  /** Declared ingredients from the product label (Open Food Facts), if known. */
+  declaredIngredients?: string[];
   longform?: { kicker: string; body: string[] };
   shrinkflation?: { year: number; weight: number; price: number }[];
 }
