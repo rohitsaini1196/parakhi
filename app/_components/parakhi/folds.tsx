@@ -386,6 +386,23 @@ export function Fold4({ product }: { product: DesignProduct }) {
           </div>
         ))}
       </div>
+      {product.declaredIngredients && product.declaredIngredients.length > 0 && (
+        <div style={{ marginTop: 48 }}>
+          <Eyebrow style={{ marginBottom: 6 }}>On the label · via Open Food Facts</Eyebrow>
+          <p style={{ fontSize: 13, color: T.inkDim, marginBottom: 14, maxWidth: 540, lineHeight: 1.5 }}>
+            The actual declared ingredients — a real sourced fact from the pack,
+            not our estimate.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {product.declaredIngredients.map((ing, i) => (
+              <span key={i} style={{ fontFamily: T.fontMono, fontSize: 11, color: T.ink, border: `1px solid ${T.line}`, borderRadius: 2, padding: "4px 9px" }}>
+                {ing}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div style={{ marginTop: 48 }}>
         <Eyebrow style={{ marginBottom: 16 }}>Sources used for this product</Eyebrow>
         {sources.map((s, i) => (

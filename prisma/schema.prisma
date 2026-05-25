@@ -18,6 +18,10 @@ model Product {
   categorySlug  String
   category      Category  @relation(fields: [categorySlug], references: [slug])
   sourceUrls    String?
+  // JSON array of declared ingredients from the product label (Open Food
+  // Facts). Real sourced fact; null when we have no label match.
+  declaredIngredients String?
+  offBarcode          String?
   mrpInPaise    Int?
   mrpLastSeenAt DateTime?
   breakdown     Breakdown?

@@ -144,6 +144,9 @@ export default async function ProductPage({ params }: { params: Params }) {
     asOf: gst.asOfDate?.slice(0, 7) ?? "2026",
     sourcedShare,
     isDraft,
+    declaredIngredients: product.declaredIngredients
+      ? (JSON.parse(product.declaredIngredients) as string[])
+      : undefined,
     longform: product.isHeroProduct && product.heroMarkdown ? parseLongform(product.heroMarkdown) : undefined,
     shrinkflation: SHRINKFLATION[product.slug],
   };
