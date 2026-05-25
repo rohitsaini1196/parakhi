@@ -14,6 +14,7 @@
     "recompute": "tsx --env-file=.env scripts/recompute-breakdowns.ts",
     "seed:catalog": "tsx --env-file=.env scripts/seed-catalog.ts",
     "enrich:off": "tsx --env-file=.env scripts/enrich-off.ts",
+    "calibrate": "tsx --env-file=.env scripts/calibrate.ts",
     "ingest:agmarknet": "tsx --env-file=.env scripts/ingest-agmarknet.ts",
     "ingest:cbic": "tsx --env-file=.env scripts/ingest-cbic-gst.ts",
     "ingest:wikidata": "tsx --env-file=.env scripts/ingest-wikidata-brands.ts",
