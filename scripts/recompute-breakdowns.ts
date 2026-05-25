@@ -25,6 +25,7 @@ import { upsertBreakdown } from "../lib/persist";
 import { lookupGstRate } from "../lib/gst-lookup";
 import { brandOriginsForProduct } from "../lib/brand-origins";
 import { isNoteworthy, writeScoreDeltaAlert } from "../lib/alerts";
+import { latestCommodityPrices } from "../lib/commodity";
 
 async function main() {
   const products = await db.product.findMany({
@@ -36,6 +37,8 @@ async function main() {
     console.log("No non-hero products to recompute.");
     return;
   }
+
+  const commodityPrices = await latestCommodityPrices();
 
   for (const product of products) {
     const template = CategoryTemplateSchema.parse(
@@ -54,6 +57,7 @@ async function main() {
       mrpInPaise: product.mrpInPaise,
       gstOverride: gst,
       brandProfitOriginsOverride: brandOrigins ?? undefined,
+      commodityPrices,
     });
 
     const previousIvc = product.breakdown

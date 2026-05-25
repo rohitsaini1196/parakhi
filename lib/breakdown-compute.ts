@@ -6,6 +6,7 @@ import type {
   Origin,
   ProductBreakdown,
 } from "./schemas";
+import { anchorForMaterial } from "./commodity";
 
 /**
  * Deterministic baseline breakdown for a product, computed from its category
@@ -152,6 +153,10 @@ export function computeBaseline(args: {
   /** Optional brandProfit origins override (e.g. from Wikidata enrichment).
    * Replaces template's `brandProfit.origins` entirely when set. */
   brandProfitOriginsOverride?: import("./schemas").Origin[];
+  /** Optional Agmarknet commodity price anchors, keyed by commodity name.
+   * Raw-material components that map to a commodity get a dated Tier-1
+   * wholesale-price anchor instead of a pure template estimate. */
+  commodityPrices?: Map<string, import("./commodity").CommodityAnchor>;
 }): ProductBreakdown {
   const { template, hsnCode, mrpInPaise = null } = args;
   // Apply overrides without mutating the template object.
@@ -220,15 +225,25 @@ export function computeBaseline(args: {
       ? `dominant origin: ${dominant.countryName}${dominant.notes ? ` — ${dominant.notes}` : ""}`
       : "origin unspecified";
 
+    // Agmarknet anchor: if this material maps to a commodity we have a live
+    // wholesale price for, upgrade it from a template estimate to a dated
+    // Tier-1 market reference.
+    const anchor = args.commodityPrices
+      ? anchorForMaterial(rm.name, args.commodityPrices)
+      : null;
+    const explanation = anchor
+      ? `Template composition share; ${originText}. Wholesale ${anchor.commodity.toLowerCase()} ₹${anchor.modalPerQuintal.toLocaleString("en-IN")}/quintal (Agmarknet ${anchor.market}, ${anchor.asOf}) — input-commodity reference.`
+      : `Template composition share of the raw-materials bucket; ${originText}.`;
+
     components.push({
       label: rm.name,
       sharePct: round1(shareOfMrp),
       rangePct: { low: round1(rangeLow), high: round1(rangeHigh) },
       rupeeAmount: paiseFromPct(shareOfMrp, mrpInPaise),
       rupeeRange: paiseRangeFromPct(rangeLow, rangeHigh, mrpInPaise),
-      confidence: "medium",
-      sourceTier: 2,
-      explanation: `Template composition share of the raw-materials bucket; ${originText}.`,
+      confidence: anchor ? "high" : "medium",
+      sourceTier: anchor ? 1 : 2,
+      explanation,
     });
   }
 

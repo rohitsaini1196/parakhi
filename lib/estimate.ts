@@ -1,6 +1,7 @@
 import { computeBaseline } from "./breakdown-compute";
 import { lookupGstRate } from "./gst-lookup";
 import { brandOriginsForProduct } from "./brand-origins";
+import { latestCommodityPrices } from "./commodity";
 import type {
   CategoryTemplate,
   ProductBreakdown,
@@ -30,6 +31,7 @@ export async function estimateBreakdown(args: {
   });
 
   const brandProfitOrigins = await brandOriginsForProduct(args.product.brand);
+  const commodityPrices = await latestCommodityPrices();
 
   return computeBaseline({
     template: args.template,
@@ -37,5 +39,6 @@ export async function estimateBreakdown(args: {
     mrpInPaise: args.product.mrpInPaise ?? null,
     gstOverride: gst,
     brandProfitOriginsOverride: brandProfitOrigins ?? undefined,
+    commodityPrices,
   });
 }
