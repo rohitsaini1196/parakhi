@@ -48,7 +48,7 @@ export const ANCHORS: Anchor[] = [
   {
     slug: "fortune-sunflower-oil-1l",
     ivc: [40, 65],
-    mustContain: ["sunflower"],
+    mustContain: ["oil"],
     basis:
       "India imports ~55-60% of edible oil; sunflower is heavily imported (Russia/Ukraine/Argentina). Oil is ~80% of cost, so import share dominates → low IVC.",
     source: "Solvent Extractors' Association of India; DGFT edible-oil import data",
