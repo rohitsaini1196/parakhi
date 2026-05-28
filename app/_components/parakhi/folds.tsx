@@ -109,6 +109,11 @@ function BigStack({ product }: { product: DesignProduct }) {
           <div style={{ fontFamily: T.fontDisplay, fontStyle: "italic", fontSize: "clamp(26px,4vw,36px)", lineHeight: 1.05, color: T.ink, maxWidth: 320, letterSpacing: "-0.02em" }}>
             {product.verdict}.
           </div>
+          <div style={{ marginTop: 10, display: "inline-flex", alignItems: "center", gap: 6, background: "oklch(0.94 0.02 145 / 0.5)", borderRadius: 4, padding: "3px 8px" }}>
+            <span style={{ fontFamily: T.fontMono, fontSize: 10, color: T.india, letterSpacing: "0.1em" }}>COMPOSITION</span>
+            <span style={{ fontFamily: T.fontDisplay, fontStyle: "italic", fontSize: 16, color: T.india }}>{product.composition}%</span>
+            <span style={{ fontFamily: T.fontMono, fontSize: 9, color: T.inkFaint, letterSpacing: "0.05em" }}>MII</span>
+          </div>
         </div>
       </div>
       <MoneyBar india={product.split.india} tax={product.split.tax} abroad={product.split.abroad} height={26} />
