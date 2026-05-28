@@ -61,7 +61,7 @@ export function SearchForm({ defaultValue }: { defaultValue?: string }) {
   function submit(q: string) {
     if (!q.trim()) return;
     setSubmitting(true);
-    window.location.href = `/api/search?q=${encodeURIComponent(q.trim())}`;
+    window.location.href = `/searching?q=${encodeURIComponent(q.trim())}`;
   }
 
   const hasSuggestions = products.length > 0 || brands.length > 0;

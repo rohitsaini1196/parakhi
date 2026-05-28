@@ -46,6 +46,7 @@ export default async function Home({ searchParams }: { searchParams: SP }) {
       <header style={{ padding: "26px clamp(20px,5vw,48px) 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Wordmark size={26} />
         <div style={{ display: "flex", gap: 24 }}>
+          <Link href="/browse" style={{ textDecoration: "none" }}><Eyebrow>browse</Eyebrow></Link>
           <Link href="/about" style={{ textDecoration: "none" }}><Eyebrow>about</Eyebrow></Link>
           <Link href="/sources" style={{ textDecoration: "none" }}><Eyebrow>sources</Eyebrow></Link>
         </div>
@@ -96,6 +97,7 @@ export default async function Home({ searchParams }: { searchParams: SP }) {
       </div>
 
       <footer style={{ padding: "24px clamp(20px,5vw,48px)", borderTop: `1px solid ${T.line}`, display: "flex", justifyContent: "center", gap: 18 }}>
+        <Link href="/browse" style={{ textDecoration: "none" }}><Eyebrow>Browse</Eyebrow></Link>
         <Link href="/about" style={{ textDecoration: "none" }}><Eyebrow>About</Eyebrow></Link>
         <a href="https://github.com/rohitsaini1196/parakhi" target="_blank" rel="noreferrer" style={{ textDecoration: "none" }}><Eyebrow>Open source</Eyebrow></a>
       </footer>

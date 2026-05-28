@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { unstable_cache } from "next/cache";
+import type { Metadata } from "next";
 import { db } from "@/lib/db";
 import {
   CategoryTemplateSchema,
@@ -180,6 +181,45 @@ export default async function ProductPage({ params }: { params: Params }) {
       <NextProducts items={nextItems} />
     </main>
   );
+}
+
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await loadProduct(slug);
+  if (!product?.breakdown) return { title: "Parakhi" };
+
+  const ivc = Math.round(product.breakdown.madeInIndiaScoreBp / 100);
+  const mrp = product.mrpInPaise != null ? `₹${Math.round(product.mrpInPaise / 100)} · ` : "";
+  const gst = GstInfoSchema.parse(JSON.parse(product.breakdown.gstJson));
+  const imports = z.array(ImportSchema).parse(JSON.parse(product.breakdown.importsJson));
+  const abroad = Math.round(imports.reduce((s, i) => s + i.sharePctOfProduct, 0));
+  const tax = Math.round(gst.ratePct);
+  const india = Math.max(0, 100 - tax - abroad);
+  const title = productTitle(product.brand, product.name);
+  const variant = product.variant ? ` ${product.variant}` : "";
+
+  const description =
+    `${mrp}${india}% stays in India · ${tax}% tax · ${abroad}% abroad. ` +
+    `Full cost breakdown sourced from public data.`;
+
+  const ogTitle = `${title}${variant} — ${ivc}% Indian Value Capture`;
+
+  return {
+    title: `${ogTitle} | Parakhi`,
+    description,
+    openGraph: {
+      title: ogTitle,
+      description,
+      url: `https://parakhi.vercel.app/p/${slug}`,
+      siteName: "Parakhi",
+      type: "website",
+    },
+    twitter: {
+      card: "summary",
+      title: ogTitle,
+      description,
+    },
+  };
 }
 
 // ── helpers ──────────────────────────────────────────────────────────

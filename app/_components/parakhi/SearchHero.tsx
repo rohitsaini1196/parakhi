@@ -59,7 +59,7 @@ export function SearchHero({ defaultValue }: { defaultValue?: string }) {
   function submit(term: string) {
     if (!term.trim()) return;
     setSubmitting(true);
-    window.location.href = `/api/search?q=${encodeURIComponent(term.trim())}`;
+    router.push(`/searching?q=${encodeURIComponent(term.trim())}`);
   }
 
   const hasSug = products.length > 0 || brands.length > 0;
