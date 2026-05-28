@@ -275,7 +275,7 @@ export function Fold3({ product }: { product: DesignProduct }) {
           {product.imports.map((imp, i) => (
             <div key={i} style={{ padding: "18px 0", borderTop: `1px solid ${T.line}`, display: "grid", gridTemplateColumns: "auto 1fr", gap: 16, alignItems: "center" }}>
               <div style={{ fontFamily: T.fontDisplay, fontStyle: "italic", fontSize: "clamp(40px,9vw,56px)", color: T.abroad, letterSpacing: "-0.04em", lineHeight: 1, minWidth: 70 }}>
-                {imp.pct}
+                {imp.pct === 0 ? "<1" : imp.pct}
                 <span style={{ fontSize: 22, color: T.inkDim, marginLeft: 2 }}>%</span>
               </div>
               <div style={{ minWidth: 0 }}>
@@ -334,7 +334,7 @@ function FlowMap({ product }: { product: DesignProduct }) {
             <path d={`M 240,180 Q 360,${yBase + 20} 452,${yBase}`} fill="none" stroke={T.abroad} strokeWidth={Math.max(2, imp.pct * 0.4)} strokeOpacity="0.5" strokeDasharray="4 6" style={{ animation: "flowDash 1.6s linear infinite" }} />
             <g transform={`translate(452, ${yBase})`}>
               <rect x="-4" y="-18" width="148" height="36" fill={T.abroad} fillOpacity="0.12" stroke={T.abroad} strokeOpacity="0.5" rx="2" />
-              <text x="6" y="-3" fontFamily="var(--font-mono), monospace" fontSize="10" fill={T.abroad} letterSpacing="0.08em">{imp.pct}% · {dest}</text>
+              <text x="6" y="-3" fontFamily="var(--font-mono), monospace" fontSize="10" fill={T.abroad} letterSpacing="0.08em">{imp.pct === 0 ? "<1" : imp.pct}% · {dest}</text>
               <text x="6" y="12" fontFamily="var(--font-body), sans-serif" fontSize="9" fill="oklch(0.85 0.04 32)" opacity="0.85">{label}</text>
             </g>
             <circle cx="240" cy="180" r="3" fill={T.abroad} />
