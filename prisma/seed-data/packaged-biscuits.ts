@@ -10,6 +10,7 @@ export const PACKAGED_BISCUITS_TEMPLATE: CategoryTemplate = {
     "biscuit", "biscuits", "cookie", "cookies", "marie", "glucose",
     "cream cracker", "digestive", "nice", "bourbon", "rusk", "khari",
     "parle", "britannia", "good day", "monaco", "krackjack", "hide and seek",
+    "sunfeast", "yumfills", "mom's magic", "dark fantasy", "mcvitie",
   ],
   typicalStructure: {
     rawMaterials: { lowPct: 25, highPct: 35 },

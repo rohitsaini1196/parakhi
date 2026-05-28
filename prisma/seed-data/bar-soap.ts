@@ -13,7 +13,7 @@ export const BAR_SOAP_TEMPLATE: CategoryTemplate = {
   keywords: [
     "soap", "bar soap", "bathing bar", "beauty bar", "lux", "lifebuoy",
     "dove", "pears", "santoor", "cinthol", "medimix", "mysore sandal",
-    "dettol soap", "hamam", "margo",
+    "dettol soap", "hamam", "margo", "fiama", "godrej no.1", "vivel", "savlon",
   ],
   typicalStructure: {
     rawMaterials: { lowPct: 25, highPct: 38 },

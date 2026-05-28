@@ -26,7 +26,7 @@ export const CHIPS_NAMKEEN_TEMPLATE: CategoryTemplate = {
     "kurkure", "bingo", "uncle chipps", "uncle chips", "pringles",
     "namkeen", "bhujia", "sev", "mixture", "dal moth", "papdi",
     "haldiram", "haldiram's", "bikaji", "balaji", "yellow diamond",
-    "cheetos", "doritos", "cornitos",
+    "cheetos", "doritos", "cornitos", "popcorn", "too yumm", "veggie stix", "act ii",
   ],
   typicalStructure: {
     rawMaterials: { lowPct: 22, highPct: 32 },

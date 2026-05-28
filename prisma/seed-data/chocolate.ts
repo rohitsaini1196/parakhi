@@ -18,7 +18,7 @@ export const CHOCOLATE_TEMPLATE: CategoryTemplate = {
     "chocolate", "dairy milk", "cadbury", "kitkat", "kit kat", "munch",
     "5 star", "five star", "perk", "gems", "milky bar", "milkybar",
     "ferrero", "nutella", "snickers", "bournville", "amul chocolate",
-    "dark chocolate", "silk", "fuse",
+    "dark chocolate", "silk", "fuse", "lindt", "hershey", "mars", "twix", "bounty",
   ],
   typicalStructure: {
     rawMaterials: { lowPct: 28, highPct: 42 },
