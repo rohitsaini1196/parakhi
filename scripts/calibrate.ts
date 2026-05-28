@@ -21,7 +21,7 @@ import { GstInfoSchema, CostComponentSchema } from "../lib/schemas";
 import { z } from "zod";
 import { ANCHORS } from "../calibration/anchors";
 
-const GENERIC = new Set(["oil", "powder", "syrup", "extract", "other", "added", "based", "mixed", "salt", "water", "agents", "regulators", "flavour", "colour", "preservatives", "emulsifiers"]);
+const GENERIC = new Set(["oil", "powder", "syrup", "extract", "other", "added", "based", "mixed", "agents", "regulators", "flavour", "colour", "preservatives", "emulsifiers"]);
 function materialTokens(name: string): string[] {
   return name.toLowerCase().replace(/[()/,]/g, " ").split(/\s+/).filter((t) => t.length >= 3 && !GENERIC.has(t));
 }
@@ -62,7 +62,11 @@ async function main() {
     const declared = (JSON.parse(p.declaredIngredients) as string[]).map((s) => s.toLowerCase());
     if (declared.length < 3) continue;
     const comps = z.array(CostComponentSchema).parse(JSON.parse(p.breakdown!.componentsJson));
-    const rm = comps.filter((c) => c.confirmedOnLabel !== undefined);
+    // Skip variant-conditional materials (sharePct.low === 0 signals optional)
+    const rm = comps.filter((c) =>
+      c.confirmedOnLabel !== undefined &&
+      c.rangePct.low > 0
+    );
     labelled++;
     for (const c of rm) {
       totalRm++;

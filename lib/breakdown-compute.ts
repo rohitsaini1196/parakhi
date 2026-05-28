@@ -123,7 +123,7 @@ const GENERIC_TOKENS = new Set([
   "regulators", "agent", "agents", "flavour", "flavor", "flavouring",
   "colour", "color", "preservative", "preservatives", "emulsifier",
   "emulsifiers", "added", "based", "other", "mixed", "unknown", "and",
-  "the", "refined", "edible", "iodised", "leavening",
+  "the", "refined", "edible", "iodised", "leavening", "processed",
 ]);
 
 /**
