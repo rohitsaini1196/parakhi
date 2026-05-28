@@ -1,0 +1,31 @@
+name: enrich-off
+
+# Weekly Open Food Facts label enrichment for products missing declaredIngredients.
+# Idempotent — skips already-enriched products. OFF hit rate ~25% for Indian products.
+# Requires repo secret: DATABASE_URL (persistent Postgres).
+
+on:
+  schedule:
+    - cron: "0 4 * * 2" # Tuesdays 09:30 IST
+  workflow_dispatch: {}
+
+concurrency:
+  group: enrich-off
+  cancel-in-progress: false
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npx tsx scripts/enrich-off.ts
+      - run: npx tsx scripts/recompute-breakdowns.ts

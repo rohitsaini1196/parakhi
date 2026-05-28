@@ -155,7 +155,7 @@ export const CARBONATED_SOFT_DRINKS_TEMPLATE: CategoryTemplate = {
       ],
     },
     {
-      name: "CO2",
+      name: "Carbonation (CO2 / carbon dioxide)",
       sharePct: { low: 0.5, high: 1.5 },
       typicalOrigin: [
         { country: "IN", countryName: "India", probabilityPct: 100 },
