@@ -210,16 +210,16 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     openGraph: {
       title: ogTitle,
       description,
-      url: `https://parakhi.vercel.app/p/${slug}`,
+      url: `https://parakhi.in/p/${slug}`,
       siteName: "Parakhi",
       type: "website",
-      images: [{ url: `https://parakhi.vercel.app/api/og?slug=${slug}`, width: 1200, height: 630 }],
+      images: [{ url: `https://parakhi.in/api/og?slug=${slug}`, width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
       title: ogTitle,
       description,
-      images: [`https://parakhi.vercel.app/api/og?slug=${slug}`],
+      images: [`https://parakhi.in/api/og?slug=${slug}`],
     },
   };
 }

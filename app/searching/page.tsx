@@ -17,7 +17,7 @@ export default async function SearchingPage({ searchParams }: { searchParams: SP
 
   // Rate-limit check (reuse existing logic — needs a Request-like object).
   // Build a minimal request for the rate limiter which only reads headers/IP.
-  const fakeReq = new Request(`https://parakhi.vercel.app/searching?q=${encodeURIComponent(q)}`, {
+  const fakeReq = new Request(`https://parakhi.in/searching?q=${encodeURIComponent(q)}`, {
     headers: { "x-forwarded-for": "0.0.0.0" },
   });
 

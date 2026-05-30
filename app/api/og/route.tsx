@@ -139,7 +139,7 @@ export async function GET(req: Request) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ fontSize: 22, fontStyle: "italic", color: "#e8e0d0" }}>parakhi</div>
           <div style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#4a4035", fontFamily: "monospace" }}>
-            parakhi.vercel.app
+            parakhi.in
           </div>
         </div>
       </div>

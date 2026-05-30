@@ -6,7 +6,7 @@ import { T } from "@/lib/parakhi-tokens";
 export function ShareButton({ slug, title, ivc }: { slug: string; title: string; ivc: number }) {
   const [copied, setCopied] = useState(false);
 
-  const url = `https://parakhi.vercel.app/p/${slug}`;
+  const url = `https://parakhi.in/p/${slug}`;
   const text = `${title} — ${ivc}% Indian Value Capture. Where does your money go? 👇`;
   const waUrl = `https://wa.me/?text=${encodeURIComponent(text + "\n" + url)}`;
 
