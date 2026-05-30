@@ -213,11 +213,13 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       url: `https://parakhi.vercel.app/p/${slug}`,
       siteName: "Parakhi",
       type: "website",
+      images: [{ url: `https://parakhi.vercel.app/api/og?slug=${slug}`, width: 1200, height: 630 }],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: ogTitle,
       description,
+      images: [`https://parakhi.vercel.app/api/og?slug=${slug}`],
     },
   };
 }

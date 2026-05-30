@@ -16,6 +16,7 @@ import {
   useIsNarrow,
 } from "./atoms";
 import { NoteFill } from "./NoteFill";
+import { ShareButton } from "./ShareButton";
 
 const PAD = "clamp(28px, 6vw, 80px)";
 
@@ -84,6 +85,7 @@ export function Fold1({ product }: { product: DesignProduct }) {
         <BigStack product={product} />
         <div style={{ width: "100%", maxWidth: 560 }}>
           <NoteFill split={product.split} ivc={product.ivc} />
+          <ShareButton slug={product.slug} title={product.brand} ivc={product.ivc} />
         </div>
       </div>
 
