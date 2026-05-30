@@ -482,6 +482,28 @@ const CATALOG: Entry[] = [
   { brand: "Coca-Cola", name: "Zero Sugar", variant: "330ml" },
   { brand: "Mountain Dew", name: "Cola", variant: "600ml" },
   { brand: "Appy Fizz", name: "Apple Drink", variant: "600ml" },
+
+  // ── Top-up to 400 ──
+  { brand: "Maggi", name: "Masala Noodles", variant: "560g" },
+  { brand: "Britannia", name: "50-50 Sweet & Salty", variant: "200g" },
+  { brand: "Parle", name: "Hide & Seek Milano", variant: "100g" },
+  { brand: "Colgate", name: "Zig Zag Charcoal Toothbrush", variant: "1 pc" },
+  { brand: "Nescafé", name: "Classic Coffee", variant: "200g" },
+  { brand: "Tata Tea", name: "Premium", variant: "1kg" },
+  { brand: "Wagh Bakri", name: "Premium Tea", variant: "1kg" },
+  { brand: "Amul", name: "Taaza Toned Milk", variant: "1L" },
+  { brand: "Surf Excel", name: "Matic Liquid", variant: "1L" },
+  { brand: "Ariel", name: "Matic Liquid", variant: "1L" },
+  { brand: "Himalaya", name: "Protein Shampoo", variant: "200ml" },
+  { brand: "Dove", name: "Elixir Hair Oil", variant: "100ml" },
+  { brand: "Fortune", name: "Soyabean Oil", variant: "5L" },
+  { brand: "Parachute", name: "Coconut Oil", variant: "200ml" },
+  { brand: "Cadbury", name: "Dairy Milk", variant: "160g" },
+  { brand: "Haldiram's", name: "Takatak Mix", variant: "150g" },
+  { brand: "Lay's", name: "Spanish Tomato Tango", variant: "52g" },
+  { brand: "Tropicana", name: "Orange Juice", variant: "200ml" },
+  { brand: "Paper Boat", name: "Nimbu Pani", variant: "250ml" },
+  { brand: "Real", name: "Mixed Fruit Juice", variant: "200ml" },
 ];
 
 async function main() {
