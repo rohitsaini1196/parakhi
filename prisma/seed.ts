@@ -18,6 +18,8 @@ import { SKIN_CREAM_TEMPLATE } from "./seed-data/skin-cream";
 import { COOKING_OIL_TEMPLATE } from "./seed-data/cooking-oil";
 import { INSTANT_COFFEE_TEMPLATE } from "./seed-data/instant-coffee";
 import { PACKAGED_JUICE_TEMPLATE } from "./seed-data/packaged-juice";
+import { LIQUID_SOAP_TEMPLATE } from "./seed-data/liquid-soap";
+import { DAIRY_PRODUCTS_TEMPLATE } from "./seed-data/dairy-products";
 import {
   PARLE_G_BREAKDOWN,
   PARLE_G_HERO_MARKDOWN,
@@ -46,6 +48,8 @@ const CATEGORIES: CategoryTemplate[] = [
   COOKING_OIL_TEMPLATE,
   INSTANT_COFFEE_TEMPLATE,
   PACKAGED_JUICE_TEMPLATE,
+  LIQUID_SOAP_TEMPLATE,
+  DAIRY_PRODUCTS_TEMPLATE,
 ];
 
 async function seedCategories() {
