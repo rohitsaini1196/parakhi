@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import {
   Instrument_Serif,
   Geist,
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
   title: "Parakhi — kya hai andar?",
   description:
     "Where does your money go when you buy an Indian product? Indian Value Capture, tax, and import origins — every number sourced. Kya hai andar?",
+  metadataBase: new URL("https://parakhi.in"),
 };
 
 export default function RootLayout({
@@ -36,7 +38,10 @@ export default function RootLayout({
       lang="en"
       className={`${display.variable} ${body.variable} ${mono.variable} ${deva.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
