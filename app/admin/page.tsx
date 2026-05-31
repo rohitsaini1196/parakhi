@@ -10,7 +10,7 @@ import type { CategoryTemplate } from "@/lib/schemas";
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
-  const [drafts, feedback, votes, llmTotals, recentCalls] = await Promise.all([
+  const [drafts, feedback, votes, llmTotals, recentCalls, failedQueries] = await Promise.all([
     db.categoryDraft.findMany({
       orderBy: { createdAt: "desc" },
       take: 25,
@@ -28,6 +28,12 @@ export default async function AdminPage() {
       _count: { _all: true },
     }),
     db.llmCall.findMany({ orderBy: { createdAt: "desc" }, take: 20 }),
+    db.failedQuery.groupBy({
+      by: ["query", "reason"],
+      _count: { query: true },
+      orderBy: { _count: { query: "desc" } },
+      take: 50,
+    }),
   ]);
 
   const totalCost = llmTotals.reduce((s, t) => s + (t._sum.costUsd ?? 0), 0);
@@ -277,6 +283,34 @@ export default async function AdminPage() {
               <tr>
                 <td colSpan={2} className="py-2 text-ink-dim">
                   No votes yet.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </Section>
+
+      <Section title={`Failed searches (${failedQueries.length} distinct)`}>
+        <table className="w-full text-sm">
+          <thead className="text-left text-xs uppercase tracking-wide text-ink-dim">
+            <tr>
+              <th className="py-1 pr-3">Query</th>
+              <th className="py-1 pr-3">Reason</th>
+              <th className="py-1 pr-3 tabular-nums">Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            {failedQueries.map((f, i) => (
+              <tr key={i} className="border-t border-line">
+                <td className="py-1.5 pr-3 font-medium">{f.query}</td>
+                <td className="py-1.5 pr-3 text-ink-dim text-xs">{f.reason}</td>
+                <td className="py-1.5 pr-3 tabular-nums">{f._count.query}</td>
+              </tr>
+            ))}
+            {failedQueries.length === 0 && (
+              <tr>
+                <td colSpan={3} className="py-2 text-ink-dim">
+                  No failed searches yet.
                 </td>
               </tr>
             )}

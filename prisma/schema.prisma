@@ -241,3 +241,13 @@ model LlmCall {
 
   @@index([createdAt])
 }
+
+model FailedQuery {
+  id        String   @id @default(cuid())
+  query     String
+  reason    String   // "uncategorized" | "resolve_failed" | "rate_limited"
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([query])
+}

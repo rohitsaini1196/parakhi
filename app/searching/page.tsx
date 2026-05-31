@@ -10,13 +10,19 @@ import { checkRateLimit } from "@/lib/rate-limit";
 
 type SP = Promise<{ q?: string }>;
 
+async function logFailedQuery(query: string, reason: string) {
+  try {
+    await db.failedQuery.create({ data: { query, reason } });
+  } catch {
+    // never break a user request
+  }
+}
+
 export default async function SearchingPage({ searchParams }: { searchParams: SP }) {
   const { q: raw } = await searchParams;
   const q = (raw ?? "").trim();
   if (!q) redirect("/");
 
-  // Rate-limit check (reuse existing logic — needs a Request-like object).
-  // Build a minimal request for the rate limiter which only reads headers/IP.
   const fakeReq = new Request(`https://parakhi.in/searching?q=${encodeURIComponent(q)}`, {
     headers: { "x-forwarded-for": "0.0.0.0" },
   });
@@ -39,11 +45,13 @@ export default async function SearchingPage({ searchParams }: { searchParams: SP
 
     const limit = await checkRateLimit(fakeReq);
     if (!limit.ok) {
+      await logFailedQuery(q, "rate_limited");
       redirect(`/?error=${encodeURIComponent(limit.reason ?? "Rate limited")}`);
     }
 
     const cat = await categorize(resolved);
     if (cat.categorySlug === UNCATEGORIZED) {
+      await logFailedQuery(q, "uncategorized");
       const params = new URLSearchParams({
         brand: resolved.brand,
         name: resolved.name,
@@ -72,6 +80,7 @@ export default async function SearchingPage({ searchParams }: { searchParams: SP
     redirect(`/p/${persisted.slug}`);
   } catch (e) {
     const message = e instanceof Error ? e.message : "Unknown error";
+    await logFailedQuery(q, `resolve_failed: ${message.slice(0, 120)}`);
     redirect(`/?error=${encodeURIComponent(message)}`);
   }
 }
