@@ -27,7 +27,6 @@
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
-    "@google/genai": "^2.6.0",
     "@prisma/client": "^6.19.3",
     "@vercel/analytics": "^2.0.1",
     "motion": "^12.40.0",

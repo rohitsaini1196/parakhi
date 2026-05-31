@@ -1,6 +1,5 @@
 import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
-import { GoogleGenAI } from "@google/genai";
 import type { z } from "zod";
 import { db } from "@/lib/db";
 import { estimateCostUsd } from "@/lib/llm-cost";
@@ -31,7 +30,6 @@ export interface LlmClient {
 const PROVIDER = (process.env.LLM_PROVIDER ?? "openai") as
   | "openai"
   | "ollama"
-  | "gemini"
   | "none";
 
 let _openai: OpenAI | null = null;
@@ -48,11 +46,6 @@ function modelFor(tier: "fast" | "smart"): string {
     return tier === "fast"
       ? (process.env.LLM_MODEL_FAST ?? "gpt-4o-mini")
       : (process.env.LLM_MODEL_SMART ?? "gpt-4o");
-  }
-  if (PROVIDER === "gemini") {
-    return tier === "fast"
-      ? (process.env.GEMINI_MODEL_FAST ?? "gemini-2.0-flash")
-      : (process.env.GEMINI_MODEL_SMART ?? "gemini-2.0-flash");
   }
   return tier === "fast"
     ? (process.env.OLLAMA_MODEL_FAST ?? "llama3.1:8b")
@@ -127,7 +120,6 @@ class OllamaLlmClient implements LlmClient {
 
   async callJson<T>(opts: CallJsonOptions<T>): Promise<T> {
     const model = opts.model ?? modelFor(opts.tier);
-    // Ollama supports `format: "json"` to coerce output. We still validate with Zod.
     const res = await fetch(`${this.baseUrl}/api/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -170,57 +162,13 @@ class OllamaLlmClient implements LlmClient {
   }
 }
 
-// ── Gemini implementation ────────────────────────────────────────────────────
-
-class GeminiLlmClient implements LlmClient {
-  private client: GoogleGenAI;
-
-  constructor() {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) throw new Error("GEMINI_API_KEY not set");
-    this.client = new GoogleGenAI({ apiKey });
-  }
-
-  async callJson<T>(opts: CallJsonOptions<T>): Promise<T> {
-    const model = opts.model ?? modelFor(opts.tier);
-    const prompt = `${opts.system}\n\n${opts.user}`;
-
-    const response = await this.client.models.generateContent({
-      model,
-      contents: prompt,
-      config: { responseMimeType: "application/json" },
-    });
-
-    const raw = response.text ?? "";
-    let json: unknown;
-    try {
-      json = JSON.parse(raw);
-    } catch {
-      throw new Error(`Gemini returned non-JSON: ${raw.slice(0, 200)}`);
-    }
-    const parsed = opts.schema.parse(json);
-
-    await logCall({
-      endpoint: opts.purpose,
-      provider: "gemini",
-      model,
-      inputTokens: response.usageMetadata?.promptTokenCount ?? 0,
-      outputTokens: response.usageMetadata?.candidatesTokenCount ?? 0,
-      productId: opts.productId,
-    });
-    return stampModel(parsed, model);
-  }
-}
-
 // ── Factory + retry wrapper ──────────────────────────────────────────────────
 
 let cached: LlmClient | null = null;
 
 function rawClient(): LlmClient {
   if (cached) return cached;
-  if (PROVIDER === "ollama") cached = new OllamaLlmClient();
-  else if (PROVIDER === "gemini") cached = new GeminiLlmClient();
-  else cached = new OpenAILlmClient();
+  cached = PROVIDER === "ollama" ? new OllamaLlmClient() : new OpenAILlmClient();
   return cached;
 }
 
@@ -247,9 +195,8 @@ export async function callJson<T>(opts: CallJsonOptions<T>): Promise<T> {
 
 /**
  * Loose JSON completion for large/nested schemas that OpenAI's strict
- * structured-output mode rejects (it requires every field required+nullable;
- * our CategoryTemplate has optional/defaulted fields). Uses `json_object`
- * response format, then validates with the provided Zod schema. One retry.
+ * structured-output mode rejects. Uses `json_object` response format,
+ * then validates with the provided Zod schema. One retry.
  *
  * Used by the category-draft generator. Honors the spend cap + logs the call.
  */
@@ -261,37 +208,11 @@ export async function completeJson<T>(opts: {
   schema: z.ZodType<T>;
   productId?: string;
 }): Promise<T> {
-  if (PROVIDER !== "openai" && PROVIDER !== "gemini") {
-    throw new Error(`completeJson requires openai or gemini provider (got ${PROVIDER})`);
+  if (PROVIDER !== "openai") {
+    throw new Error(`completeJson requires LLM_PROVIDER=openai (got ${PROVIDER})`);
   }
   await assertUnderSpendCap();
   const model = modelFor(opts.tier);
-
-  if (PROVIDER === "gemini") {
-    const gClient = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
-    const run = async (): Promise<T> => {
-      const response = await gClient.models.generateContent({
-        model,
-        contents: `${opts.system}\n\n${opts.user}`,
-        config: { responseMimeType: "application/json" },
-      });
-      const raw = response.text ?? "";
-      await logCall({
-        endpoint: opts.purpose,
-        provider: "gemini",
-        model,
-        inputTokens: response.usageMetadata?.promptTokenCount ?? 0,
-        outputTokens: response.usageMetadata?.candidatesTokenCount ?? 0,
-        productId: opts.productId,
-      });
-      return opts.schema.parse(JSON.parse(raw));
-    };
-    try { return await run(); } catch (err) {
-      console.warn(`[llm] ${opts.purpose} attempt 1 failed, retrying`, err);
-      return await run();
-    }
-  }
-
   const run = async (): Promise<T> => {
     const resp = await getOpenAI().chat.completions.create({
       model,
@@ -333,7 +254,7 @@ export class LlmSpendCapError extends Error {
 }
 
 async function assertUnderSpendCap(): Promise<void> {
-  if (PROVIDER === "ollama" || PROVIDER === "gemini") return; // local / free-tier
+  if (PROVIDER === "ollama") return; // local, free
   if (!MONTHLY_USD_CAP || MONTHLY_USD_CAP <= 0) return; // disabled
   const startOfMonth = new Date();
   startOfMonth.setUTCDate(1);
