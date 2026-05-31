@@ -504,6 +504,40 @@ const CATALOG: Entry[] = [
   { brand: "Tropicana", name: "Orange Juice", variant: "200ml" },
   { brand: "Paper Boat", name: "Nimbu Pani", variant: "250ml" },
   { brand: "Real", name: "Mixed Fruit Juice", variant: "200ml" },
+
+  // ── High-demand pre-seed (post-launch searches) ──
+  // Hygiene / healthcare
+  { brand: "Dettol", name: "Antiseptic Liquid", variant: "250ml" },
+  { brand: "Dettol", name: "Handwash", variant: "200ml" },
+  { brand: "Savlon", name: "Antiseptic Liquid", variant: "200ml" },
+  // Patanjali vs mainstream — comparison bait
+  { brand: "Patanjali", name: "Dant Kanti Natural Toothpaste", variant: "200g" },
+  { brand: "Patanjali", name: "Kesh Kanti Hair Oil", variant: "200ml" },
+  { brand: "Patanjali", name: "Saundarya Aloe Vera Gel", variant: "150ml" },
+  // Dairy
+  { brand: "Amul", name: "Butter", variant: "500g" },
+  { brand: "Amul", name: "Processed Cheese", variant: "200g" },
+  { brand: "Amul", name: "Dahi", variant: "400g" },
+  { brand: "Mother Dairy", name: "Mishti Doi", variant: "100g" },
+  // Snacks people search
+  { brand: "Haldiram's", name: "Bhel", variant: "200g" },
+  { brand: "Haldiram's", name: "Chaat Chaska", variant: "150g" },
+  { brand: "Bikaji", name: "Namkeen Mixture", variant: "200g" },
+  { brand: "Bingo", name: "Mad Angles Achaari Masti", variant: "90g" },
+  // Beverages
+  { brand: "Horlicks", name: "Health & Nutrition Drink", variant: "500g" },
+  { brand: "Bournvita", name: "Health Drink", variant: "500g" },
+  { brand: "Complan", name: "Nutrition Drink", variant: "500g" },
+  { brand: "Boost", name: "Health Drink", variant: "500g" },
+  // More soft drinks
+  { brand: "Limca", name: "Lemon", variant: "600ml" },
+  { brand: "Fanta", name: "Orange", variant: "600ml" },
+  // Noodles variants
+  { brand: "Maggi", name: "Oats Noodles", variant: "75g" },
+  { brand: "Yippee", name: "Long Slurpy Noodles", variant: "70g" },
+  // Oils
+  { brand: "Dabur", name: "Vatika Hair Oil", variant: "300ml" },
+  { brand: "Parachute", name: "Advansed Jasmine Hair Oil", variant: "300ml" },
 ];
 
 async function main() {
