@@ -18,6 +18,10 @@ export const SKIN_CREAM_TEMPLATE: CategoryTemplate = {
     "ponds", "pond's", "glow & lovely", "fair & lovely", "fair and lovely",
     "nivea", "vaseline", "boroline", "lakme", "himalaya", "olay", "garnier",
     "body lotion", "cold cream", "night cream",
+    "face wash", "facewash", "face scrub", "cleanser", "clean & clear",
+    "himalaya face wash", "garnier face wash", "neutrogena face wash",
+    "cetaphil cleanser", "ponds face wash", "neem face wash",
+    "aloe vera gel", "aloe gel", "sunscreen", "spf", "sunblock",
   ],
   typicalStructure: {
     rawMaterials: { lowPct: 18, highPct: 30 },

@@ -24,6 +24,8 @@ export const CARBONATED_SOFT_DRINKS_TEMPLATE: CategoryTemplate = {
     "coke", "coca-cola", "coca cola", "diet coke", "pepsi", "thums up",
     "thums up", "sprite", "fanta", "limca", "mirinda", "7up", "mountain dew",
     "campa", "soft drink can",
+    "energy drink", "sting", "monster energy", "red bull", "redbull",
+    "hell energy", "cloud 9", "xxxx energy", "tzinga",
   ],
   typicalStructure: {
     // Raw materials look small because syrup concentrate is the dominant line

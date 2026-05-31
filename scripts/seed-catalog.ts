@@ -538,6 +538,75 @@ const CATALOG: Entry[] = [
   // Oils
   { brand: "Dabur", name: "Vatika Hair Oil", variant: "300ml" },
   { brand: "Parachute", name: "Advansed Jasmine Hair Oil", variant: "300ml" },
+
+  // ── Atta & wheat flour ──
+  { brand: "Aashirvaad", name: "Whole Wheat Atta", variant: "5kg" },
+  { brand: "Aashirvaad", name: "Whole Wheat Atta", variant: "1kg" },
+  { brand: "Aashirvaad", name: "Multigrain Atta", variant: "5kg" },
+  { brand: "Pilsbury", name: "Chakki Fresh Atta", variant: "5kg" },
+  { brand: "Shakti Bhog", name: "Whole Wheat Atta", variant: "10kg" },
+  { brand: "Fortune", name: "Chakki Fresh Atta", variant: "5kg" },
+  { brand: "Annapurna", name: "Atta", variant: "5kg" },
+  { brand: "Patanjali", name: "Sampoorn Chakki Atta", variant: "5kg" },
+  { brand: "Rajdhani", name: "Whole Wheat Atta", variant: "5kg" },
+  { brand: "Tata Sampann", name: "Unpolished Whole Wheat Atta", variant: "5kg" },
+
+  // ── Spices & masala ──
+  { brand: "MDH", name: "Chaat Masala", variant: "100g" },
+  { brand: "MDH", name: "Rajma Masala", variant: "100g" },
+  { brand: "MDH", name: "Garam Masala", variant: "100g" },
+  { brand: "MDH", name: "Chicken Masala", variant: "100g" },
+  { brand: "MDH", name: "Chole Masala", variant: "100g" },
+  { brand: "Everest", name: "Chaat Masala", variant: "100g" },
+  { brand: "Everest", name: "Chicken Masala", variant: "100g" },
+  { brand: "Everest", name: "Garam Masala", variant: "100g" },
+  { brand: "Catch", name: "Black Pepper Powder", variant: "100g" },
+  { brand: "Catch", name: "Chaat Masala", variant: "100g" },
+  { brand: "Tata Sampann", name: "Turmeric Powder", variant: "200g" },
+  { brand: "Tata Sampann", name: "Chilli Powder", variant: "200g" },
+  { brand: "Badshah", name: "Pav Bhaji Masala", variant: "100g" },
+  { brand: "Badshah", name: "Kitchen King Masala", variant: "100g" },
+  { brand: "Suhana", name: "Biryani Masala", variant: "50g" },
+
+  // ── Energy drinks (CSD category) ──
+  { brand: "Sting", name: "Energy Drink", variant: "250ml" },
+  { brand: "Sting", name: "Energy Drink", variant: "500ml" },
+  { brand: "Monster Energy", name: "Original", variant: "330ml" },
+  { brand: "Red Bull", name: "Energy Drink", variant: "250ml" },
+  { brand: "Hell Energy", name: "Original", variant: "250ml" },
+
+  // ── Face wash (skin_cream category) ──
+  { brand: "Himalaya", name: "Purifying Neem Face Wash", variant: "150ml" },
+  { brand: "Garnier", name: "Bright Complete Face Wash", variant: "100ml" },
+  { brand: "Ponds", name: "Bright Beauty Face Wash", variant: "100ml" },
+  { brand: "Neutrogena", name: "Deep Clean Face Wash", variant: "100ml" },
+  { brand: "Clean & Clear", name: "Morning Energy Face Wash", variant: "100ml" },
+  { brand: "Cetaphil", name: "Gentle Skin Cleanser", variant: "125ml" },
+  { brand: "Mamaearth", name: "Vitamin C Face Wash", variant: "100ml" },
+  { brand: "Wow", name: "Ubtan Face Wash", variant: "100ml" },
+  { brand: "Patanjali", name: "Aloe Vera Face Wash", variant: "60ml" },
+
+  // ── More dairy ──
+  { brand: "Amul", name: "Pure Ghee", variant: "500ml" },
+  { brand: "Amul", name: "Pure Ghee", variant: "1L" },
+  { brand: "Mother Dairy", name: "Pure Ghee", variant: "500ml" },
+  { brand: "Nestlé", name: "Milkmaid Sweetened Condensed Milk", variant: "400g" },
+  { brand: "Amul", name: "Fresh Cream", variant: "200ml" },
+  { brand: "Amul", name: "Taaza Full Cream Milk", variant: "1L" },
+  { brand: "Nandini", name: "Full Cream Milk", variant: "500ml" },
+
+  // ── More liquid soap ──
+  { brand: "Lifebuoy", name: "Total Handwash", variant: "190ml" },
+  { brand: "Himalaya", name: "Pure Hands Handwash", variant: "250ml" },
+  { brand: "Dettol", name: "Skincare Handwash", variant: "250ml" },
+  { brand: "Pears", name: "Soft & Fresh Handwash", variant: "250ml" },
+
+  // ── More health drinks ──
+  { brand: "Horlicks", name: "Health & Nutrition Drink", variant: "1kg" },
+  { brand: "Bournvita", name: "Health Drink", variant: "1kg" },
+  { brand: "Complan", name: "Nutrition Drink", variant: "1kg" },
+  { brand: "Protinex", name: "Tasty Chocolate Drink", variant: "400g" },
+  { brand: "Pediasure", name: "Nutrition Drink", variant: "400g" },
 ];
 
 async function main() {
