@@ -48,14 +48,24 @@ const loadProduct = unstable_cache(
 );
 
 const loadOthers = unstable_cache(
-  async (slug: string) =>
-    db.product.findMany({
-      where: { slug: { not: slug }, breakdown: { isNot: null } },
+  async (slug: string, categorySlug: string) => {
+    // Same category first, fill remainder with any product
+    const sameCategory = await db.product.findMany({
+      where: { slug: { not: slug }, categorySlug, breakdown: { isNot: null } },
       include: { breakdown: true, category: true },
       orderBy: { isHeroProduct: "desc" },
       take: 6,
-    }),
-  ["product-others"],
+    });
+    if (sameCategory.length >= 4) return sameCategory.slice(0, 6);
+    const others = await db.product.findMany({
+      where: { slug: { notIn: [slug, ...sameCategory.map((p) => p.slug)] }, breakdown: { isNot: null } },
+      include: { breakdown: true, category: true },
+      orderBy: { isHeroProduct: "desc" },
+      take: 6 - sameCategory.length,
+    });
+    return [...sameCategory, ...others];
+  },
+  ["product-others-by-category"],
   { revalidate: 3600 },
 );
 
@@ -154,7 +164,7 @@ export default async function ProductPage({ params }: { params: Params }) {
   };
 
   // "Next products" — a few others to jump to.
-  const others = await loadOthers(slug);
+  const others = await loadOthers(slug, product.categorySlug);
   const nextItems = others.map((p) => {
     const c = z.array(CostComponentSchema).parse(JSON.parse(p.breakdown!.componentsJson));
     const im = z.array(ImportSchema).parse(JSON.parse(p.breakdown!.importsJson));
