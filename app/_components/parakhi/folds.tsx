@@ -43,6 +43,9 @@ export function Fold1({ product }: { product: DesignProduct }) {
           <Wordmark size={22} />
         </Link>
         <div style={{ display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap" }}>
+          <Link href={`/compare?a=${product.slug}`} style={{ textDecoration: "none" }}>
+            <Eyebrow style={{ color: T.india }}>compare ↔</Eyebrow>
+          </Link>
           <Eyebrow>{product.category}</Eyebrow>
           {product.isDraft && (
             <span
