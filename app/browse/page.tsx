@@ -86,7 +86,10 @@ export default async function BrowsePage({ searchParams }: { searchParams: SP })
     <div style={{ minHeight: "100vh", background: T.bg, color: T.ink }}>
       <header style={{ padding: "26px clamp(20px,5vw,48px) 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Link href="/" style={{ textDecoration: "none" }}><Wordmark size={22} /></Link>
-        <Link href="/" style={{ textDecoration: "none" }}><Eyebrow style={{ color: T.inkFaint }}>← search</Eyebrow></Link>
+        <div style={{ display: "flex", gap: 18 }}>
+          <Link href="/compare" style={{ textDecoration: "none" }}><Eyebrow style={{ color: T.inkFaint }}>compare ↔</Eyebrow></Link>
+          <Link href="/" style={{ textDecoration: "none" }}><Eyebrow style={{ color: T.inkFaint }}>← search</Eyebrow></Link>
+        </div>
       </header>
 
       <div style={{ padding: "40px clamp(20px,5vw,48px)" }}>
