@@ -824,6 +824,55 @@ const CATALOG: Entry[] = [
   { brand: "Hem", name: "Precious Chandan Incense", variant: "100 sticks" },
   { brand: "Moksh", name: "Sambrani Dhoop Cups", variant: "12 cups" },
   { brand: "Patanjali", name: "Aastha Agarbatti", variant: "100 sticks" },
+
+  // ── Deodorant & perfume ──
+  { brand: "Axe", name: "Signature Dark Body Spray", variant: "150ml" },
+  { brand: "Fogg", name: "Scent Xpressio Body Spray", variant: "150ml" },
+  { brand: "Fogg", name: "Fresh Deodorant", variant: "150ml" },
+  { brand: "Engage", name: "Urge Body Spray", variant: "165ml" },
+  { brand: "Wild Stone", name: "Ultra Sensual Deodorant", variant: "150ml" },
+  { brand: "Park Avenue", name: "Good Morning Deodorant", variant: "150ml" },
+  { brand: "Nivea", name: "Fresh Active Deodorant", variant: "150ml" },
+  { brand: "Denver", name: "Hamilton Deodorant", variant: "165ml" },
+  { brand: "Rexona", name: "Powder Dry Roll On", variant: "50ml" },
+
+  // ── Sanitary pads ──
+  { brand: "Whisper", name: "Ultra Clean XL Wings", variant: "30 pads" },
+  { brand: "Whisper", name: "Ultra Soft XL+", variant: "15 pads" },
+  { brand: "Stayfree", name: "Secure XL Wings", variant: "20 pads" },
+  { brand: "Stayfree", name: "Dry Max All Night", variant: "14 pads" },
+  { brand: "Sofy", name: "Bodyfit Anti Bacteria XL", variant: "15 pads" },
+  { brand: "Nine", name: "Sanitary Napkins XL", variant: "15 pads" },
+  { brand: "Sirona", name: "Ultra Thin Sanitary Pads", variant: "15 pads" },
+  { brand: "Sanfe", name: "Cottony Soft Pads XL", variant: "15 pads" },
+
+  // ── Baby diapers ──
+  { brand: "Pampers", name: "All Round Protection Pants M", variant: "62 pants" },
+  { brand: "Pampers", name: "Premium Care Pants L", variant: "44 pants" },
+  { brand: "Huggies", name: "Wonder Pants M", variant: "56 pants" },
+  { brand: "MamyPoko", name: "Pants Extra Absorb L", variant: "50 pants" },
+  { brand: "Teddyy", name: "Easy Diaper Pants M", variant: "54 pants" },
+  { brand: "Himalaya", name: "Total Care Baby Pants M", variant: "54 pants" },
+  { brand: "Bumtum", name: "Baby Diaper Pants L", variant: "62 pants" },
+
+  // ── Talcum powder ──
+  { brand: "Ponds", name: "Dreamflower Talc", variant: "300g" },
+  { brand: "Navratna", name: "Cool Talc", variant: "300g" },
+  { brand: "Dermicool", name: "Prickly Heat Powder", variant: "150g" },
+  { brand: "Gokul", name: "Santoor Talc", variant: "300g" },
+  { brand: "Cinthol", name: "Original Talc", variant: "300g" },
+  { brand: "Johnson's", name: "Baby Powder", variant: "200g" },
+  { brand: "Himalaya", name: "Baby Powder", variant: "200g" },
+
+  // ── Pet food ──
+  { brand: "Pedigree", name: "Adult Chicken & Vegetables", variant: "3kg" },
+  { brand: "Pedigree", name: "Puppy Chicken & Milk", variant: "1.2kg" },
+  { brand: "Drools", name: "Adult Chicken & Egg", variant: "3kg" },
+  { brand: "Drools", name: "Puppy Chicken & Egg", variant: "1.2kg" },
+  { brand: "Whiskas", name: "Adult Ocean Fish Cat Food", variant: "1.2kg" },
+  { brand: "Royal Canin", name: "Maxi Adult Dog Food", variant: "4kg" },
+  { brand: "Purepet", name: "Adult Chicken & Vegetable", variant: "3kg" },
+  { brand: "Meat Up", name: "Adult Chicken Dog Food", variant: "3kg" },
 ];
 
 async function main() {

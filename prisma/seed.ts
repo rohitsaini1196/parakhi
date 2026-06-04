@@ -41,6 +41,11 @@ import { DISHWASH_TEMPLATE } from "./seed-data/dishwash";
 import { FLOOR_TOILET_CLEANER_TEMPLATE } from "./seed-data/floor-toilet-cleaner";
 import { MOSQUITO_REPELLENT_TEMPLATE } from "./seed-data/mosquito-repellent";
 import { AGARBATTI_TEMPLATE } from "./seed-data/agarbatti";
+import { DEODORANT_TEMPLATE } from "./seed-data/deodorant";
+import { SANITARY_PADS_TEMPLATE } from "./seed-data/sanitary-pads";
+import { DIAPERS_TEMPLATE } from "./seed-data/diapers";
+import { TALCUM_POWDER_TEMPLATE } from "./seed-data/talcum-powder";
+import { PET_FOOD_TEMPLATE } from "./seed-data/pet-food";
 import {
   PARLE_G_BREAKDOWN,
   PARLE_G_HERO_MARKDOWN,
@@ -92,6 +97,11 @@ const CATEGORIES: CategoryTemplate[] = [
   FLOOR_TOILET_CLEANER_TEMPLATE,
   MOSQUITO_REPELLENT_TEMPLATE,
   AGARBATTI_TEMPLATE,
+  DEODORANT_TEMPLATE,
+  SANITARY_PADS_TEMPLATE,
+  DIAPERS_TEMPLATE,
+  TALCUM_POWDER_TEMPLATE,
+  PET_FOOD_TEMPLATE,
 ];
 
 async function seedCategories() {

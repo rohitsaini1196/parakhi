@@ -154,6 +154,39 @@ const BRANDS: BrandSeed[] = [
   { canonicalName: "Zed Black", aliases: ["zed black"], country: "IN", parentCompany: "Mysore Deep Perfumery House" },
   { canonicalName: "Hem", aliases: ["hem incense", "hem agarbatti"], country: "IN" },
   { canonicalName: "Moksh", aliases: ["moksh"], country: "IN" },
+  // Deodorant
+  { canonicalName: "Axe", aliases: ["axe deodorant", "axe deo"], country: "NL", parentCompany: "Hindustan Unilever" },
+  { canonicalName: "Fogg", aliases: ["fogg"], country: "IN", parentCompany: "Vini Cosmetics" },
+  { canonicalName: "Engage", aliases: ["engage deo", "engage body"], country: "IN", parentCompany: "ITC Limited" },
+  { canonicalName: "Wild Stone", aliases: ["wild stone"], country: "IN", parentCompany: "McNROE" },
+  { canonicalName: "Park Avenue", aliases: ["park avenue"], country: "IN", parentCompany: "Raymond" },
+  { canonicalName: "Denver", aliases: ["denver deo", "denver hamilton"], country: "IN" },
+  { canonicalName: "Rexona", aliases: ["rexona"], country: "NL", parentCompany: "Hindustan Unilever" },
+  // Sanitary pads
+  { canonicalName: "Whisper", aliases: ["whisper"], country: "US", parentCompany: "Procter & Gamble" },
+  { canonicalName: "Stayfree", aliases: ["stayfree"], country: "US", parentCompany: "Kenvue" },
+  { canonicalName: "Sofy", aliases: ["sofy"], country: "JP", parentCompany: "Unicharm" },
+  { canonicalName: "Nine", aliases: ["nine pads", "nine napkins"], country: "IN" },
+  { canonicalName: "Sirona", aliases: ["sirona"], country: "IN" },
+  { canonicalName: "Sanfe", aliases: ["sanfe"], country: "IN" },
+  // Diapers
+  { canonicalName: "Pampers", aliases: ["pampers"], country: "US", parentCompany: "Procter & Gamble" },
+  { canonicalName: "Huggies", aliases: ["huggies"], country: "US", parentCompany: "Kimberly-Clark" },
+  { canonicalName: "MamyPoko", aliases: ["mamypoko", "mamy poko"], country: "JP", parentCompany: "Unicharm" },
+  { canonicalName: "Teddyy", aliases: ["teddyy"], country: "IN", parentCompany: "Nobel Hygiene" },
+  { canonicalName: "Bumtum", aliases: ["bumtum"], country: "IN" },
+  // Talcum
+  { canonicalName: "Ponds", aliases: ["ponds", "pond's"], country: "NL", parentCompany: "Hindustan Unilever" },
+  { canonicalName: "Dermicool", aliases: ["dermicool"], country: "IN", parentCompany: "Emami" },
+  { canonicalName: "Gokul", aliases: ["gokul santoor", "gokul"], country: "IN", parentCompany: "Wipro" },
+  { canonicalName: "Cinthol", aliases: ["cinthol"], country: "IN", parentCompany: "Godrej" },
+  // Pet food
+  { canonicalName: "Pedigree", aliases: ["pedigree"], country: "US", parentCompany: "Mars" },
+  { canonicalName: "Drools", aliases: ["drools"], country: "IN" },
+  { canonicalName: "Whiskas", aliases: ["whiskas"], country: "US", parentCompany: "Mars" },
+  { canonicalName: "Royal Canin", aliases: ["royal canin"], country: "US", parentCompany: "Mars" },
+  { canonicalName: "Purepet", aliases: ["purepet"], country: "IN", parentCompany: "Drools" },
+  { canonicalName: "Meat Up", aliases: ["meat up"], country: "IN" },
 ];
 
 async function main() {
