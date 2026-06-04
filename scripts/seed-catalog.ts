@@ -607,6 +607,32 @@ const CATALOG: Entry[] = [
   { brand: "Complan", name: "Nutrition Drink", variant: "1kg" },
   { brand: "Protinex", name: "Tasty Chocolate Drink", variant: "400g" },
   { brand: "Pediasure", name: "Nutrition Drink", variant: "400g" },
+
+  // ── Hair oil ──
+  { brand: "Parachute", name: "Coconut Hair Oil", variant: "175ml" },
+  { brand: "Parachute", name: "Advansed Coconut Hair Oil", variant: "300ml" },
+  { brand: "Parachute", name: "Advansed Jasmine Hair Oil", variant: "175ml" },
+  { brand: "Parachute", name: "Advansed Aloe Vera Hair Oil", variant: "150ml" },
+  { brand: "Nihar", name: "Naturals Shanti Amla Hair Oil", variant: "175ml" },
+  { brand: "Nihar", name: "Naturals Coconut Hair Oil", variant: "175ml" },
+  { brand: "Dabur", name: "Amla Hair Oil", variant: "275ml" },
+  { brand: "Dabur", name: "Amla Hair Oil", variant: "450ml" },
+  { brand: "Dabur", name: "Vatika Enriched Coconut Hair Oil", variant: "300ml" },
+  { brand: "Dabur", name: "Almond Hair Oil", variant: "200ml" },
+  { brand: "Bajaj", name: "Almond Drops Hair Oil", variant: "200ml" },
+  { brand: "Bajaj", name: "Brahmi Amla Hair Oil", variant: "200ml" },
+  { brand: "Navratna", name: "Cool Hair Oil", variant: "200ml" },
+  { brand: "Navratna", name: "Ayurvedic Cool Hair Oil", variant: "100ml" },
+  { brand: "Keo Karpin", name: "Hair Oil", variant: "200ml" },
+  { brand: "Indulekha", name: "Bringha Hair Oil", variant: "100ml" },
+  { brand: "Kesh King", name: "Ayurvedic Hair Oil", variant: "100ml" },
+  { brand: "Sesa", name: "Ayurvedic Hair Oil", variant: "200ml" },
+  { brand: "Hair & Care", name: "Aloe Vera Hair Oil", variant: "300ml" },
+  { brand: "Patanjali", name: "Kesh Kanti Hair Oil", variant: "120ml" },
+  { brand: "Patanjali", name: "Almond Hair Oil", variant: "100ml" },
+  { brand: "Himalaya", name: "Anti-Hair Fall Hair Oil", variant: "200ml" },
+  { brand: "WOW", name: "Onion Hair Oil", variant: "200ml" },
+  { brand: "Mamaearth", name: "Onion Hair Oil", variant: "150ml" },
 ];
 
 async function main() {

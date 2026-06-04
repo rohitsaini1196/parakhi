@@ -52,6 +52,16 @@ const BRANDS: BrandSeed[] = [
   // Misc personal care
   { canonicalName: "Vatika", aliases: ["vatika", "dabur vatika"], country: "IN", parentCompany: "Dabur" },
   { canonicalName: "Savlon", aliases: ["savlon"], country: "IN", parentCompany: "ITC Limited" },
+  // Hair oil
+  { canonicalName: "Parachute", aliases: ["parachute", "parachute advansed"], country: "IN", parentCompany: "Marico" },
+  { canonicalName: "Nihar", aliases: ["nihar", "nihar naturals"], country: "IN", parentCompany: "Marico" },
+  { canonicalName: "Hair & Care", aliases: ["hair & care", "hair and care"], country: "IN", parentCompany: "Marico" },
+  { canonicalName: "Bajaj", aliases: ["bajaj", "bajaj almond drops"], country: "IN", parentCompany: "Bajaj Consumer Care" },
+  { canonicalName: "Navratna", aliases: ["navratna", "navratna oil"], country: "IN", parentCompany: "Emami" },
+  { canonicalName: "Kesh King", aliases: ["kesh king"], country: "IN", parentCompany: "Emami" },
+  { canonicalName: "Sesa", aliases: ["sesa", "sesa hair oil"], country: "IN", parentCompany: "Ban Labs" },
+  { canonicalName: "Keo Karpin", aliases: ["keo karpin"], country: "IN", parentCompany: "Dey's Medical" },
+  { canonicalName: "Indulekha", aliases: ["indulekha", "indulekha bringha"], country: "NL", parentCompany: "Hindustan Unilever" },
 ];
 
 async function main() {
