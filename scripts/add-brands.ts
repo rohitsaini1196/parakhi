@@ -81,6 +81,30 @@ const BRANDS: BrandSeed[] = [
   { canonicalName: "Trust", aliases: ["trust sugar"], country: "IN" },
   { canonicalName: "Uttam", aliases: ["uttam sugar"], country: "IN", parentCompany: "Uttam Sugar Mills" },
   { canonicalName: "Mawana", aliases: ["mawana", "mawana sugar"], country: "IN" },
+  // Sauces & ketchup
+  { canonicalName: "Kissan", aliases: ["kissan"], country: "NL", parentCompany: "Hindustan Unilever" },
+  { canonicalName: "Heinz", aliases: ["heinz"], country: "US", parentCompany: "Kraft Heinz" },
+  { canonicalName: "Veeba", aliases: ["veeba"], country: "IN" },
+  { canonicalName: "Del Monte", aliases: ["del monte"], country: "IN", parentCompany: "FieldFresh Foods (Bharti)" },
+  { canonicalName: "Cremica", aliases: ["cremica"], country: "IN" },
+  { canonicalName: "Wingreens", aliases: ["wingreens", "wingreens farms"], country: "IN" },
+  // Pickle
+  { canonicalName: "Mother's Recipe", aliases: ["mother's recipe", "mothers recipe"], country: "IN", parentCompany: "Desai Brothers" },
+  { canonicalName: "Priya", aliases: ["priya", "priya foods"], country: "IN" },
+  { canonicalName: "Nilon's", aliases: ["nilon's", "nilons"], country: "IN" },
+  { canonicalName: "Bedekar", aliases: ["bedekar"], country: "IN" },
+  { canonicalName: "Tops", aliases: ["tops pickle", "tops"], country: "IN", parentCompany: "G.D. Foods" },
+  { canonicalName: "Ruchi", aliases: ["ruchi pickle", "ruchi"], country: "IN" },
+  // Jam & spreads
+  { canonicalName: "Mapro", aliases: ["mapro"], country: "IN" },
+  { canonicalName: "Pintola", aliases: ["pintola"], country: "IN" },
+  { canonicalName: "Sundrop", aliases: ["sundrop"], country: "IN", parentCompany: "Agro Tech Foods" },
+  { canonicalName: "Nutella", aliases: ["nutella"], country: "IT", parentCompany: "Ferrero" },
+  { canonicalName: "Hershey's", aliases: ["hershey's", "hersheys", "hershey"], country: "US", parentCompany: "The Hershey Company" },
+  // Honey
+  { canonicalName: "Apis", aliases: ["apis"], country: "IN" },
+  { canonicalName: "Zandu", aliases: ["zandu"], country: "IN", parentCompany: "Emami" },
+  { canonicalName: "Hitkari", aliases: ["hitkari"], country: "IN" },
 ];
 
 async function main() {

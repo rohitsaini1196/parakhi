@@ -28,6 +28,10 @@ import { RICE_TEMPLATE } from "./seed-data/rice";
 import { PULSES_DAL_TEMPLATE } from "./seed-data/pulses-dal";
 import { EDIBLE_SALT_TEMPLATE } from "./seed-data/edible-salt";
 import { SUGAR_TEMPLATE } from "./seed-data/sugar";
+import { SAUCES_KETCHUP_TEMPLATE } from "./seed-data/sauces-ketchup";
+import { PICKLE_ACHAAR_TEMPLATE } from "./seed-data/pickle-achaar";
+import { JAM_SPREADS_TEMPLATE } from "./seed-data/jam-spreads";
+import { HONEY_TEMPLATE } from "./seed-data/honey";
 import {
   PARLE_G_BREAKDOWN,
   PARLE_G_HERO_MARKDOWN,
@@ -66,6 +70,10 @@ const CATEGORIES: CategoryTemplate[] = [
   PULSES_DAL_TEMPLATE,
   EDIBLE_SALT_TEMPLATE,
   SUGAR_TEMPLATE,
+  SAUCES_KETCHUP_TEMPLATE,
+  PICKLE_ACHAAR_TEMPLATE,
+  JAM_SPREADS_TEMPLATE,
+  HONEY_TEMPLATE,
 ];
 
 async function seedCategories() {

@@ -677,6 +677,52 @@ const CATALOG: Entry[] = [
   { brand: "Mawana", name: "Sulphurless Sugar", variant: "1kg" },
   { brand: "Madhur", name: "Brown Sugar", variant: "500g" },
   { brand: "Trust", name: "Icing Sugar", variant: "500g" },
+
+  // ── Sauces & ketchup ──
+  { brand: "Kissan", name: "Fresh Tomato Ketchup", variant: "950g" },
+  { brand: "Kissan", name: "No Onion No Garlic Ketchup", variant: "850g" },
+  { brand: "Maggi", name: "Rich Tomato Ketchup", variant: "900g" },
+  { brand: "Heinz", name: "Tomato Ketchup", variant: "700g" },
+  { brand: "Veeba", name: "Tomato Ketchup", variant: "950g" },
+  { brand: "Veeba", name: "Sweet Onion Sauce", variant: "350g" },
+  { brand: "Del Monte", name: "Tomato Ketchup", variant: "900g" },
+  { brand: "Ching's Secret", name: "Schezwan Chutney", variant: "250g" },
+  { brand: "Ching's Secret", name: "Green Chilli Sauce", variant: "190g" },
+  { brand: "Wingreens", name: "Pizza Pasta Sauce", variant: "450g" },
+  { brand: "Cremica", name: "Tomato Ketchup", variant: "1kg" },
+
+  // ── Pickle & achaar ──
+  { brand: "Mother's Recipe", name: "Mango Pickle", variant: "300g" },
+  { brand: "Mother's Recipe", name: "Mixed Pickle", variant: "300g" },
+  { brand: "Mother's Recipe", name: "Lime Pickle", variant: "300g" },
+  { brand: "Priya", name: "Avakkai Mango Pickle", variant: "300g" },
+  { brand: "Priya", name: "Gongura Pickle", variant: "300g" },
+  { brand: "Nilon's", name: "Mango Pickle", variant: "350g" },
+  { brand: "Bedekar", name: "Mango Pickle", variant: "400g" },
+  { brand: "Patanjali", name: "Mixed Achaar", variant: "500g" },
+  { brand: "Tops", name: "Mango Pickle", variant: "400g" },
+  { brand: "Ruchi", name: "Gongura Pickle", variant: "300g" },
+
+  // ── Jam & spreads ──
+  { brand: "Kissan", name: "Mixed Fruit Jam", variant: "500g" },
+  { brand: "Kissan", name: "Strawberry Jam", variant: "200g" },
+  { brand: "Mapro", name: "Mixed Fruit Jam", variant: "500g" },
+  { brand: "Mapro", name: "Strawberry Jam", variant: "200g" },
+  { brand: "Pintola", name: "Peanut Butter Creamy", variant: "1kg" },
+  { brand: "Sundrop", name: "Peanut Butter Crunchy", variant: "462g" },
+  { brand: "Hershey's", name: "Chocolate Spread", variant: "350g" },
+  { brand: "Nutella", name: "Hazelnut Spread", variant: "350g" },
+  { brand: "Veeba", name: "Peanut Butter", variant: "400g" },
+
+  // ── Honey ──
+  { brand: "Dabur", name: "Honey", variant: "500g" },
+  { brand: "Dabur", name: "Honey", variant: "1kg" },
+  { brand: "Patanjali", name: "Pure Honey", variant: "500g" },
+  { brand: "Apis", name: "Himalaya Honey", variant: "500g" },
+  { brand: "Saffola", name: "Honey Active", variant: "500g" },
+  { brand: "Zandu", name: "Pure Honey", variant: "500g" },
+  { brand: "Himalaya", name: "Forest Honey", variant: "350g" },
+  { brand: "Hitkari", name: "Natural Honey", variant: "500g" },
 ];
 
 async function main() {
