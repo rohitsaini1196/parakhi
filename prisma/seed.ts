@@ -32,6 +32,11 @@ import { SAUCES_KETCHUP_TEMPLATE } from "./seed-data/sauces-ketchup";
 import { PICKLE_ACHAAR_TEMPLATE } from "./seed-data/pickle-achaar";
 import { JAM_SPREADS_TEMPLATE } from "./seed-data/jam-spreads";
 import { HONEY_TEMPLATE } from "./seed-data/honey";
+import { BREAKFAST_CEREAL_TEMPLATE } from "./seed-data/breakfast-cereal";
+import { PASTA_VERMICELLI_TEMPLATE } from "./seed-data/pasta-vermicelli";
+import { ICE_CREAM_TEMPLATE } from "./seed-data/ice-cream";
+import { FROZEN_FOODS_TEMPLATE } from "./seed-data/frozen-foods";
+import { BREAD_BAKERY_TEMPLATE } from "./seed-data/bread-bakery";
 import {
   PARLE_G_BREAKDOWN,
   PARLE_G_HERO_MARKDOWN,
@@ -74,6 +79,11 @@ const CATEGORIES: CategoryTemplate[] = [
   PICKLE_ACHAAR_TEMPLATE,
   JAM_SPREADS_TEMPLATE,
   HONEY_TEMPLATE,
+  BREAKFAST_CEREAL_TEMPLATE,
+  PASTA_VERMICELLI_TEMPLATE,
+  ICE_CREAM_TEMPLATE,
+  FROZEN_FOODS_TEMPLATE,
+  BREAD_BAKERY_TEMPLATE,
 ];
 
 async function seedCategories() {

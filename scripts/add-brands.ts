@@ -105,6 +105,33 @@ const BRANDS: BrandSeed[] = [
   { canonicalName: "Apis", aliases: ["apis"], country: "IN" },
   { canonicalName: "Zandu", aliases: ["zandu"], country: "IN", parentCompany: "Emami" },
   { canonicalName: "Hitkari", aliases: ["hitkari"], country: "IN" },
+  // Breakfast cereal
+  { canonicalName: "Kellogg's", aliases: ["kellogg's", "kelloggs", "kellogg"], country: "US", parentCompany: "Kellanova" },
+  { canonicalName: "Bagrry's", aliases: ["bagrry's", "bagrrys"], country: "IN" },
+  { canonicalName: "Quaker", aliases: ["quaker", "quaker oats"], country: "US", parentCompany: "PepsiCo" },
+  { canonicalName: "Soulfull", aliases: ["soulfull"], country: "IN", parentCompany: "Tata Consumer Products" },
+  { canonicalName: "True Elements", aliases: ["true elements"], country: "IN" },
+  // Pasta
+  { canonicalName: "Bambino", aliases: ["bambino"], country: "IN" },
+  { canonicalName: "Weikfield", aliases: ["weikfield"], country: "IN" },
+  { canonicalName: "Borges", aliases: ["borges"], country: "ES", parentCompany: "Borges International" },
+  { canonicalName: "MTR", aliases: ["mtr", "mtr foods"], country: "NO", parentCompany: "Orkla" },
+  // Ice cream
+  { canonicalName: "Kwality Wall's", aliases: ["kwality wall's", "kwality walls"], country: "NL", parentCompany: "Hindustan Unilever" },
+  { canonicalName: "Vadilal", aliases: ["vadilal"], country: "IN" },
+  { canonicalName: "Havmor", aliases: ["havmor"], country: "KR", parentCompany: "Lotte" },
+  { canonicalName: "Cream Bell", aliases: ["cream bell", "creambell"], country: "IN" },
+  { canonicalName: "Baskin Robbins", aliases: ["baskin robbins"], country: "US", parentCompany: "Inspire Brands" },
+  // Frozen
+  { canonicalName: "McCain", aliases: ["mccain"], country: "CA", parentCompany: "McCain Foods" },
+  { canonicalName: "Safal", aliases: ["safal"], country: "IN", parentCompany: "Mother Dairy" },
+  { canonicalName: "ITC Master Chef", aliases: ["itc master chef", "master chef"], country: "IN", parentCompany: "ITC Limited" },
+  { canonicalName: "Godrej Yummiez", aliases: ["godrej yummiez", "yummiez"], country: "IN", parentCompany: "Godrej" },
+  // Bread
+  { canonicalName: "Modern", aliases: ["modern bread", "modern foods"], country: "IN" },
+  { canonicalName: "Harvest Gold", aliases: ["harvest gold"], country: "IN" },
+  { canonicalName: "English Oven", aliases: ["english oven"], country: "IN", parentCompany: "Bonn Group" },
+  { canonicalName: "Bonn", aliases: ["bonn"], country: "IN", parentCompany: "Bonn Group" },
 ];
 
 async function main() {

@@ -723,6 +723,67 @@ const CATALOG: Entry[] = [
   { brand: "Zandu", name: "Pure Honey", variant: "500g" },
   { brand: "Himalaya", name: "Forest Honey", variant: "350g" },
   { brand: "Hitkari", name: "Natural Honey", variant: "500g" },
+
+  // ── Breakfast cereal ──
+  { brand: "Kellogg's", name: "Corn Flakes", variant: "475g" },
+  { brand: "Kellogg's", name: "Chocos", variant: "375g" },
+  { brand: "Kellogg's", name: "Muesli Fruit & Nut", variant: "500g" },
+  { brand: "Bagrry's", name: "Crunchy Muesli", variant: "500g" },
+  { brand: "Bagrry's", name: "White Oats", variant: "1kg" },
+  { brand: "Saffola", name: "Masala Oats", variant: "400g" },
+  { brand: "Saffola", name: "Classic Oats", variant: "1kg" },
+  { brand: "Quaker", name: "Oats", variant: "1kg" },
+  { brand: "Soulfull", name: "Millet Muesli", variant: "400g" },
+  { brand: "Kellogg's", name: "Corn Flakes", variant: "875g" },
+  { brand: "Nestlé", name: "Koko Krunch", variant: "300g" },
+  { brand: "True Elements", name: "Rolled Oats", variant: "1.2kg" },
+
+  // ── Pasta & vermicelli ──
+  { brand: "Sunfeast", name: "Yippee Pasta Tricolor", variant: "65g" },
+  { brand: "Bambino", name: "Vermicelli Roasted", variant: "900g" },
+  { brand: "Bambino", name: "Macaroni", variant: "400g" },
+  { brand: "Weikfield", name: "Penne Pasta", variant: "400g" },
+  { brand: "Weikfield", name: "Macaroni Pasta", variant: "400g" },
+  { brand: "Borges", name: "Penne Rigate Pasta", variant: "500g" },
+  { brand: "Borges", name: "Spaghetti", variant: "500g" },
+  { brand: "Del Monte", name: "Fusilli Pasta", variant: "500g" },
+  { brand: "MTR", name: "Roasted Vermicelli", variant: "440g" },
+  { brand: "Bambino", name: "Seviyan", variant: "400g" },
+
+  // ── Ice cream ──
+  { brand: "Amul", name: "Vanilla Ice Cream", variant: "1L" },
+  { brand: "Amul", name: "Butterscotch Ice Cream", variant: "1L" },
+  { brand: "Amul", name: "Chocolate Ice Cream Tub", variant: "700ml" },
+  { brand: "Kwality Wall's", name: "Cornetto Chocolate", variant: "110ml" },
+  { brand: "Kwality Wall's", name: "Cassata", variant: "700ml" },
+  { brand: "Vadilal", name: "Vanilla Ice Cream", variant: "1L" },
+  { brand: "Vadilal", name: "Gulab Jamun Ice Cream", variant: "1L" },
+  { brand: "Mother Dairy", name: "Vanilla Ice Cream", variant: "1L" },
+  { brand: "Havmor", name: "Rajbhog Ice Cream", variant: "1L" },
+  { brand: "Cream Bell", name: "Butterscotch Ice Cream", variant: "1L" },
+  { brand: "Baskin Robbins", name: "Choco Almond Ice Cream", variant: "450ml" },
+
+  // ── Frozen foods ──
+  { brand: "McCain", name: "French Fries", variant: "420g" },
+  { brand: "McCain", name: "Smiles", variant: "415g" },
+  { brand: "McCain", name: "Aloo Tikki", variant: "400g" },
+  { brand: "Safal", name: "Green Peas", variant: "500g" },
+  { brand: "Safal", name: "Mixed Vegetables", variant: "500g" },
+  { brand: "ITC Master Chef", name: "Chicken Nuggets", variant: "400g" },
+  { brand: "Godrej Yummiez", name: "Veg Fingers", variant: "400g" },
+  { brand: "Godrej Yummiez", name: "Chicken Nuggets", variant: "400g" },
+  { brand: "McCain", name: "Veg Spring Roll", variant: "400g" },
+
+  // ── Bread & bakery ──
+  { brand: "Britannia", name: "Brown Bread", variant: "400g" },
+  { brand: "Britannia", name: "Whole Wheat Bread", variant: "400g" },
+  { brand: "Britannia", name: "Bread Pav", variant: "400g" },
+  { brand: "Modern", name: "Milk Bread", variant: "400g" },
+  { brand: "Harvest Gold", name: "Sandwich Bread", variant: "400g" },
+  { brand: "English Oven", name: "Multigrain Bread", variant: "400g" },
+  { brand: "Bonn", name: "Brown Bread", variant: "400g" },
+  { brand: "Britannia", name: "Toastea Rusk", variant: "300g" },
+  { brand: "Parle", name: "Rusk", variant: "300g" },
 ];
 
 async function main() {
