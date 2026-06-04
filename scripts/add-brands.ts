@@ -132,6 +132,28 @@ const BRANDS: BrandSeed[] = [
   { canonicalName: "Harvest Gold", aliases: ["harvest gold"], country: "IN" },
   { canonicalName: "English Oven", aliases: ["english oven"], country: "IN", parentCompany: "Bonn Group" },
   { canonicalName: "Bonn", aliases: ["bonn"], country: "IN", parentCompany: "Bonn Group" },
+  // Dishwash
+  { canonicalName: "Vim", aliases: ["vim"], country: "NL", parentCompany: "Hindustan Unilever" },
+  { canonicalName: "Exo", aliases: ["exo"], country: "IN", parentCompany: "Jyothy Labs" },
+  { canonicalName: "Pril", aliases: ["pril"], country: "DE", parentCompany: "Henkel" },
+  { canonicalName: "Xpert", aliases: ["xpert"], country: "IN", parentCompany: "Jyothy Labs" },
+  // Floor & toilet cleaner
+  { canonicalName: "Harpic", aliases: ["harpic"], country: "GB", parentCompany: "Reckitt" },
+  { canonicalName: "Lizol", aliases: ["lizol"], country: "GB", parentCompany: "Reckitt" },
+  { canonicalName: "Domex", aliases: ["domex"], country: "NL", parentCompany: "Hindustan Unilever" },
+  { canonicalName: "Colin", aliases: ["colin"], country: "GB", parentCompany: "Reckitt" },
+  // Mosquito repellent
+  { canonicalName: "Good Knight", aliases: ["good knight", "goodknight"], country: "IN", parentCompany: "Godrej" },
+  { canonicalName: "All Out", aliases: ["all out"], country: "US", parentCompany: "SC Johnson" },
+  { canonicalName: "Mortein", aliases: ["mortein"], country: "GB", parentCompany: "Reckitt" },
+  { canonicalName: "Hit", aliases: ["hit spray", "hit anti"], country: "IN", parentCompany: "Godrej" },
+  { canonicalName: "Odomos", aliases: ["odomos"], country: "IN", parentCompany: "Dabur" },
+  // Agarbatti
+  { canonicalName: "Cycle", aliases: ["cycle agarbatti", "cycle pure"], country: "IN", parentCompany: "NR Group" },
+  { canonicalName: "Mangaldeep", aliases: ["mangaldeep"], country: "IN", parentCompany: "ITC Limited" },
+  { canonicalName: "Zed Black", aliases: ["zed black"], country: "IN", parentCompany: "Mysore Deep Perfumery House" },
+  { canonicalName: "Hem", aliases: ["hem incense", "hem agarbatti"], country: "IN" },
+  { canonicalName: "Moksh", aliases: ["moksh"], country: "IN" },
 ];
 
 async function main() {

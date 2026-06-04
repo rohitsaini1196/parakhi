@@ -37,6 +37,10 @@ import { PASTA_VERMICELLI_TEMPLATE } from "./seed-data/pasta-vermicelli";
 import { ICE_CREAM_TEMPLATE } from "./seed-data/ice-cream";
 import { FROZEN_FOODS_TEMPLATE } from "./seed-data/frozen-foods";
 import { BREAD_BAKERY_TEMPLATE } from "./seed-data/bread-bakery";
+import { DISHWASH_TEMPLATE } from "./seed-data/dishwash";
+import { FLOOR_TOILET_CLEANER_TEMPLATE } from "./seed-data/floor-toilet-cleaner";
+import { MOSQUITO_REPELLENT_TEMPLATE } from "./seed-data/mosquito-repellent";
+import { AGARBATTI_TEMPLATE } from "./seed-data/agarbatti";
 import {
   PARLE_G_BREAKDOWN,
   PARLE_G_HERO_MARKDOWN,
@@ -84,6 +88,10 @@ const CATEGORIES: CategoryTemplate[] = [
   ICE_CREAM_TEMPLATE,
   FROZEN_FOODS_TEMPLATE,
   BREAD_BAKERY_TEMPLATE,
+  DISHWASH_TEMPLATE,
+  FLOOR_TOILET_CLEANER_TEMPLATE,
+  MOSQUITO_REPELLENT_TEMPLATE,
+  AGARBATTI_TEMPLATE,
 ];
 
 async function seedCategories() {

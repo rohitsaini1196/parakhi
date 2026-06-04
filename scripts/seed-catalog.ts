@@ -784,6 +784,46 @@ const CATALOG: Entry[] = [
   { brand: "Bonn", name: "Brown Bread", variant: "400g" },
   { brand: "Britannia", name: "Toastea Rusk", variant: "300g" },
   { brand: "Parle", name: "Rusk", variant: "300g" },
+
+  // ── Dishwash ──
+  { brand: "Vim", name: "Dishwash Bar", variant: "300g" },
+  { brand: "Vim", name: "Dishwash Gel Lemon", variant: "500ml" },
+  { brand: "Exo", name: "Dishwash Bar", variant: "300g" },
+  { brand: "Exo", name: "Dishwash Gel", variant: "500ml" },
+  { brand: "Pril", name: "Dishwash Liquid", variant: "425ml" },
+  { brand: "Patanjali", name: "Dishwash Bar", variant: "200g" },
+  { brand: "Xpert", name: "Dishwash Bar", variant: "300g" },
+  { brand: "Vim", name: "Dishwash Liquid Refill", variant: "1.8L" },
+
+  // ── Floor & toilet cleaner ──
+  { brand: "Harpic", name: "Power Plus Toilet Cleaner", variant: "1L" },
+  { brand: "Harpic", name: "Disinfectant Toilet Cleaner", variant: "500ml" },
+  { brand: "Lizol", name: "Floor Cleaner Citrus", variant: "975ml" },
+  { brand: "Lizol", name: "Floor Cleaner Floral", variant: "500ml" },
+  { brand: "Domex", name: "Toilet Cleaner", variant: "1L" },
+  { brand: "Colin", name: "Glass Cleaner", variant: "500ml" },
+  { brand: "Patanjali", name: "Floor Cleaner", variant: "1L" },
+  { brand: "Dettol", name: "Floor Cleaner Jasmine", variant: "1L" },
+
+  // ── Mosquito repellent ──
+  { brand: "Good Knight", name: "Activ+ Liquid Vaporiser", variant: "45ml" },
+  { brand: "Good Knight", name: "Gold Flash Refill", variant: "45ml" },
+  { brand: "All Out", name: "Ultra Liquid Vaporiser", variant: "45ml" },
+  { brand: "Mortein", name: "Insta5 Liquid Vaporiser", variant: "45ml" },
+  { brand: "Hit", name: "Anti Mosquito Spray", variant: "400ml" },
+  { brand: "Good Knight", name: "Coil", variant: "10 coils" },
+  { brand: "Odomos", name: "Mosquito Repellent Cream", variant: "100g" },
+  { brand: "Mortein", name: "Mosquito Coil", variant: "10 coils" },
+
+  // ── Agarbatti & dhoop ──
+  { brand: "Cycle", name: "Three in One Agarbatti", variant: "100 sticks" },
+  { brand: "Cycle", name: "Lia Floral Agarbatti", variant: "100 sticks" },
+  { brand: "Mangaldeep", name: "Sandal Agarbatti", variant: "100 sticks" },
+  { brand: "Mangaldeep", name: "Tulsi Dhoop", variant: "20 sticks" },
+  { brand: "Zed Black", name: "Manthan Agarbatti", variant: "100 sticks" },
+  { brand: "Hem", name: "Precious Chandan Incense", variant: "100 sticks" },
+  { brand: "Moksh", name: "Sambrani Dhoop Cups", variant: "12 cups" },
+  { brand: "Patanjali", name: "Aastha Agarbatti", variant: "100 sticks" },
 ];
 
 async function main() {
