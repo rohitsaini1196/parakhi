@@ -633,6 +633,50 @@ const CATALOG: Entry[] = [
   { brand: "Himalaya", name: "Anti-Hair Fall Hair Oil", variant: "200ml" },
   { brand: "WOW", name: "Onion Hair Oil", variant: "200ml" },
   { brand: "Mamaearth", name: "Onion Hair Oil", variant: "150ml" },
+
+  // ── Rice ──
+  { brand: "India Gate", name: "Basmati Rice Classic", variant: "1kg" },
+  { brand: "India Gate", name: "Basmati Rice Super", variant: "5kg" },
+  { brand: "Daawat", name: "Rozana Basmati Rice", variant: "5kg" },
+  { brand: "Daawat", name: "Super Basmati Rice", variant: "1kg" },
+  { brand: "Kohinoor", name: "Super Silver Basmati Rice", variant: "1kg" },
+  { brand: "Fortune", name: "Everyday Basmati Rice", variant: "5kg" },
+  { brand: "Lal Qilla", name: "Basmati Rice", variant: "1kg" },
+  { brand: "Tata Sampann", name: "Sona Masoori Rice", variant: "5kg" },
+  { brand: "Shrilalmahal", name: "Empire Basmati Rice", variant: "1kg" },
+  { brand: "Double Horse", name: "Matta Rice", variant: "5kg" },
+  { brand: "Tilda", name: "Pure Basmati Rice", variant: "1kg" },
+
+  // ── Pulses & dal ──
+  { brand: "Tata Sampann", name: "Toor Dal", variant: "1kg" },
+  { brand: "Tata Sampann", name: "Moong Dal", variant: "1kg" },
+  { brand: "Tata Sampann", name: "Chana Dal", variant: "1kg" },
+  { brand: "Tata Sampann", name: "Urad Dal", variant: "500g" },
+  { brand: "Tata Sampann", name: "Masoor Dal", variant: "1kg" },
+  { brand: "Fortune", name: "Toor Dal", variant: "1kg" },
+  { brand: "Fortune", name: "Moong Dal", variant: "1kg" },
+  { brand: "Organic Tattva", name: "Toor Dal", variant: "500g" },
+  { brand: "Organic Tattva", name: "Chana Dal", variant: "500g" },
+  { brand: "Patanjali", name: "Arhar Dal", variant: "1kg" },
+
+  // ── Edible salt ──
+  { brand: "Tata Salt", name: "Iodised Salt", variant: "1kg" },
+  { brand: "Tata Salt", name: "Lite Low Sodium Salt", variant: "1kg" },
+  { brand: "Aashirvaad", name: "Iodised Salt", variant: "1kg" },
+  { brand: "Nirma", name: "Shudh Iodised Salt", variant: "1kg" },
+  { brand: "Tata Salt", name: "Rock Salt Sendha Namak", variant: "1kg" },
+  { brand: "Patanjali", name: "Sendha Namak", variant: "1kg" },
+  { brand: "Surya", name: "Crystal Salt", variant: "1kg" },
+
+  // ── Sugar ──
+  { brand: "Madhur", name: "Pure & Hygienic Sugar", variant: "1kg" },
+  { brand: "Madhur", name: "Pure & Hygienic Sugar", variant: "5kg" },
+  { brand: "Dhampure", name: "Sulphurless Sugar", variant: "1kg" },
+  { brand: "Trust", name: "Sulphurless Sugar", variant: "1kg" },
+  { brand: "Uttam", name: "Sugar", variant: "1kg" },
+  { brand: "Mawana", name: "Sulphurless Sugar", variant: "1kg" },
+  { brand: "Madhur", name: "Brown Sugar", variant: "500g" },
+  { brand: "Trust", name: "Icing Sugar", variant: "500g" },
 ];
 
 async function main() {

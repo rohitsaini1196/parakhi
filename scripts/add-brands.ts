@@ -62,6 +62,25 @@ const BRANDS: BrandSeed[] = [
   { canonicalName: "Sesa", aliases: ["sesa", "sesa hair oil"], country: "IN", parentCompany: "Ban Labs" },
   { canonicalName: "Keo Karpin", aliases: ["keo karpin"], country: "IN", parentCompany: "Dey's Medical" },
   { canonicalName: "Indulekha", aliases: ["indulekha", "indulekha bringha"], country: "NL", parentCompany: "Hindustan Unilever" },
+  // Rice
+  { canonicalName: "India Gate", aliases: ["india gate", "india gate basmati"], country: "IN", parentCompany: "KRBL" },
+  { canonicalName: "Daawat", aliases: ["daawat", "daawat basmati"], country: "IN", parentCompany: "LT Foods" },
+  { canonicalName: "Kohinoor", aliases: ["kohinoor", "kohinoor basmati"], country: "US", parentCompany: "McCormick & Company" },
+  { canonicalName: "Lal Qilla", aliases: ["lal qilla", "lal quila"], country: "IN", parentCompany: "Amar Singh Chawal Wala" },
+  { canonicalName: "Shrilalmahal", aliases: ["shrilalmahal", "shri lal mahal"], country: "IN" },
+  { canonicalName: "Double Horse", aliases: ["double horse"], country: "IN", parentCompany: "Manjilas" },
+  { canonicalName: "Tilda", aliases: ["tilda"], country: "ES", parentCompany: "Ebro Foods" },
+  // Pulses
+  { canonicalName: "Organic Tattva", aliases: ["organic tattva"], country: "IN" },
+  // Salt
+  { canonicalName: "Tata Salt", aliases: ["tata salt"], country: "IN", parentCompany: "Tata Chemicals" },
+  { canonicalName: "Surya", aliases: ["surya salt"], country: "IN" },
+  // Sugar
+  { canonicalName: "Madhur", aliases: ["madhur", "madhur sugar"], country: "IN" },
+  { canonicalName: "Dhampure", aliases: ["dhampure", "dhampur"], country: "IN", parentCompany: "Dhampur Sugar Mills" },
+  { canonicalName: "Trust", aliases: ["trust sugar"], country: "IN" },
+  { canonicalName: "Uttam", aliases: ["uttam sugar"], country: "IN", parentCompany: "Uttam Sugar Mills" },
+  { canonicalName: "Mawana", aliases: ["mawana", "mawana sugar"], country: "IN" },
 ];
 
 async function main() {

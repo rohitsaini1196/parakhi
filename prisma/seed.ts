@@ -24,6 +24,10 @@ import { HEALTH_DRINKS_TEMPLATE } from "./seed-data/health-drinks";
 import { ATTA_FLOUR_TEMPLATE } from "./seed-data/atta-flour";
 import { SPICES_MASALA_TEMPLATE } from "./seed-data/spices-masala";
 import { HAIR_OIL_TEMPLATE } from "./seed-data/hair-oil";
+import { RICE_TEMPLATE } from "./seed-data/rice";
+import { PULSES_DAL_TEMPLATE } from "./seed-data/pulses-dal";
+import { EDIBLE_SALT_TEMPLATE } from "./seed-data/edible-salt";
+import { SUGAR_TEMPLATE } from "./seed-data/sugar";
 import {
   PARLE_G_BREAKDOWN,
   PARLE_G_HERO_MARKDOWN,
@@ -58,6 +62,10 @@ const CATEGORIES: CategoryTemplate[] = [
   ATTA_FLOUR_TEMPLATE,
   SPICES_MASALA_TEMPLATE,
   HAIR_OIL_TEMPLATE,
+  RICE_TEMPLATE,
+  PULSES_DAL_TEMPLATE,
+  EDIBLE_SALT_TEMPLATE,
+  SUGAR_TEMPLATE,
 ];
 
 async function seedCategories() {
