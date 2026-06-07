@@ -9,7 +9,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Browse products — Parakhi",
-  description: "Explore 400+ Indian products by category. See where your money goes.",
+  description: "Explore 1,000+ Indian products by category. See where your money goes.",
 };
 
 export const revalidate = 3600;

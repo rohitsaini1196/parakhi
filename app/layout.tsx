@@ -28,6 +28,20 @@ export const metadata: Metadata = {
   description:
     "Where does your money go when you buy an Indian product? Indian Value Capture, tax, and import origins — every number sourced. Kya hai andar?",
   metadataBase: new URL("https://parakhi.in"),
+  openGraph: {
+    title: "Parakhi — kya hai andar?",
+    description: "Where does your money go when you buy an Indian product? Indian Value Capture, tax, and import origins — every number sourced.",
+    url: "https://parakhi.in",
+    siteName: "Parakhi",
+    type: "website",
+    images: [{ url: "https://parakhi.in/api/og", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Parakhi — kya hai andar?",
+    description: "Where does your money go when you buy an Indian product?",
+    images: ["https://parakhi.in/api/og"],
+  },
 };
 
 export default function RootLayout({

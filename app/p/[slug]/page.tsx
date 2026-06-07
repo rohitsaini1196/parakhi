@@ -9,9 +9,15 @@ import { Fold1, Fold2, Fold3, Fold4, HeroStory, NextProducts } from "@/app/_comp
 
 type Params = Promise<{ slug: string }>;
 
-// ISR: cache each product page; breakdowns change only on recompute (nightly).
-// First hit renders + caches; subsequent hits skip the DB entirely.
 export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const products = await db.product.findMany({
+    where: { breakdown: { isNot: null } },
+    select: { slug: true },
+  });
+  return products.map((p) => ({ slug: p.slug }));
+}
 
 // Cache the per-slug DB read for an hour — Neon round-trips (incl. free-tier
 // cold-start) are the dominant cost; caching them is what makes warm loads fast.
@@ -72,8 +78,21 @@ export default async function ProductPage({ params }: { params: Params }) {
     };
   });
 
+  const { india, tax, abroad } = design.split;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: `${design.brand}${product.variant ? ` ${product.variant}` : ""} — ${design.ivc}% Indian Value Capture`,
+    description: `${india}% stays in India · ${tax}% tax · ${abroad}% abroad. Full cost breakdown sourced from public data.`,
+    url: `https://parakhi.in/p/${slug}`,
+    image: `https://parakhi.in/api/og?slug=${slug}`,
+    publisher: { "@type": "Organization", name: "Parakhi", url: "https://parakhi.in" },
+    about: { "@type": "Product", name: design.brand, brand: { "@type": "Brand", name: design.brand } },
+  };
+
   return (
     <main style={{ background: "var(--bg)", color: "var(--ink)" }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Fold1 product={design} />
       <Fold2 product={design} />
       <Fold3 product={design} />
