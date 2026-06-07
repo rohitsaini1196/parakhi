@@ -11,6 +11,7 @@ export const PACKAGED_BISCUITS_TEMPLATE: CategoryTemplate = {
     "cream cracker", "digestive", "nice", "bourbon", "rusk", "khari",
     "parle", "britannia", "good day", "monaco", "krackjack", "hide and seek",
     "sunfeast", "yumfills", "mom's magic", "dark fantasy", "mcvitie",
+    "wafer", "waffy", "wafer biscuit", "dukes",
   ],
   typicalStructure: {
     rawMaterials: { lowPct: 25, highPct: 35 },

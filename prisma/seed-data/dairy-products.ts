@@ -12,12 +12,12 @@ export const DAIRY_PRODUCTS_TEMPLATE: CategoryTemplate = {
   displayName: "Dairy Products",
   templateVersion: "0.1.0-draft",
   defaultGstRate: 12.0,
-  hsnCodes: ["04051000", "04052000", "04061000", "04069090", "04031000", "04039090", "21050000"],
+  hsnCodes: ["04051000", "04052000", "04061000", "04069090", "04031000", "04039090"],
   keywords: [
     "butter", "ghee", "cheese", "dahi", "curd", "yogurt", "yoghurt",
     "paneer", "cream", "whey", "amul butter", "amul cheese", "amul ghee",
     "processed cheese", "spreadable cheese", "slice cheese", "cheese spread",
-    "mishti doi", "greek yogurt", "flavoured yogurt", "ice cream",
+    "mishti doi", "greek yogurt", "flavoured yogurt",
     "amul dahi", "mother dairy dahi", "nestle yogurt",
   ],
   typicalStructure: {

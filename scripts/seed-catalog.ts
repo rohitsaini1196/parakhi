@@ -607,6 +607,677 @@ const CATALOG: Entry[] = [
   { brand: "Complan", name: "Nutrition Drink", variant: "1kg" },
   { brand: "Protinex", name: "Tasty Chocolate Drink", variant: "400g" },
   { brand: "Pediasure", name: "Nutrition Drink", variant: "400g" },
+
+  // ── Hair oil ──
+  { brand: "Parachute", name: "Coconut Hair Oil", variant: "175ml" },
+  { brand: "Parachute", name: "Advansed Coconut Hair Oil", variant: "300ml" },
+  { brand: "Parachute", name: "Advansed Jasmine Hair Oil", variant: "175ml" },
+  { brand: "Parachute", name: "Advansed Aloe Vera Hair Oil", variant: "150ml" },
+  { brand: "Nihar", name: "Naturals Shanti Amla Hair Oil", variant: "175ml" },
+  { brand: "Nihar", name: "Naturals Coconut Hair Oil", variant: "175ml" },
+  { brand: "Dabur", name: "Amla Hair Oil", variant: "275ml" },
+  { brand: "Dabur", name: "Amla Hair Oil", variant: "450ml" },
+  { brand: "Dabur", name: "Vatika Enriched Coconut Hair Oil", variant: "300ml" },
+  { brand: "Dabur", name: "Almond Hair Oil", variant: "200ml" },
+  { brand: "Bajaj", name: "Almond Drops Hair Oil", variant: "200ml" },
+  { brand: "Bajaj", name: "Brahmi Amla Hair Oil", variant: "200ml" },
+  { brand: "Navratna", name: "Cool Hair Oil", variant: "200ml" },
+  { brand: "Navratna", name: "Ayurvedic Cool Hair Oil", variant: "100ml" },
+  { brand: "Keo Karpin", name: "Hair Oil", variant: "200ml" },
+  { brand: "Indulekha", name: "Bringha Hair Oil", variant: "100ml" },
+  { brand: "Kesh King", name: "Ayurvedic Hair Oil", variant: "100ml" },
+  { brand: "Sesa", name: "Ayurvedic Hair Oil", variant: "200ml" },
+  { brand: "Hair & Care", name: "Aloe Vera Hair Oil", variant: "300ml" },
+  { brand: "Patanjali", name: "Kesh Kanti Hair Oil", variant: "120ml" },
+  { brand: "Patanjali", name: "Almond Hair Oil", variant: "100ml" },
+  { brand: "Himalaya", name: "Anti-Hair Fall Hair Oil", variant: "200ml" },
+  { brand: "WOW", name: "Onion Hair Oil", variant: "200ml" },
+  { brand: "Mamaearth", name: "Onion Hair Oil", variant: "150ml" },
+
+  // ── Rice ──
+  { brand: "India Gate", name: "Basmati Rice Classic", variant: "1kg" },
+  { brand: "India Gate", name: "Basmati Rice Super", variant: "5kg" },
+  { brand: "Daawat", name: "Rozana Basmati Rice", variant: "5kg" },
+  { brand: "Daawat", name: "Super Basmati Rice", variant: "1kg" },
+  { brand: "Kohinoor", name: "Super Silver Basmati Rice", variant: "1kg" },
+  { brand: "Fortune", name: "Everyday Basmati Rice", variant: "5kg" },
+  { brand: "Lal Qilla", name: "Basmati Rice", variant: "1kg" },
+  { brand: "Tata Sampann", name: "Sona Masoori Rice", variant: "5kg" },
+  { brand: "Shrilalmahal", name: "Empire Basmati Rice", variant: "1kg" },
+  { brand: "Double Horse", name: "Matta Rice", variant: "5kg" },
+  { brand: "Tilda", name: "Pure Basmati Rice", variant: "1kg" },
+
+  // ── Pulses & dal ──
+  { brand: "Tata Sampann", name: "Toor Dal", variant: "1kg" },
+  { brand: "Tata Sampann", name: "Moong Dal", variant: "1kg" },
+  { brand: "Tata Sampann", name: "Chana Dal", variant: "1kg" },
+  { brand: "Tata Sampann", name: "Urad Dal", variant: "500g" },
+  { brand: "Tata Sampann", name: "Masoor Dal", variant: "1kg" },
+  { brand: "Fortune", name: "Toor Dal", variant: "1kg" },
+  { brand: "Fortune", name: "Moong Dal", variant: "1kg" },
+  { brand: "Organic Tattva", name: "Toor Dal", variant: "500g" },
+  { brand: "Organic Tattva", name: "Chana Dal", variant: "500g" },
+  { brand: "Patanjali", name: "Arhar Dal", variant: "1kg" },
+
+  // ── Edible salt ──
+  { brand: "Tata Salt", name: "Iodised Salt", variant: "1kg" },
+  { brand: "Tata Salt", name: "Lite Low Sodium Salt", variant: "1kg" },
+  { brand: "Aashirvaad", name: "Iodised Salt", variant: "1kg" },
+  { brand: "Nirma", name: "Shudh Iodised Salt", variant: "1kg" },
+  { brand: "Tata Salt", name: "Rock Salt Sendha Namak", variant: "1kg" },
+  { brand: "Patanjali", name: "Sendha Namak", variant: "1kg" },
+  { brand: "Surya", name: "Crystal Salt", variant: "1kg" },
+
+  // ── Sugar ──
+  { brand: "Madhur", name: "Pure & Hygienic Sugar", variant: "1kg" },
+  { brand: "Madhur", name: "Pure & Hygienic Sugar", variant: "5kg" },
+  { brand: "Dhampure", name: "Sulphurless Sugar", variant: "1kg" },
+  { brand: "Trust", name: "Sulphurless Sugar", variant: "1kg" },
+  { brand: "Uttam", name: "Sugar", variant: "1kg" },
+  { brand: "Mawana", name: "Sulphurless Sugar", variant: "1kg" },
+  { brand: "Madhur", name: "Brown Sugar", variant: "500g" },
+  { brand: "Trust", name: "Icing Sugar", variant: "500g" },
+
+  // ── Sauces & ketchup ──
+  { brand: "Kissan", name: "Fresh Tomato Ketchup", variant: "950g" },
+  { brand: "Kissan", name: "No Onion No Garlic Ketchup", variant: "850g" },
+  { brand: "Maggi", name: "Rich Tomato Ketchup", variant: "900g" },
+  { brand: "Heinz", name: "Tomato Ketchup", variant: "700g" },
+  { brand: "Veeba", name: "Tomato Ketchup", variant: "950g" },
+  { brand: "Veeba", name: "Sweet Onion Sauce", variant: "350g" },
+  { brand: "Del Monte", name: "Tomato Ketchup", variant: "900g" },
+  { brand: "Ching's Secret", name: "Schezwan Chutney", variant: "250g" },
+  { brand: "Ching's Secret", name: "Green Chilli Sauce", variant: "190g" },
+  { brand: "Wingreens", name: "Pizza Pasta Sauce", variant: "450g" },
+  { brand: "Cremica", name: "Tomato Ketchup", variant: "1kg" },
+
+  // ── Pickle & achaar ──
+  { brand: "Mother's Recipe", name: "Mango Pickle", variant: "300g" },
+  { brand: "Mother's Recipe", name: "Mixed Pickle", variant: "300g" },
+  { brand: "Mother's Recipe", name: "Lime Pickle", variant: "300g" },
+  { brand: "Priya", name: "Avakkai Mango Pickle", variant: "300g" },
+  { brand: "Priya", name: "Gongura Pickle", variant: "300g" },
+  { brand: "Nilon's", name: "Mango Pickle", variant: "350g" },
+  { brand: "Bedekar", name: "Mango Pickle", variant: "400g" },
+  { brand: "Patanjali", name: "Mixed Achaar", variant: "500g" },
+  { brand: "Tops", name: "Mango Pickle", variant: "400g" },
+  { brand: "Ruchi", name: "Gongura Pickle", variant: "300g" },
+
+  // ── Jam & spreads ──
+  { brand: "Kissan", name: "Mixed Fruit Jam", variant: "500g" },
+  { brand: "Kissan", name: "Strawberry Jam", variant: "200g" },
+  { brand: "Mapro", name: "Mixed Fruit Jam", variant: "500g" },
+  { brand: "Mapro", name: "Strawberry Jam", variant: "200g" },
+  { brand: "Pintola", name: "Peanut Butter Creamy", variant: "1kg" },
+  { brand: "Sundrop", name: "Peanut Butter Crunchy", variant: "462g" },
+  { brand: "Hershey's", name: "Chocolate Spread", variant: "350g" },
+  { brand: "Nutella", name: "Hazelnut Spread", variant: "350g" },
+  { brand: "Veeba", name: "Peanut Butter", variant: "400g" },
+
+  // ── Honey ──
+  { brand: "Dabur", name: "Honey", variant: "500g" },
+  { brand: "Dabur", name: "Honey", variant: "1kg" },
+  { brand: "Patanjali", name: "Pure Honey", variant: "500g" },
+  { brand: "Apis", name: "Himalaya Honey", variant: "500g" },
+  { brand: "Saffola", name: "Honey Active", variant: "500g" },
+  { brand: "Zandu", name: "Pure Honey", variant: "500g" },
+  { brand: "Himalaya", name: "Forest Honey", variant: "350g" },
+  { brand: "Hitkari", name: "Natural Honey", variant: "500g" },
+
+  // ── Breakfast cereal ──
+  { brand: "Kellogg's", name: "Corn Flakes", variant: "475g" },
+  { brand: "Kellogg's", name: "Chocos", variant: "375g" },
+  { brand: "Kellogg's", name: "Muesli Fruit & Nut", variant: "500g" },
+  { brand: "Bagrry's", name: "Crunchy Muesli", variant: "500g" },
+  { brand: "Bagrry's", name: "White Oats", variant: "1kg" },
+  { brand: "Saffola", name: "Masala Oats", variant: "400g" },
+  { brand: "Saffola", name: "Classic Oats", variant: "1kg" },
+  { brand: "Quaker", name: "Oats", variant: "1kg" },
+  { brand: "Soulfull", name: "Millet Muesli", variant: "400g" },
+  { brand: "Kellogg's", name: "Corn Flakes", variant: "875g" },
+  { brand: "Nestlé", name: "Koko Krunch", variant: "300g" },
+  { brand: "True Elements", name: "Rolled Oats", variant: "1.2kg" },
+
+  // ── Pasta & vermicelli ──
+  { brand: "Sunfeast", name: "Yippee Pasta Tricolor", variant: "65g" },
+  { brand: "Bambino", name: "Vermicelli Roasted", variant: "900g" },
+  { brand: "Bambino", name: "Macaroni", variant: "400g" },
+  { brand: "Weikfield", name: "Penne Pasta", variant: "400g" },
+  { brand: "Weikfield", name: "Macaroni Pasta", variant: "400g" },
+  { brand: "Borges", name: "Penne Rigate Pasta", variant: "500g" },
+  { brand: "Borges", name: "Spaghetti", variant: "500g" },
+  { brand: "Del Monte", name: "Fusilli Pasta", variant: "500g" },
+  { brand: "MTR", name: "Roasted Vermicelli", variant: "440g" },
+  { brand: "Bambino", name: "Seviyan", variant: "400g" },
+
+  // ── Ice cream ──
+  { brand: "Amul", name: "Vanilla Ice Cream", variant: "1L" },
+  { brand: "Amul", name: "Butterscotch Ice Cream", variant: "1L" },
+  { brand: "Amul", name: "Chocolate Ice Cream Tub", variant: "700ml" },
+  { brand: "Kwality Wall's", name: "Cornetto Chocolate", variant: "110ml" },
+  { brand: "Kwality Wall's", name: "Cassata", variant: "700ml" },
+  { brand: "Vadilal", name: "Vanilla Ice Cream", variant: "1L" },
+  { brand: "Vadilal", name: "Gulab Jamun Ice Cream", variant: "1L" },
+  { brand: "Mother Dairy", name: "Vanilla Ice Cream", variant: "1L" },
+  { brand: "Havmor", name: "Rajbhog Ice Cream", variant: "1L" },
+  { brand: "Cream Bell", name: "Butterscotch Ice Cream", variant: "1L" },
+  { brand: "Baskin Robbins", name: "Choco Almond Ice Cream", variant: "450ml" },
+
+  // ── Frozen foods ──
+  { brand: "McCain", name: "French Fries", variant: "420g" },
+  { brand: "McCain", name: "Smiles", variant: "415g" },
+  { brand: "McCain", name: "Aloo Tikki", variant: "400g" },
+  { brand: "Safal", name: "Green Peas", variant: "500g" },
+  { brand: "Safal", name: "Mixed Vegetables", variant: "500g" },
+  { brand: "ITC Master Chef", name: "Chicken Nuggets", variant: "400g" },
+  { brand: "Godrej Yummiez", name: "Veg Fingers", variant: "400g" },
+  { brand: "Godrej Yummiez", name: "Chicken Nuggets", variant: "400g" },
+  { brand: "McCain", name: "Veg Spring Roll", variant: "400g" },
+
+  // ── Bread & bakery ──
+  { brand: "Britannia", name: "Brown Bread", variant: "400g" },
+  { brand: "Britannia", name: "Whole Wheat Bread", variant: "400g" },
+  { brand: "Britannia", name: "Bread Pav", variant: "400g" },
+  { brand: "Modern", name: "Milk Bread", variant: "400g" },
+  { brand: "Harvest Gold", name: "Sandwich Bread", variant: "400g" },
+  { brand: "English Oven", name: "Multigrain Bread", variant: "400g" },
+  { brand: "Bonn", name: "Brown Bread", variant: "400g" },
+  { brand: "Britannia", name: "Toastea Rusk", variant: "300g" },
+  { brand: "Parle", name: "Rusk", variant: "300g" },
+
+  // ── Dishwash ──
+  { brand: "Vim", name: "Dishwash Bar", variant: "300g" },
+  { brand: "Vim", name: "Dishwash Gel Lemon", variant: "500ml" },
+  { brand: "Exo", name: "Dishwash Bar", variant: "300g" },
+  { brand: "Exo", name: "Dishwash Gel", variant: "500ml" },
+  { brand: "Pril", name: "Dishwash Liquid", variant: "425ml" },
+  { brand: "Patanjali", name: "Dishwash Bar", variant: "200g" },
+  { brand: "Xpert", name: "Dishwash Bar", variant: "300g" },
+  { brand: "Vim", name: "Dishwash Liquid Refill", variant: "1.8L" },
+
+  // ── Floor & toilet cleaner ──
+  { brand: "Harpic", name: "Power Plus Toilet Cleaner", variant: "1L" },
+  { brand: "Harpic", name: "Disinfectant Toilet Cleaner", variant: "500ml" },
+  { brand: "Lizol", name: "Floor Cleaner Citrus", variant: "975ml" },
+  { brand: "Lizol", name: "Floor Cleaner Floral", variant: "500ml" },
+  { brand: "Domex", name: "Toilet Cleaner", variant: "1L" },
+  { brand: "Colin", name: "Glass Cleaner", variant: "500ml" },
+  { brand: "Patanjali", name: "Floor Cleaner", variant: "1L" },
+  { brand: "Dettol", name: "Floor Cleaner Jasmine", variant: "1L" },
+
+  // ── Mosquito repellent ──
+  { brand: "Good Knight", name: "Activ+ Liquid Vaporiser", variant: "45ml" },
+  { brand: "Good Knight", name: "Gold Flash Refill", variant: "45ml" },
+  { brand: "All Out", name: "Ultra Liquid Vaporiser", variant: "45ml" },
+  { brand: "Mortein", name: "Insta5 Liquid Vaporiser", variant: "45ml" },
+  { brand: "Hit", name: "Anti Mosquito Spray", variant: "400ml" },
+  { brand: "Good Knight", name: "Coil", variant: "10 coils" },
+  { brand: "Odomos", name: "Mosquito Repellent Cream", variant: "100g" },
+  { brand: "Mortein", name: "Mosquito Coil", variant: "10 coils" },
+
+  // ── Agarbatti & dhoop ──
+  { brand: "Cycle", name: "Three in One Agarbatti", variant: "100 sticks" },
+  { brand: "Cycle", name: "Lia Floral Agarbatti", variant: "100 sticks" },
+  { brand: "Mangaldeep", name: "Sandal Agarbatti", variant: "100 sticks" },
+  { brand: "Mangaldeep", name: "Tulsi Dhoop", variant: "20 sticks" },
+  { brand: "Zed Black", name: "Manthan Agarbatti", variant: "100 sticks" },
+  { brand: "Hem", name: "Precious Chandan Incense", variant: "100 sticks" },
+  { brand: "Moksh", name: "Sambrani Dhoop Cups", variant: "12 cups" },
+  { brand: "Patanjali", name: "Aastha Agarbatti", variant: "100 sticks" },
+
+  // ── Deodorant & perfume ──
+  { brand: "Axe", name: "Signature Dark Body Spray", variant: "150ml" },
+  { brand: "Fogg", name: "Scent Xpressio Body Spray", variant: "150ml" },
+  { brand: "Fogg", name: "Fresh Deodorant", variant: "150ml" },
+  { brand: "Engage", name: "Urge Body Spray", variant: "165ml" },
+  { brand: "Wild Stone", name: "Ultra Sensual Deodorant", variant: "150ml" },
+  { brand: "Park Avenue", name: "Good Morning Deodorant", variant: "150ml" },
+  { brand: "Nivea", name: "Fresh Active Deodorant", variant: "150ml" },
+  { brand: "Denver", name: "Hamilton Deodorant", variant: "165ml" },
+  { brand: "Rexona", name: "Powder Dry Roll On", variant: "50ml" },
+
+  // ── Sanitary pads ──
+  { brand: "Whisper", name: "Ultra Clean XL Wings", variant: "30 pads" },
+  { brand: "Whisper", name: "Ultra Soft XL+", variant: "15 pads" },
+  { brand: "Stayfree", name: "Secure XL Wings", variant: "20 pads" },
+  { brand: "Stayfree", name: "Dry Max All Night", variant: "14 pads" },
+  { brand: "Sofy", name: "Bodyfit Anti Bacteria XL", variant: "15 pads" },
+  { brand: "Nine", name: "Sanitary Napkins XL", variant: "15 pads" },
+  { brand: "Sirona", name: "Ultra Thin Sanitary Pads", variant: "15 pads" },
+  { brand: "Sanfe", name: "Cottony Soft Pads XL", variant: "15 pads" },
+
+  // ── Baby diapers ──
+  { brand: "Pampers", name: "All Round Protection Pants M", variant: "62 pants" },
+  { brand: "Pampers", name: "Premium Care Pants L", variant: "44 pants" },
+  { brand: "Huggies", name: "Wonder Pants M", variant: "56 pants" },
+  { brand: "MamyPoko", name: "Pants Extra Absorb L", variant: "50 pants" },
+  { brand: "Teddyy", name: "Easy Diaper Pants M", variant: "54 pants" },
+  { brand: "Himalaya", name: "Total Care Baby Pants M", variant: "54 pants" },
+  { brand: "Bumtum", name: "Baby Diaper Pants L", variant: "62 pants" },
+
+  // ── Talcum powder ──
+  { brand: "Ponds", name: "Dreamflower Talc", variant: "300g" },
+  { brand: "Navratna", name: "Cool Talc", variant: "300g" },
+  { brand: "Dermicool", name: "Prickly Heat Powder", variant: "150g" },
+  { brand: "Gokul", name: "Santoor Talc", variant: "300g" },
+  { brand: "Cinthol", name: "Original Talc", variant: "300g" },
+  { brand: "Johnson's", name: "Baby Powder", variant: "200g" },
+  { brand: "Himalaya", name: "Baby Powder", variant: "200g" },
+
+  // ── Pet food ──
+  { brand: "Pedigree", name: "Adult Chicken & Vegetables", variant: "3kg" },
+  { brand: "Pedigree", name: "Puppy Chicken & Milk", variant: "1.2kg" },
+  { brand: "Drools", name: "Adult Chicken & Egg", variant: "3kg" },
+  { brand: "Drools", name: "Puppy Chicken & Egg", variant: "1.2kg" },
+  { brand: "Whiskas", name: "Adult Ocean Fish Cat Food", variant: "1.2kg" },
+  { brand: "Royal Canin", name: "Maxi Adult Dog Food", variant: "4kg" },
+  { brand: "Purepet", name: "Adult Chicken & Vegetable", variant: "3kg" },
+  { brand: "Meat Up", name: "Adult Chicken Dog Food", variant: "3kg" },
+
+  // ════════ FILL BATCH 1 — real top SKUs into existing categories ════════
+
+  // ── Biscuits ──
+  { brand: "Britannia", name: "Marie Gold", variant: "120g" },
+  { brand: "Britannia", name: "Good Day Chocochip Cookies", variant: "150g" },
+  { brand: "Britannia", name: "Bourbon Bliss", variant: "100g" },
+  { brand: "Britannia", name: "Milk Bikis", variant: "120g" },
+  { brand: "Britannia", name: "Treat Cream Biscuit", variant: "120g" },
+  { brand: "Parle", name: "20-20 Cashew Cookies", variant: "200g" },
+  { brand: "Parle", name: "Happy Happy Choco-Chip", variant: "150g" },
+  { brand: "Sunfeast", name: "Bourbon", variant: "100g" },
+  { brand: "Sunfeast", name: "Marie Light Oats", variant: "150g" },
+  { brand: "Unibic", name: "Choco Chip Cookies", variant: "150g" },
+  { brand: "Cadbury", name: "Oreo Vanilla Crème", variant: "150g" },
+  { brand: "Patanjali", name: "Marie Biscuit", variant: "250g" },
+
+  // ── Chips & namkeen ──
+  { brand: "Lay's", name: "American Style Cream & Onion", variant: "52g" },
+  { brand: "Lay's", name: "Chile Limon", variant: "52g" },
+  { brand: "Bingo", name: "Original Style Chaat Masala", variant: "90g" },
+  { brand: "Kurkure", name: "Chilli Chatka", variant: "90g" },
+  { brand: "Haldiram's", name: "Aloo Bhujia", variant: "400g" },
+  { brand: "Haldiram's", name: "All in One", variant: "200g" },
+  { brand: "Bikaji", name: "Gulab Jamun", variant: "1kg" },
+  { brand: "Balaji", name: "Simply Salted Wafers", variant: "55g" },
+  { brand: "Pringles", name: "Original", variant: "107g" },
+  { brand: "Too Yumm", name: "Karare Masala", variant: "55g" },
+
+  // ── Chocolate ──
+  { brand: "Cadbury", name: "Dairy Milk Roast Almond", variant: "36g" },
+  { brand: "Cadbury", name: "Fuse", variant: "25g" },
+  { brand: "Cadbury", name: "Temptations Almond Treat", variant: "72g" },
+  { brand: "Nestlé", name: "Milkybar Moo", variant: "40g" },
+  { brand: "Amul", name: "Tropical Orange Chocolate", variant: "150g" },
+  { brand: "Lindt", name: "Lindor Assorted", variant: "100g" },
+  { brand: "Snickers", name: "Chocolate Bar", variant: "50g" },
+  { brand: "Bournville", name: "Rich Cocoa Dark", variant: "80g" },
+
+  // ── Carbonated soft drinks ──
+  { brand: "Coca-Cola", name: "Original", variant: "750ml" },
+  { brand: "Sprite", name: "Lime", variant: "750ml" },
+  { brand: "Thums Up", name: "Charged", variant: "250ml" },
+  { brand: "Mountain Dew", name: "Cola", variant: "250ml" },
+  { brand: "7Up", name: "Lime", variant: "600ml" },
+  { brand: "Sprite", name: "Zero Sugar", variant: "300ml" },
+  { brand: "Paper Boat", name: "Fizz Jaljeera", variant: "250ml" },
+  { brand: "Bovonto", name: "Grape Soda", variant: "300ml" },
+
+  // ── Shampoo ──
+  { brand: "Clinic Plus", name: "Strong & Long Health", variant: "340ml" },
+  { brand: "Dove", name: "Dryness Care Shampoo", variant: "340ml" },
+  { brand: "Head & Shoulders", name: "Smooth & Silky", variant: "340ml" },
+  { brand: "Sunsilk", name: "Stunning Black Shine", variant: "340ml" },
+  { brand: "Pantene", name: "Long Black Shampoo", variant: "340ml" },
+  { brand: "Tresemme", name: "Keratin Smooth", variant: "580ml" },
+  { brand: "Mamaearth", name: "Rice Water Shampoo", variant: "250ml" },
+  { brand: "Indulekha", name: "Bringha Shampoo", variant: "200ml" },
+
+  // ── Bar soap ──
+  { brand: "Lifebuoy", name: "Total 10 Soap", variant: "125g" },
+  { brand: "Lux", name: "Velvet Glow Rose Soap", variant: "100g" },
+  { brand: "Santoor", name: "Sandal & Turmeric Soap", variant: "125g" },
+  { brand: "Mysore Sandal", name: "Gold Soap", variant: "125g" },
+  { brand: "Dettol", name: "Cool Soap", variant: "125g" },
+  { brand: "Pears", name: "Soft & Fresh Soap", variant: "125g" },
+  { brand: "Chandrika", name: "Ayurvedic Soap", variant: "75g" },
+  { brand: "Vivel", name: "Sandal & Sakura Soap", variant: "100g" },
+
+  // ── Toothpaste ──
+  { brand: "Colgate", name: "Visible White", variant: "100g" },
+  { brand: "Colgate", name: "Cibaca Anticavity", variant: "175g" },
+  { brand: "Pepsodent", name: "2in1 Toothpaste", variant: "150g" },
+  { brand: "Dabur", name: "Red Paste", variant: "200g" },
+  { brand: "Patanjali", name: "Dant Kanti Medicated", variant: "100g" },
+  { brand: "Sensodyne", name: "Rapid Relief", variant: "80g" },
+  { brand: "Closeup", name: "Diamond Attraction", variant: "150g" },
+
+  // ── Instant noodles ──
+  { brand: "Maggi", name: "2-Minute Masala Noodles", variant: "140g" },
+  { brand: "Maggi", name: "Cuppa Mania Masala", variant: "70g" },
+  { brand: "Yippee", name: "Magic Masala Noodles", variant: "140g" },
+  { brand: "Top Ramen", name: "Super Noodles Masala", variant: "70g" },
+  { brand: "Ching's Secret", name: "Veg Hakka Noodles", variant: "150g" },
+  { brand: "Nissin", name: "Cup Noodles Masala", variant: "70g" },
+
+  // ── Packaged juice ──
+  { brand: "Real", name: "Pomegranate Juice", variant: "1L" },
+  { brand: "Tropicana", name: "Litchi Delight", variant: "1L" },
+  { brand: "Maaza", name: "Mango Drink", variant: "1.2L" },
+  { brand: "Frooti", name: "Mango Drink", variant: "1L" },
+  { brand: "Slice", name: "Alphonso Mango", variant: "1.2L" },
+  { brand: "Paper Boat", name: "Coconut Water", variant: "200ml" },
+  { brand: "Storia", name: "Coconut Water", variant: "200ml" },
+  { brand: "Raw Pressery", name: "Cold Pressed Orange", variant: "250ml" },
+
+  // ── Cooking oil ──
+  { brand: "Fortune", name: "Rice Bran Health Oil", variant: "1L" },
+  { brand: "Saffola", name: "Tasty Blended Oil", variant: "1L" },
+  { brand: "Sundrop", name: "Heart Sunflower Oil", variant: "1L" },
+  { brand: "Dhara", name: "Refined Sunflower Oil", variant: "1L" },
+  { brand: "Nature Fresh", name: "Acti Cook Oil", variant: "1L" },
+  { brand: "Gemini", name: "Filtered Groundnut Oil", variant: "1L" },
+  { brand: "Idhayam", name: "Sesame Oil", variant: "500ml" },
+
+  // ── Packaged tea ──
+  { brand: "Red Label", name: "Natural Care", variant: "1kg" },
+  { brand: "Tata Tea", name: "Gold Care", variant: "250g" },
+  { brand: "Brooke Bond", name: "Taaza", variant: "500g" },
+  { brand: "Wagh Bakri", name: "Good Morning Tea", variant: "250g" },
+  { brand: "Lipton", name: "Darjeeling Tea", variant: "100g" },
+  { brand: "Society Tea", name: "Masala Tea", variant: "250g" },
+
+  // ── Instant coffee ──
+  { brand: "Nescafé", name: "Sunrise Rich Aroma", variant: "100g" },
+  { brand: "Bru", name: "Instant Coffee", variant: "100g" },
+  { brand: "Continental Coffee", name: "Premium", variant: "100g" },
+  { brand: "Davidoff", name: "Rich Aroma Coffee", variant: "100g" },
+
+  // ── Hair oil ──
+  { brand: "Dabur", name: "Amla Hair Oil", variant: "180ml" },
+  { brand: "Bajaj", name: "Almond Drops Hair Oil", variant: "100ml" },
+  { brand: "Parachute", name: "Advansed Ayurvedic Hair Oil", variant: "190ml" },
+  { brand: "Kesh King", name: "Scalp & Hair Medicine Oil", variant: "300ml" },
+
+  // ── Spices & masala ──
+  { brand: "MDH", name: "Deggi Mirch", variant: "100g" },
+  { brand: "MDH", name: "Kasuri Methi", variant: "100g" },
+  { brand: "Everest", name: "Tikhalal Chilli", variant: "200g" },
+  { brand: "Everest", name: "Turmeric Powder", variant: "200g" },
+  { brand: "Catch", name: "Garam Masala", variant: "100g" },
+  { brand: "Tata Sampann", name: "Coriander Powder", variant: "200g" },
+  { brand: "Eastern", name: "Sambar Powder", variant: "200g" },
+  { brand: "Aachi", name: "Chicken Masala", variant: "200g" },
+
+  // ── Dairy products ──
+  { brand: "Amul", name: "Cheese Slices", variant: "100g" },
+  { brand: "Amul", name: "Masti Dahi", variant: "400g" },
+  { brand: "Britannia", name: "Cheese Slices", variant: "100g" },
+  { brand: "Mother Dairy", name: "Paneer", variant: "200g" },
+  { brand: "Amul", name: "Paneer", variant: "200g" },
+  { brand: "Go", name: "Cheese Spread", variant: "200g" },
+
+  // ── Atta & flour ──
+  { brand: "Aashirvaad", name: "Whole Wheat Atta", variant: "10kg" },
+  { brand: "Fortune", name: "Chakki Fresh Atta", variant: "10kg" },
+  { brand: "Pilsbury", name: "Gold Chakki Atta", variant: "5kg" },
+  { brand: "Tata Sampann", name: "Besan", variant: "500g" },
+  { brand: "Rajdhani", name: "Besan", variant: "500g" },
+
+  // ── Liquid soap / handwash ──
+  { brand: "Dettol", name: "Original Handwash", variant: "750ml" },
+  { brand: "Lifebuoy", name: "Total Handwash Refill", variant: "750ml" },
+  { brand: "Savlon", name: "Moisture Shield Handwash", variant: "750ml" },
+  { brand: "Godrej", name: "Protekt Handwash", variant: "750ml" },
+  { brand: "Palmolive", name: "Aroma Handwash", variant: "250ml" },
+
+  // ── Health drinks ──
+  { brand: "Horlicks", name: "Chocolate Health Drink", variant: "500g" },
+  { brand: "Bournvita", name: "5 Star Magic", variant: "500g" },
+  { brand: "Boost", name: "Health Drink Refill", variant: "750g" },
+  { brand: "Horlicks", name: "Women's Plus", variant: "400g" },
+
+  // ── Bottled water ──
+  { brand: "Bisleri", name: "Mineral Water", variant: "2L" },
+  { brand: "Kinley", name: "Water", variant: "2L" },
+  { brand: "Aquafina", name: "Water", variant: "2L" },
+  { brand: "Bisleri", name: "Mineral Water", variant: "5L" },
+
+  // ── Detergent powder ──
+  { brand: "Surf Excel", name: "Quick Wash Detergent", variant: "500g" },
+  { brand: "Tide", name: "Double Power Jasmine", variant: "1kg" },
+  { brand: "Ariel", name: "Complete Detergent", variant: "2kg" },
+  { brand: "Rin", name: "Detergent Powder", variant: "2kg" },
+
+  // ════════ FILL BATCH 2 — grow new + existing categories to 1,000 ════════
+
+  // ── Rice (more) ──
+  { brand: "India Gate", name: "Feast Rozana Basmati", variant: "5kg" },
+  { brand: "Daawat", name: "Biryani Basmati Rice", variant: "1kg" },
+  { brand: "Kohinoor", name: "Authentic Basmati", variant: "5kg" },
+  { brand: "Fortune", name: "Biryani Special Basmati", variant: "1kg" },
+  { brand: "Tata Sampann", name: "Brown Rice", variant: "1kg" },
+  { brand: "Lal Qilla", name: "Super Basmati", variant: "5kg" },
+
+  // ── Pulses & dal (more) ──
+  { brand: "Tata Sampann", name: "Kabuli Chana", variant: "1kg" },
+  { brand: "Tata Sampann", name: "Rajma", variant: "1kg" },
+  { brand: "Fortune", name: "Chana Dal", variant: "1kg" },
+  { brand: "Fortune", name: "Urad Dal", variant: "1kg" },
+  { brand: "Organic Tattva", name: "Moong Whole", variant: "500g" },
+  { brand: "24 Mantra", name: "Organic Toor Dal", variant: "1kg" },
+
+  // ── Sugar & salt (more) ──
+  { brand: "Madhur", name: "Pure Sugar", variant: "2kg" },
+  { brand: "Uttam", name: "Sugar", variant: "5kg" },
+  { brand: "Tata Salt", name: "Plus Iodised Salt", variant: "1kg" },
+  { brand: "Aashirvaad", name: "Salt", variant: "1kg" },
+  { brand: "Catch", name: "Black Salt", variant: "200g" },
+  { brand: "Nirma", name: "Shudh Salt", variant: "1kg" },
+
+  // ── Sauces & ketchup (more) ──
+  { brand: "Kissan", name: "Tomato Ketchup Pichkoo", variant: "200g" },
+  { brand: "Maggi", name: "Pichkoo Tomato Ketchup", variant: "90g" },
+  { brand: "Veeba", name: "Chilli Garlic Sauce", variant: "310g" },
+  { brand: "Ching's Secret", name: "Red Chilli Sauce", variant: "200g" },
+  { brand: "Wingreens", name: "Peri Peri Mayo", variant: "180g" },
+  { brand: "Fun Foods", name: "Mayonnaise Veg", variant: "275g" },
+  { brand: "Dr. Oetker", name: "FunFoods Sandwich Spread", variant: "250g" },
+
+  // ── Pickle & jam & honey (more) ──
+  { brand: "Mother's Recipe", name: "Garlic Pickle", variant: "300g" },
+  { brand: "Priya", name: "Lime Pickle", variant: "300g" },
+  { brand: "Patanjali", name: "Mango Pickle", variant: "1kg" },
+  { brand: "Kissan", name: "Pineapple Jam", variant: "490g" },
+  { brand: "Mapro", name: "Pineapple Jam", variant: "500g" },
+  { brand: "Pintola", name: "Peanut Butter Dark Chocolate", variant: "350g" },
+  { brand: "MyFitness", name: "Peanut Butter Crunchy", variant: "510g" },
+  { brand: "Dabur", name: "Honey Squeezy", variant: "400g" },
+  { brand: "Patanjali", name: "Honey", variant: "1kg" },
+
+  // ── Breakfast cereal (more) ──
+  { brand: "Kellogg's", name: "Chocos Fills", variant: "250g" },
+  { brand: "Kellogg's", name: "Special K", variant: "290g" },
+  { brand: "Bagrry's", name: "Oats & Honey Granola", variant: "450g" },
+  { brand: "Nestlé", name: "Koko Krunch", variant: "300g" },
+  { brand: "Quaker", name: "Oats Plus Multigrain", variant: "1kg" },
+  { brand: "Yoga Bar", name: "Dark Chocolate Muesli", variant: "400g" },
+
+  // ── Pasta & ice cream (more) ──
+  { brand: "Sunfeast", name: "Pasta Treat Cheese", variant: "65g" },
+  { brand: "Disano", name: "Penne Pasta", variant: "500g" },
+  { brand: "Bambino", name: "Vermicelli Plain", variant: "400g" },
+  { brand: "Amul", name: "Strawberry Ice Cream", variant: "1L" },
+  { brand: "Vadilal", name: "Badam Kulfi", variant: "60ml" },
+  { brand: "Mother Dairy", name: "Chocolate Ice Cream", variant: "1L" },
+  { brand: "Cream Bell", name: "Vanilla Ice Cream", variant: "700ml" },
+  { brand: "Havmor", name: "Butterscotch Ice Cream", variant: "1L" },
+
+  // ── Frozen & bread (more) ──
+  { brand: "McCain", name: "Chilli Garlic Potato Bites", variant: "400g" },
+  { brand: "Safal", name: "Sweet Corn", variant: "500g" },
+  { brand: "ITC Master Chef", name: "Veg Spring Roll", variant: "400g" },
+  { brand: "Godrej Yummiez", name: "Chicken Sausages", variant: "375g" },
+  { brand: "Britannia", name: "Multigrain Bread", variant: "400g" },
+  { brand: "Harvest Gold", name: "Brown Bread", variant: "400g" },
+  { brand: "English Oven", name: "Zero Maida Bread", variant: "400g" },
+  { brand: "Modern", name: "Brown Bread", variant: "400g" },
+
+  // ── Dishwash & cleaners (more) ──
+  { brand: "Vim", name: "Dishwash Gel Anti Smell", variant: "750ml" },
+  { brand: "Exo", name: "Touch & Shine Dishwash Liquid", variant: "750ml" },
+  { brand: "Pril", name: "Lime Dishwash Liquid", variant: "750ml" },
+  { brand: "Harpic", name: "Bathroom Cleaner", variant: "500ml" },
+  { brand: "Lizol", name: "Floor Cleaner Lavender", variant: "975ml" },
+  { brand: "Colin", name: "Glass Cleaner Refill", variant: "500ml" },
+  { brand: "Domex", name: "Floor Cleaner", variant: "1L" },
+  { brand: "Patanjali", name: "Toilet Cleaner", variant: "500ml" },
+
+  // ── Mosquito & agarbatti (more) ──
+  { brand: "Good Knight", name: "Fast Card", variant: "10 cards" },
+  { brand: "All Out", name: "Power+ Refill Twin", variant: "90ml" },
+  { brand: "Mortein", name: "Power Booster Refill", variant: "45ml" },
+  { brand: "Cycle", name: "Rhythm Agarbatti", variant: "100 sticks" },
+  { brand: "Mangaldeep", name: "Rose Agarbatti", variant: "100 sticks" },
+  { brand: "Zed Black", name: "3 in 1 Agarbatti", variant: "100 sticks" },
+
+  // ── Deodorant (more) ──
+  { brand: "Fogg", name: "Marco Body Spray", variant: "150ml" },
+  { brand: "Axe", name: "Apollo Body Spray", variant: "150ml" },
+  { brand: "Wild Stone", name: "Code Platinum Perfume", variant: "100ml" },
+  { brand: "Engage", name: "W2 Perfume Spray", variant: "120ml" },
+  { brand: "Nivea", name: "Deep Impact Deodorant", variant: "150ml" },
+  { brand: "Set Wet", name: "Charm Avatar Deodorant", variant: "150ml" },
+
+  // ── Pads, diapers, talc, pet food (more) ──
+  { brand: "Whisper", name: "Bindazzz Night XL", variant: "20 pads" },
+  { brand: "Stayfree", name: "Advanced All Night", variant: "28 pads" },
+  { brand: "Sofy", name: "Anti Bacteria XXL", variant: "20 pads" },
+  { brand: "Pampers", name: "Active Baby Taped XL", variant: "32 pcs" },
+  { brand: "Huggies", name: "Complete Comfort Dry Pants L", variant: "42 pants" },
+  { brand: "MamyPoko", name: "Standard Pants M", variant: "62 pants" },
+  { brand: "Navratna", name: "Cool Talc", variant: "100g" },
+  { brand: "Dermicool", name: "Prickly Heat Powder", variant: "75g" },
+  { brand: "Pedigree", name: "Gravy Chicken & Liver", variant: "70g" },
+  { brand: "Drools", name: "Cat Food Ocean Fish", variant: "1.2kg" },
+
+  // ── Hair oil & shampoo (more) ──
+  { brand: "Parachute", name: "Coconut Hair Oil", variant: "600ml" },
+  { brand: "Dabur", name: "Vatika Black Shine Hair Oil", variant: "300ml" },
+  { brand: "Nihar", name: "Naturals Almond Hair Oil", variant: "200ml" },
+  { brand: "Mamaearth", name: "Onion Shampoo", variant: "400ml" },
+  { brand: "WOW", name: "Red Onion Black Seed Shampoo", variant: "300ml" },
+  { brand: "Dove", name: "Hair Fall Rescue Shampoo", variant: "650ml" },
+
+  // ── Skin cream / face (more) ──
+  { brand: "Nivea", name: "Soft Light Moisturiser", variant: "200ml" },
+  { brand: "Pond's", name: "Super Light Gel", variant: "147g" },
+  { brand: "Himalaya", name: "Purifying Neem Face Wash", variant: "200ml" },
+  { brand: "Mamaearth", name: "Ubtan Face Wash", variant: "150ml" },
+  { brand: "Garnier", name: "Men Acno Fight Face Wash", variant: "100g" },
+  { brand: "Cetaphil", name: "Oily Skin Cleanser", variant: "250ml" },
+  { brand: "Boroline", name: "Antiseptic Cream", variant: "20g" },
+  { brand: "Nivea", name: "Men Dark Spot Face Wash", variant: "100ml" },
+
+  // ── Biscuits / chips / chocolate (more) ──
+  { brand: "Britannia", name: "50-50 Maska Chaska", variant: "200g" },
+  { brand: "Parle", name: "Hide & Seek Black Bourbon", variant: "100g" },
+  { brand: "Sunfeast", name: "Dark Fantasy Choco Fills", variant: "150g" },
+  { brand: "McVitie's", name: "Digestive Original", variant: "400g" },
+  { brand: "Lay's", name: "Sizzling Hot", variant: "52g" },
+  { brand: "Bingo", name: "Tedhe Medhe Masala Tadka", variant: "130g" },
+  { brand: "Haldiram's", name: "Nut Cracker", variant: "200g" },
+  { brand: "Cadbury", name: "Dairy Milk Silk Hazelnut", variant: "58g" },
+  { brand: "Nestlé", name: "KitKat Dessert Delight", variant: "50g" },
+  { brand: "Ferrero Rocher", name: "T24 Box", variant: "300g" },
+
+  // ── Soft drinks / juice / water (more) ──
+  { brand: "Pepsi", name: "Cola", variant: "750ml" },
+  { brand: "Thums Up", name: "Cola", variant: "1.25L" },
+  { brand: "Coca-Cola", name: "Original", variant: "2L" },
+  { brand: "Sprite", name: "Lime", variant: "2L" },
+  { brand: "Real", name: "Activ Coconut Water", variant: "200ml" },
+  { brand: "Minute Maid", name: "Pulpy Orange", variant: "1L" },
+  { brand: "Bisleri", name: "Pop Fonzo", variant: "250ml" },
+  { brand: "Himalayan", name: "Sparkling Water", variant: "500ml" },
+
+  // ── Tea / coffee / milk / health drinks (more) ──
+  { brand: "Tata Tea", name: "Premium", variant: "250g" },
+  { brand: "Red Label", name: "Special Tea", variant: "250g" },
+  { brand: "Bru", name: "Gold Coffee Jar", variant: "100g" },
+  { brand: "Nescafé", name: "Classic Coffee", variant: "100g" },
+  { brand: "Amul", name: "Gold Full Cream Milk", variant: "500ml" },
+  { brand: "Mother Dairy", name: "Cow Milk", variant: "500ml" },
+  { brand: "Bournvita", name: "Health Drink Jar", variant: "750g" },
+  { brand: "Horlicks", name: "Classic Malt", variant: "750g" },
+
+  // ── Cooking oil / atta / spices / dairy (more) ──
+  { brand: "Fortune", name: "Premium Kachi Ghani Mustard Oil", variant: "1L" },
+  { brand: "Saffola", name: "Gold Pro Healthy Lifestyle Oil", variant: "1L" },
+  { brand: "Aashirvaad", name: "Multigrain Atta", variant: "5kg" },
+  { brand: "Patanjali", name: "Chakki Atta", variant: "10kg" },
+  { brand: "MDH", name: "Sabji Masala", variant: "100g" },
+  { brand: "Everest", name: "Garam Masala", variant: "200g" },
+  { brand: "Amul", name: "Butter", variant: "100g" },
+  { brand: "Amul", name: "Pure Ghee", variant: "200ml" },
+  { brand: "Mother Dairy", name: "Dahi", variant: "400g" },
+  { brand: "Britannia", name: "Winkin Cow Thick Shake", variant: "180ml" },
+
+  // ── Detergent / dishwash / handwash (more) ──
+  { brand: "Surf Excel", name: "Matic Top Load", variant: "2kg" },
+  { brand: "Ariel", name: "Matic Liquid", variant: "2L" },
+  { brand: "Tide", name: "Plus Extra Power", variant: "4kg" },
+  { brand: "Ghadi", name: "Detergent Powder", variant: "4kg" },
+  { brand: "Dettol", name: "Sensitive Handwash", variant: "200ml" },
+  { brand: "Savlon", name: "Glycerin Handwash", variant: "750ml" },
+
+  // ════════ FILL BATCH 3 — top-up to 1,000 ════════
+
+  // ── Skin care / face ──
+  { brand: "Biotique", name: "Bio Papaya Scrub", variant: "75g" },
+  { brand: "Mamaearth", name: "Vitamin C Face Serum", variant: "30ml" },
+  { brand: "Ponds", name: "Bright Beauty Serum Cream", variant: "50g" },
+  { brand: "Lakme", name: "9-to-5 Naturale Aloe Aqua Gel", variant: "50ml" },
+
+  // ── Biscuits / snacks ──
+  { brand: "Dukes", name: "Waffy Vanilla", variant: "150g" },
+  { brand: "McVitie's", name: "Digestive Original", variant: "400g" },
+  { brand: "Britannia", name: "Good Day Pista Badam", variant: "200g" },
+  { brand: "Parle", name: "Kachha Mango Bite", variant: "100g" },
+
+  // ── Sauces & condiments ──
+  { brand: "Dr. Oetker", name: "FunFoods Sandwich Spread", variant: "250g" },
+  { brand: "Kissan", name: "Squeezy Tomato Ketchup", variant: "500g" },
+  { brand: "Del Monte", name: "Tomato Ketchup", variant: "1kg" },
+
+  // ── Breakfast / health ──
+  { brand: "Kellogg's", name: "Corn Flakes Original", variant: "875g" },
+  { brand: "Saffola", name: "Oats Plain", variant: "1kg" },
+  { brand: "Bagrry's", name: "White Oats", variant: "1kg" },
+
+  // ── Beverages ──
+  { brand: "Tata Tea", name: "Gold Jar", variant: "500g" },
+  { brand: "Bru", name: "Instant Coffee", variant: "200g" },
+  { brand: "Paper Boat", name: "Aam Panna", variant: "250ml" },
+  { brand: "Coca-Cola", name: "Thums Up Charged", variant: "600ml" },
+
+  // ── Personal care ──
+  { brand: "Himalaya", name: "Nourishing Skin Cream", variant: "150ml" },
+  { brand: "Dove", name: "Deeply Nourishing Body Wash", variant: "500ml" },
+  { brand: "Head & Shoulders", name: "Cool Menthol Shampoo", variant: "675ml" },
+  { brand: "Gillette", name: "Mach3 Razor", variant: "1 pc" },
+
+  // ── Home care ──
+  { brand: "Harpic", name: "Power Plus Citrus", variant: "1L" },
+  { brand: "Lizol", name: "Disinfectant Floor Cleaner Pine", variant: "500ml" },
+  { brand: "Domex", name: "Ultra Thick Bleach", variant: "1L" },
+  { brand: "Colin", name: "Glass & Surface Cleaner", variant: "500ml" },
+
+  // ── Dairy / staples ──
+  { brand: "Amul", name: "Cheese Slices", variant: "200g" },
+  { brand: "Nestlé", name: "Munch Bar", variant: "40g" },
+  { brand: "Cadbury", name: "Gems Tube", variant: "26g" },
+  { brand: "Fortune", name: "Sunflower Oil", variant: "1L" },
+  { brand: "Aashirvaad", name: "Superior MP Atta", variant: "1kg" },
 ];
 
 async function main() {

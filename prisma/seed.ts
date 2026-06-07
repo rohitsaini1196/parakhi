@@ -23,6 +23,29 @@ import { DAIRY_PRODUCTS_TEMPLATE } from "./seed-data/dairy-products";
 import { HEALTH_DRINKS_TEMPLATE } from "./seed-data/health-drinks";
 import { ATTA_FLOUR_TEMPLATE } from "./seed-data/atta-flour";
 import { SPICES_MASALA_TEMPLATE } from "./seed-data/spices-masala";
+import { HAIR_OIL_TEMPLATE } from "./seed-data/hair-oil";
+import { RICE_TEMPLATE } from "./seed-data/rice";
+import { PULSES_DAL_TEMPLATE } from "./seed-data/pulses-dal";
+import { EDIBLE_SALT_TEMPLATE } from "./seed-data/edible-salt";
+import { SUGAR_TEMPLATE } from "./seed-data/sugar";
+import { SAUCES_KETCHUP_TEMPLATE } from "./seed-data/sauces-ketchup";
+import { PICKLE_ACHAAR_TEMPLATE } from "./seed-data/pickle-achaar";
+import { JAM_SPREADS_TEMPLATE } from "./seed-data/jam-spreads";
+import { HONEY_TEMPLATE } from "./seed-data/honey";
+import { BREAKFAST_CEREAL_TEMPLATE } from "./seed-data/breakfast-cereal";
+import { PASTA_VERMICELLI_TEMPLATE } from "./seed-data/pasta-vermicelli";
+import { ICE_CREAM_TEMPLATE } from "./seed-data/ice-cream";
+import { FROZEN_FOODS_TEMPLATE } from "./seed-data/frozen-foods";
+import { BREAD_BAKERY_TEMPLATE } from "./seed-data/bread-bakery";
+import { DISHWASH_TEMPLATE } from "./seed-data/dishwash";
+import { FLOOR_TOILET_CLEANER_TEMPLATE } from "./seed-data/floor-toilet-cleaner";
+import { MOSQUITO_REPELLENT_TEMPLATE } from "./seed-data/mosquito-repellent";
+import { AGARBATTI_TEMPLATE } from "./seed-data/agarbatti";
+import { DEODORANT_TEMPLATE } from "./seed-data/deodorant";
+import { SANITARY_PADS_TEMPLATE } from "./seed-data/sanitary-pads";
+import { DIAPERS_TEMPLATE } from "./seed-data/diapers";
+import { TALCUM_POWDER_TEMPLATE } from "./seed-data/talcum-powder";
+import { PET_FOOD_TEMPLATE } from "./seed-data/pet-food";
 import {
   PARLE_G_BREAKDOWN,
   PARLE_G_HERO_MARKDOWN,
@@ -56,6 +79,29 @@ const CATEGORIES: CategoryTemplate[] = [
   HEALTH_DRINKS_TEMPLATE,
   ATTA_FLOUR_TEMPLATE,
   SPICES_MASALA_TEMPLATE,
+  HAIR_OIL_TEMPLATE,
+  RICE_TEMPLATE,
+  PULSES_DAL_TEMPLATE,
+  EDIBLE_SALT_TEMPLATE,
+  SUGAR_TEMPLATE,
+  SAUCES_KETCHUP_TEMPLATE,
+  PICKLE_ACHAAR_TEMPLATE,
+  JAM_SPREADS_TEMPLATE,
+  HONEY_TEMPLATE,
+  BREAKFAST_CEREAL_TEMPLATE,
+  PASTA_VERMICELLI_TEMPLATE,
+  ICE_CREAM_TEMPLATE,
+  FROZEN_FOODS_TEMPLATE,
+  BREAD_BAKERY_TEMPLATE,
+  DISHWASH_TEMPLATE,
+  FLOOR_TOILET_CLEANER_TEMPLATE,
+  MOSQUITO_REPELLENT_TEMPLATE,
+  AGARBATTI_TEMPLATE,
+  DEODORANT_TEMPLATE,
+  SANITARY_PADS_TEMPLATE,
+  DIAPERS_TEMPLATE,
+  TALCUM_POWDER_TEMPLATE,
+  PET_FOOD_TEMPLATE,
 ];
 
 async function seedCategories() {
