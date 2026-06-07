@@ -17,6 +17,7 @@ export const PACKAGED_JUICE_TEMPLATE: CategoryTemplate = {
     "juice", "fruit juice", "nectar", "real", "tropicana", "maaza",
     "frooti", "slice", "appy", "minute maid", "paper boat", "b natural",
     "mango drink", "mixed fruit", "orange juice", "apple juice",
+    "cold pressed", "coconut water", "storia", "raw pressery", "litchi delight",
   ],
   typicalStructure: {
     rawMaterials: { lowPct: 25, highPct: 40 },

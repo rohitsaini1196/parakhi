@@ -19,6 +19,7 @@ export const BREAKFAST_CEREAL_TEMPLATE: CategoryTemplate = {
     "chocos", "kellogg's", "bagrry's", "saffola oats", "quaker", "soulfull",
     "rolled oats", "instant oats", "wheat flakes", "porridge", "kelloggs",
     "masala oats", "classic oats", "white oats", "millet muesli",
+    "koko krunch", "chocos", "honey loops", "flakes cereal",
   ],
   typicalStructure: {
     rawMaterials: { lowPct: 30, highPct: 45 },

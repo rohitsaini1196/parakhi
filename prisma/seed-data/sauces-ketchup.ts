@@ -19,6 +19,7 @@ export const SAUCES_KETCHUP_TEMPLATE: CategoryTemplate = {
     "schezwan", "pasta sauce", "hot sauce", "kissan", "maggi sauce",
     "heinz", "veeba", "del monte ketchup", "wingreens", "ching's sauce",
     "tomato sauce", "mayonnaise", "mayo", "salsa",
+    "sandwich spread", "funfoods", "fun foods",
   ],
   typicalStructure: {
     rawMaterials: { lowPct: 35, highPct: 50 },
